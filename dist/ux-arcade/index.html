@@ -1,0 +1,779 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="../">
+    <title>UX Arcade | Stephen Musson</title>
+    <meta name="description" content="Five playable UX challenges about pop-ups, contrast, navigation, scope and CAPTCHA friction. Enter Stephen Musson’s UX Arcade.">
+    <meta name="theme-color" content="#191c22">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="UX Arcade | Stephen Musson">
+    <meta property="og:description" content="Good UX gets people where they need to go. Bad UX makes a surprisingly entertaining game.">
+    <link rel="canonical" href="https://www.stephenmusson.com/ux-arcade/">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="arcade.css">
+    <link rel="stylesheet" href="arcade-games.css">
+    <link rel="stylesheet" href="arcade-page.css">
+    <script>document.documentElement.classList.add('js');</script>
+    <script src="script.js" defer></script>
+    <script src="arcade.js" defer></script>
+    <script src="contrast-crash.js" defer></script>
+    <script src="mega-menu-mayhem.js" defer></script>
+    <script src="scope-invaders.js" defer></script>
+    <script src="captcha-boss.js" defer></script>
+    <script src="arcade-entry.js" defer></script>
+  </head>
+  <body class="arcade-page arcade-intro-active">
+    <a class="skip-link" data-arcade-skip href="#arcade-opening-title">Skip to Arcade start</a>
+
+    <section class="arcade-opening" data-arcade-opening aria-labelledby="arcade-opening-title">
+      <div class="arcade-opening-scanlines" aria-hidden="true"></div>
+      <div class="arcade-opening-topline">
+        <a href="../" class="arcade-opening-back">← Stephen Musson portfolio</a>
+        <button class="arcade-opening-sound" type="button" data-sound-toggle aria-pressed="false" aria-label="Sound is off. Turn sound on.">
+          <span aria-hidden="true">♪</span>
+          <span data-sound-label>Sound: off</span>
+        </button>
+      </div>
+      <div class="arcade-opening-stage">
+        <div class="arcade-versus" aria-hidden="true">
+          <span><small>Player 1</small>Judgement</span>
+          <strong>VS</strong>
+          <span><small>Final boss</small>Friction</span>
+        </div>
+        <div class="arcade-opening-title-wrap">
+          <span class="arcade-pixel-burst" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <p class="arcade-opening-kicker">Insert better decisions</p>
+          <h1 id="arcade-opening-title"><span>UX</span> Arcade</h1>
+          <p>Five avoidable problems. One useful way through.</p>
+        </div>
+        <button class="arcade-opening-start" type="button" data-arcade-start>
+          Start game <span aria-hidden="true">▶</span>
+        </button>
+      </div>
+    </section>
+
+    <main id="main">
+      <section class="ux-arcade section-space" id="ux-arcade" aria-labelledby="arcade-title">
+        <div class="shell">
+          <nav class="arcade-page-nav" aria-label="Arcade navigation">
+            <a href="../"><span aria-hidden="true">←</span> Portfolio</a>
+            <span>Stephen Musson · UX Arcade</span>
+            <button type="button" data-sound-toggle aria-pressed="false" aria-label="Sound is off. Turn sound on.">
+              <span aria-hidden="true">♪</span>
+              <span data-sound-label>Sound: off</span>
+            </button>
+          </nav>
+          <div class="arcade-marquee reveal" aria-hidden="true">
+            <span>UX ARCADE</span>
+            <span>FIVE WAYS TO MAKE THINGS DIFFICULT</span>
+            <span>ONE SENSIBLE WAY OUT</span>
+          </div>
+
+          <div class="arcade-intro reveal">
+            <div>
+              <p class="eyebrow">A small diversion</p>
+              <h2 id="arcade-title">UX Arcade</h2>
+            </div>
+            <div class="arcade-intro-copy">
+              <p class="arcade-lead">Good UX gets people where they need to go. Bad UX makes a surprisingly entertaining game.</p>
+              <p>Choose a challenge, protect the user journey and try not to make things worse.</p>
+            </div>
+          </div>
+
+          <div class="arcade-toolbar reveal">
+            <div class="arcade-progress" role="status" aria-live="polite">
+              <span class="arcade-progress-label" id="arcade-progress-text">0 of 5 games played</span>
+              <span class="arcade-progress-pips" aria-hidden="true">
+                <i data-progress-game="popup-panic"></i>
+                <i data-progress-game="contrast-crash"></i>
+                <i data-progress-game="mega-menu-mayhem"></i>
+                <i data-progress-game="scope-invaders"></i>
+                <i data-progress-game="captcha-boss"></i>
+              </span>
+            </div>
+            <button class="arcade-sound" type="button" data-sound-toggle aria-pressed="false" aria-label="Sound is off. Turn sound on.">
+              <span class="sound-icon" aria-hidden="true">♪</span>
+              <span data-sound-label>Sound: off</span>
+            </button>
+          </div>
+
+          <div class="arcade-grid">
+            <article class="game-card game-card-featured reveal" data-game-card="popup-panic" aria-labelledby="popup-panic-title">
+              <div class="game-art game-art-popup" role="img" aria-label="Pixel-art computer overwhelmed by pop-up windows">
+                <span class="game-number" aria-hidden="true">01</span>
+              </div>
+              <div class="game-card-content">
+                <div class="game-card-status">
+                  <span class="game-availability">Playable now</span>
+                  <span class="game-complete-badge" data-completed-badge hidden>Completed</span>
+                </div>
+                <h3 id="popup-panic-title">Pop-up Panic</h3>
+                <p>Clear the interruptions before they take over the screen.</p>
+                <div class="game-card-footer">
+                  <p class="game-best" data-game-best hidden>Personal best <strong data-game-best-score>0</strong></p>
+                  <button class="arcade-action arcade-action-primary" type="button" data-open-game="popup-panic">
+                    Play game <span aria-hidden="true">→</span>
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <article class="game-card game-card-playable reveal" data-game-card="contrast-crash" aria-labelledby="contrast-crash-title">
+              <div class="game-art game-art-contrast" role="img" aria-label="Pixel-art shooting range with targets fading into the background">
+                <span class="game-number" aria-hidden="true">02</span>
+              </div>
+              <div class="game-card-content">
+                <div class="game-card-status">
+                  <span class="game-availability">Playable now</span>
+                  <span class="game-complete-badge" data-completed-badge hidden>Completed</span>
+                </div>
+                <h3 id="contrast-crash-title">Contrast Target</h3>
+                <p>Find and hit targets hidden inside a deliberately clashing website.</p>
+                <div class="game-card-footer">
+                  <p class="game-best" data-game-best hidden>Personal best <strong data-game-best-score>0</strong></p>
+                  <button class="arcade-action arcade-action-primary" type="button" data-open-game="contrast-crash">
+                    Play game <span aria-hidden="true">→</span>
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <article class="game-card game-card-playable reveal" data-game-card="mega-menu-mayhem" aria-labelledby="mega-menu-title">
+              <div class="game-art game-art-menu" role="img" aria-label="Pixel-art maze made from a chaotic website mega menu">
+                <span class="game-number" aria-hidden="true">03</span>
+              </div>
+              <div class="game-card-content">
+                <div class="game-card-status">
+                  <span class="game-availability">Playable now</span>
+                  <span class="game-complete-badge" data-completed-badge hidden>Completed</span>
+                </div>
+                <h3 id="mega-menu-title">Mega Menu Mayhem</h3>
+                <p>Find the right destination inside an increasingly chaotic navigation.</p>
+                <div class="game-card-footer">
+                  <p class="game-best" data-game-best hidden>Personal best <strong data-game-best-score>0</strong></p>
+                  <button class="arcade-action arcade-action-primary" type="button" data-open-game="mega-menu-mayhem">
+                    Play game <span aria-hidden="true">→</span>
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <article class="game-card game-card-playable reveal" data-game-card="scope-invaders" aria-labelledby="scope-invaders-title">
+              <div class="game-art game-art-scope" role="img" aria-label="Pixel-art product shield defending against descending feature requests">
+                <span class="game-number" aria-hidden="true">04</span>
+              </div>
+              <div class="game-card-content">
+                <div class="game-card-status">
+                  <span class="game-availability">Playable now</span>
+                  <span class="game-complete-badge" data-completed-badge hidden>Completed</span>
+                </div>
+                <h3 id="scope-invaders-title">Scope Invaders</h3>
+                <p>Protect the product from unnecessary features without rejecting the useful ones.</p>
+                <div class="game-card-footer">
+                  <p class="game-best" data-game-best hidden>Personal best <strong data-game-best-score>0</strong></p>
+                  <button class="arcade-action arcade-action-primary" type="button" data-open-game="scope-invaders">
+                    Play game <span aria-hidden="true">→</span>
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <article class="game-card game-card-playable reveal" data-game-card="captcha-boss" aria-labelledby="captcha-boss-title">
+              <div class="game-art game-art-captcha" role="img" aria-label="Pixel-art platform level made from CAPTCHA image tiles">
+                <span class="game-number" aria-hidden="true">05</span>
+              </div>
+              <div class="game-card-content">
+                <div class="game-card-status">
+                  <span class="game-availability">Playable now</span>
+                  <span class="game-complete-badge" data-completed-badge hidden>Completed</span>
+                </div>
+                <h3 id="captcha-boss-title">Are You Human?</h3>
+                <p>Cross five obstacles and survive five increasingly unreasonable CAPTCHA checkpoints.</p>
+                <div class="game-card-footer">
+                  <p class="game-best" data-game-best hidden>Personal best <strong data-game-best-score>0</strong></p>
+                  <button class="arcade-action arcade-action-primary" type="button" data-open-game="captcha-boss">
+                    Play game <span aria-hidden="true">→</span>
+                  </button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <dialog class="arcade-dialog" id="arcade-dialog" aria-labelledby="arcade-screen-title">
+      <div class="arcade-cabinet">
+        <header class="arcade-game-header">
+          <div class="arcade-game-brand" aria-label="UX Arcade, Pop-up Panic">
+            <span>UX Arcade</span>
+            <strong>Pop-up Panic</strong>
+          </div>
+          <div class="arcade-game-header-actions">
+            <button class="arcade-icon-button" type="button" data-sound-toggle aria-pressed="false" aria-label="Sound is off. Turn sound on.">
+              <span aria-hidden="true">♪</span>
+              <span data-sound-label>Sound: off</span>
+            </button>
+            <button class="arcade-icon-button" type="button" data-exit-game>
+              Exit arcade <span aria-hidden="true">×</span>
+            </button>
+          </div>
+        </header>
+
+        <div class="arcade-screen">
+          <section class="arcade-game-view arcade-instructions" data-arcade-screen="instructions">
+            <div class="instruction-art" role="img" aria-label="Pixel-art computer overwhelmed by pop-up windows"></div>
+            <div class="instruction-copy">
+              <p class="arcade-kicker">Game 01 · Clear thinking under pressure</p>
+              <h2 id="arcade-screen-title">Pop-up Panic</h2>
+              <p class="instruction-lead">Close as many pop-ups as you can in 20 seconds.</p>
+              <ul class="instruction-list">
+                <li>Close each <strong>×</strong>. New pop-ups arrive faster until time runs out.</li>
+              </ul>
+              <div class="game-controls" aria-label="Game controls">
+                <span><strong>Desktop</strong> Click ×, or use <kbd>Tab</kbd> + <kbd>Enter</kbd></span>
+                <span><strong>Mobile</strong> Tap ×</span>
+                <span><kbd>P</kbd> pause</span>
+              </div>
+              <div class="instruction-actions">
+                <button class="arcade-action arcade-action-primary" type="button" data-start-game>Start game <span aria-hidden="true">▶</span></button>
+                <button class="arcade-action arcade-action-quiet" type="button" data-exit-game>Exit arcade</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="arcade-game-view arcade-playing" data-arcade-screen="playing" aria-labelledby="playing-title" hidden>
+            <h2 class="visually-hidden" id="playing-title">Pop-up Panic in progress</h2>
+            <div class="game-hud">
+              <div class="hud-stat"><span>Closed</span><strong id="panic-score">0</strong></div>
+              <div class="hud-stat"><span>Open</span><strong id="panic-cleared">0</strong></div>
+              <div class="hud-stat"><span>Time</span><strong><span id="panic-time">20</span>s</strong></div>
+              <div class="hud-overload panic-pace">
+                <div><span>Incoming</span><strong id="panic-pace-text">Steady</strong></div>
+                <progress id="panic-pace" max="100" value="0">Steady pace</progress>
+              </div>
+              <button class="arcade-action arcade-action-small" type="button" data-pause-game>Pause <span aria-hidden="true">Ⅱ</span></button>
+            </div>
+
+            <div class="panic-playfield" id="panic-playfield">
+              <div class="panic-site" aria-hidden="true">
+                <div class="panic-site-nav"><i></i><i></i><i></i><i></i></div>
+                <div class="panic-site-hero">
+                  <span>Almost useful</span>
+                  <strong>The page you actually came to see.</strong>
+                  <i></i>
+                </div>
+                <div class="panic-site-cards"><i></i><i></i><i></i></div>
+              </div>
+              <div class="panic-live-status visually-hidden" id="panic-live-status" aria-live="polite"></div>
+              <div class="pause-panel" data-pause-panel hidden>
+                <div>
+                  <p class="arcade-kicker">Game paused</p>
+                  <h3>A rare moment of calm.</h3>
+                  <div class="pause-actions">
+                    <button class="arcade-action arcade-action-primary" type="button" data-resume-game>Resume <span aria-hidden="true">▶</span></button>
+                    <button class="arcade-action arcade-action-quiet" type="button" data-exit-game>Exit arcade</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="arcade-game-view arcade-result" data-arcade-screen="result" aria-live="polite" hidden>
+            <p class="arcade-kicker" id="panic-result-kicker">20 seconds complete</p>
+            <h2 id="panic-result-title">A brief moment of calm.</h2>
+            <p class="result-copy" id="panic-result-copy">You removed the interruptions. The page should never have made that a competitive skill.</p>
+            <div class="result-scoreboard">
+              <div><span>Final score</span><strong id="panic-final-score">0000</strong></div>
+              <div><span>Personal best</span><strong id="panic-best-score">0000</strong></div>
+              <div><span>Pop-ups closed</span><strong id="panic-final-cleared">0</strong></div>
+            </div>
+            <div class="result-actions">
+              <button class="arcade-action arcade-action-primary" type="button" data-play-again>Play again <span aria-hidden="true">↻</span></button>
+              <button class="arcade-action" type="button" data-choose-game>Choose another game</button>
+              <button class="arcade-action arcade-action-quiet" type="button" data-exit-game>Exit arcade</button>
+            </div>
+          </section>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="arcade-dialog contrast-dialog" id="contrast-dialog" aria-labelledby="contrast-screen-title">
+      <div class="arcade-cabinet">
+        <header class="arcade-game-header">
+          <div class="arcade-game-brand" aria-label="UX Arcade, Contrast Target">
+            <span>UX Arcade</span>
+            <strong>Contrast Target</strong>
+          </div>
+          <div class="arcade-game-header-actions">
+            <button class="arcade-icon-button" type="button" data-sound-toggle aria-pressed="false" aria-label="Sound is off. Turn sound on.">
+              <span aria-hidden="true">♪</span>
+              <span data-sound-label>Sound: off</span>
+            </button>
+            <button class="arcade-icon-button" type="button" data-contrast-exit>
+              Exit arcade <span aria-hidden="true">×</span>
+            </button>
+          </div>
+        </header>
+
+        <div class="arcade-screen contrast-screen">
+          <section class="arcade-game-view arcade-instructions" data-contrast-screen="instructions">
+            <div class="instruction-art contrast-instruction-art" role="img" aria-label="Pixel-art shooting range with high and low contrast targets"></div>
+            <div class="instruction-copy">
+              <p class="arcade-kicker">Game 02 · Accessibility under pressure</p>
+              <h2 id="contrast-screen-title">Contrast Target</h2>
+              <p class="instruction-lead">Shoot as many targets as you can in 30 seconds.</p>
+              <ul class="instruction-list">
+                <li>Large, clear targets score less. Small, low-contrast targets score more.</li>
+                <li>The website gets busier and targets disappear faster.</li>
+              </ul>
+              <p class="contrast-access-note"><strong>Accessibility note:</strong> low contrast is confined to the shooting range. Scores, controls and feedback remain readable, and keyboard aiming includes directional announcements.</p>
+              <div class="game-controls" aria-label="Game controls">
+                <span><strong>Desktop</strong> Click targets, or aim with arrows / WASD and press <kbd>Space</kbd></span>
+                <span><strong>Mobile</strong> Tap targets</span>
+                <span><kbd>P</kbd> pause</span>
+              </div>
+              <div class="instruction-actions">
+                <button class="arcade-action arcade-action-primary" type="button" data-contrast-start>Start game <span aria-hidden="true">▶</span></button>
+                <button class="arcade-action arcade-action-quiet" type="button" data-contrast-exit>Exit arcade</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="arcade-game-view arcade-playing contrast-playing" data-contrast-screen="playing" aria-labelledby="contrast-playing-title" hidden>
+            <h2 class="visually-hidden" id="contrast-playing-title">Contrast Target in progress</h2>
+            <div class="game-hud contrast-hud">
+              <div class="hud-stat"><span>Score</span><strong id="contrast-score">0000</strong></div>
+              <div class="hud-stat"><span>Hits</span><strong id="contrast-round">0</strong></div>
+              <div class="hud-stat"><span>Streak</span><strong id="contrast-streak">0</strong></div>
+              <div class="hud-overload contrast-timer">
+                <div><span>Time</span><strong id="contrast-time">30s</strong></div>
+                <progress id="contrast-timer" max="30000" value="30000">30 seconds remaining</progress>
+              </div>
+              <button class="arcade-action arcade-action-small" type="button" data-contrast-pause>Pause <span aria-hidden="true">Ⅱ</span></button>
+            </div>
+
+            <div class="contrast-playfield contrast-shooter" id="contrast-playfield">
+              <div class="contrast-range-heading">
+                <div>
+                  <span>Contrast shooting range</span>
+                  <strong id="contrast-phase">Clear targets</strong>
+                </div>
+                <ul class="contrast-value-legend" aria-label="Target scoring">
+                  <li><i class="is-clear" aria-hidden="true"></i>Clear · 50</li>
+                  <li><i class="is-faint" aria-hidden="true"></i>Faint · 220</li>
+                  <li><i class="is-vanishing" aria-hidden="true"></i>Vanishing · 550</li>
+                </ul>
+              </div>
+
+              <div class="contrast-target-zone" id="contrast-target-zone" tabindex="0" aria-describedby="contrast-range-help">
+                <p class="visually-hidden" id="contrast-range-help">Use the arrow keys to move the sight. Press Space to fire. Higher-value target directions and scores are announced as they appear.</p>
+                <div class="contrast-pixel-site" aria-hidden="true">
+                  <div class="contrast-site-nav"><b>NOISY</b><i></i><i></i><i></i><button type="button" tabindex="-1">BUY</button></div>
+                  <div class="contrast-site-hero"><small>Limited offer, probably</small><strong>EVERYTHING<br>YOU NEED*</strong><span>*plus several things you do not</span><button type="button" tabindex="-1">DO THE THING</button></div>
+                  <div class="contrast-site-promo"><span>88%</span><strong>MORE<br>CONTENT</strong><i></i></div>
+                  <div class="contrast-site-card is-one"><i></i><strong>Latest news</strong><span></span><span></span></div>
+                  <div class="contrast-site-card is-two"><b>NEW</b><strong>Popular things</strong><span></span><span></span></div>
+                  <div class="contrast-site-card is-three"><strong>Join the list</strong><i class="contrast-fake-input"></i><button type="button" tabindex="-1">YES</button></div>
+                  <div class="contrast-site-ticker">SALE · UPDATE · COOKIE · CHAT · FEEDBACK · SALE ·</div>
+                </div>
+                <div class="contrast-target-layer" id="contrast-target-layer" aria-hidden="true"></div>
+                <div class="contrast-crosshair" id="contrast-crosshair" aria-hidden="true"><i></i></div>
+                <div class="contrast-shot-flash" id="contrast-shot-flash" aria-hidden="true"></div>
+              </div>
+
+              <div class="contrast-shot-feedback" aria-live="polite">
+                <span class="contrast-wcag-badge" id="contrast-wcag-badge">UI contrast: waiting</span>
+                <p>Last target <strong id="contrast-ratio">Not yet</strong></p>
+                <p class="contrast-micro-feedback" id="contrast-micro-feedback" role="status">Aim for a target.</p>
+              </div>
+
+              <div class="pause-panel" data-contrast-pause-panel hidden>
+                <div>
+                  <p class="arcade-kicker">Game paused</p>
+                  <h3>The contrast can wait.</h3>
+                  <div class="pause-actions">
+                    <button class="arcade-action arcade-action-primary" type="button" data-contrast-resume>Resume <span aria-hidden="true">▶</span></button>
+                    <button class="arcade-action arcade-action-quiet" type="button" data-contrast-exit>Exit arcade</button>
+                  </div>
+                </div>
+              </div>
+              <div class="visually-hidden" id="contrast-live-status" aria-live="polite"></div>
+            </div>
+          </section>
+
+          <section class="arcade-game-view arcade-result contrast-result" data-contrast-screen="result" aria-live="polite" hidden>
+            <p class="arcade-kicker" id="contrast-result-kicker">30 seconds complete</p>
+            <h2 id="contrast-result-title">A difficult target is still a design decision.</h2>
+            <p class="result-copy" id="contrast-result-copy">The interface chose to make those targets hard to see. Missing one was not a personal failure.</p>
+            <div class="result-scoreboard">
+              <div><span>Final score</span><strong id="contrast-final-score">0000</strong></div>
+              <div><span>Personal best</span><strong id="contrast-best-score">0000</strong></div>
+              <div><span>Targets hit</span><strong id="contrast-final-matched">0</strong></div>
+            </div>
+            <div class="result-actions">
+              <button class="arcade-action arcade-action-primary" type="button" data-contrast-play-again>Play again <span aria-hidden="true">↻</span></button>
+              <button class="arcade-action" type="button" data-contrast-choose>Choose another game</button>
+              <button class="arcade-action arcade-action-quiet" type="button" data-contrast-exit>Exit arcade</button>
+            </div>
+          </section>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="arcade-dialog menu-dialog" id="menu-dialog" aria-labelledby="menu-screen-title">
+      <div class="arcade-cabinet">
+        <header class="arcade-game-header">
+          <div class="arcade-game-brand" aria-label="UX Arcade, Mega Menu Mayhem">
+            <span>UX Arcade</span>
+            <strong>Mega Menu Mayhem</strong>
+          </div>
+          <div class="arcade-game-header-actions">
+            <button class="arcade-icon-button" type="button" data-sound-toggle aria-pressed="false" aria-label="Sound is off. Turn sound on.">
+              <span aria-hidden="true">♪</span>
+              <span data-sound-label>Sound: off</span>
+            </button>
+            <button class="arcade-icon-button" type="button" data-menu-exit>
+              Exit arcade <span aria-hidden="true">×</span>
+            </button>
+          </div>
+        </header>
+
+        <div class="arcade-screen menu-screen">
+          <section class="arcade-game-view arcade-instructions" data-menu-screen="instructions">
+            <div class="instruction-art menu-instruction-art" role="img" aria-label="Pixel-art maze made from a chaotic website mega menu"></div>
+            <div class="instruction-copy">
+              <p class="arcade-kicker">Game 03 · Navigation under pressure</p>
+              <h2 id="menu-screen-title">Mega Menu Mayhem</h2>
+              <p class="instruction-lead">Find as many destinations as you can in 30 seconds.</p>
+              <ul class="instruction-list">
+                <li>Read the task and select the link that best matches it.</li>
+                <li>A wrong answer costs points and two seconds.</li>
+              </ul>
+              <div class="game-controls" aria-label="Game controls">
+                <span><strong>Desktop</strong> Click, or use <kbd>Tab</kbd> / arrows + <kbd>Enter</kbd></span>
+                <span><strong>Mobile</strong> Tap a link</span>
+                <span><kbd>P</kbd> pause</span>
+              </div>
+              <div class="instruction-actions">
+                <button class="arcade-action arcade-action-primary" type="button" data-menu-start>Start game <span aria-hidden="true">▶</span></button>
+                <button class="arcade-action arcade-action-quiet" type="button" data-menu-exit>Exit arcade</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="arcade-game-view arcade-playing menu-playing" data-menu-screen="playing" aria-labelledby="menu-playing-title" hidden>
+            <h2 class="visually-hidden" id="menu-playing-title">Mega Menu Mayhem in progress</h2>
+            <div class="game-hud menu-hud">
+              <div class="hud-stat"><span>Score</span><strong id="menu-score">0000</strong></div>
+              <div class="hud-stat"><span>Found</span><strong id="menu-round">0</strong></div>
+              <div class="hud-stat"><span>Streak</span><strong id="menu-streak">0</strong></div>
+              <div class="hud-overload menu-timer">
+                <div><span>Time</span><strong id="menu-time">30s</strong></div>
+                <progress id="menu-time-progress" max="30000" value="30000">30 seconds remaining</progress>
+              </div>
+              <button class="arcade-action arcade-action-small" type="button" data-menu-pause>Pause <span aria-hidden="true">Ⅱ</span></button>
+            </div>
+
+            <div class="menu-playfield">
+              <div class="menu-taskbar">
+                <div>
+                  <span>Current task</span>
+                  <h3 id="menu-task" tabindex="-1">Find running shoes.</h3>
+                </div>
+                <strong class="menu-phase" id="menu-phase">Clear labels</strong>
+              </div>
+
+              <div class="menu-browser" id="menu-browser">
+                <div class="menu-browser-chrome" aria-hidden="true">
+                  <span class="menu-browser-dots"><i></i><i></i><i></i></span>
+                  <strong>PartlyUseful.shop</strong>
+                  <span>Basket (0)</span>
+                </div>
+                <div class="menu-navigation-label">
+                  <span>Primary navigation</span>
+                  <strong id="menu-feedback-line" role="status" aria-live="polite">The answer is in here somewhere.</strong>
+                </div>
+                <div class="menu-category-grid" id="menu-category-grid" role="navigation" aria-label="Website mega menu"></div>
+              </div>
+
+              <div class="pause-panel" data-menu-pause-panel hidden>
+                <div>
+                  <p class="arcade-kicker">Game paused</p>
+                  <h3>The menu can wait.</h3>
+                  <div class="pause-actions">
+                    <button class="arcade-action arcade-action-primary" type="button" data-menu-resume>Resume <span aria-hidden="true">▶</span></button>
+                    <button class="arcade-action arcade-action-quiet" type="button" data-menu-exit>Exit arcade</button>
+                  </div>
+                </div>
+              </div>
+              <div class="visually-hidden" id="menu-live-status" aria-live="polite"></div>
+            </div>
+          </section>
+
+          <section class="arcade-game-view arcade-result menu-result" data-menu-screen="result" aria-live="polite" hidden>
+            <p class="arcade-kicker" id="menu-result-kicker">30 seconds complete</p>
+            <h2 id="menu-result-title">You found the useful route.</h2>
+            <p class="result-copy" id="menu-result-copy">Clear information architecture should make this considerably less exciting.</p>
+            <div class="result-scoreboard">
+              <div><span>Final score</span><strong id="menu-final-score">0000</strong></div>
+              <div><span>Personal best</span><strong id="menu-best-score">0000</strong></div>
+              <div><span>Destinations found</span><strong id="menu-final-correct">0</strong></div>
+            </div>
+            <div class="result-actions">
+              <button class="arcade-action arcade-action-primary" type="button" data-menu-play-again>Play again <span aria-hidden="true">↻</span></button>
+              <button class="arcade-action" type="button" data-menu-choose>Choose another game</button>
+              <button class="arcade-action arcade-action-quiet" type="button" data-menu-exit>Exit arcade</button>
+            </div>
+          </section>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="arcade-dialog scope-dialog" id="scope-dialog" aria-labelledby="scope-screen-title">
+      <div class="arcade-cabinet">
+        <header class="arcade-game-header">
+          <div class="arcade-game-brand" aria-label="UX Arcade, Scope Invaders">
+            <span>UX Arcade</span>
+            <strong>Scope Invaders</strong>
+          </div>
+          <div class="arcade-game-header-actions">
+            <button class="arcade-icon-button" type="button" data-sound-toggle aria-pressed="false" aria-label="Sound is off. Turn sound on.">
+              <span aria-hidden="true">♪</span>
+              <span data-sound-label>Sound: off</span>
+            </button>
+            <button class="arcade-icon-button" type="button" data-scope-exit>
+              Exit arcade <span aria-hidden="true">×</span>
+            </button>
+          </div>
+        </header>
+
+        <div class="arcade-screen scope-screen">
+          <section class="arcade-game-view arcade-instructions" data-scope-screen="instructions">
+            <div class="instruction-art scope-instruction-art" role="img" aria-label="Pixel-art product shield defending against descending feature requests"></div>
+            <div class="instruction-copy">
+              <p class="arcade-kicker">Game 04 · Product judgement under fire</p>
+              <h2 id="scope-screen-title">Scope Invaders</h2>
+              <p class="instruction-lead">Defend the product for 45 seconds. Shoot weak scope and let useful ideas through.</p>
+              <ul class="instruction-list">
+                <li>Shoot opinion-led requests. Let evidence-backed improvements reach the product.</li>
+              </ul>
+              <div class="game-controls" aria-label="Game controls">
+                <span><strong>Desktop</strong> Drag the ship or use arrows / A-D. Press <kbd>Space</kbd> to fire</span>
+                <span><strong>Mobile</strong> Use the move and Fire buttons</span>
+                <span><kbd>P</kbd> pause</span>
+              </div>
+              <div class="instruction-actions">
+                <button class="arcade-action arcade-action-primary" type="button" data-scope-start>Start game <span aria-hidden="true">▶</span></button>
+                <button class="arcade-action arcade-action-quiet" type="button" data-scope-exit>Exit arcade</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="arcade-game-view arcade-playing scope-playing" data-scope-screen="playing" aria-labelledby="scope-playing-title" hidden>
+            <h2 class="visually-hidden" id="scope-playing-title">Scope Invaders in progress</h2>
+            <div class="game-hud scope-hud">
+              <div class="hud-stat"><span>Score</span><strong id="scope-score">0000</strong></div>
+              <div class="hud-stat"><span>Stopped</span><strong id="scope-stopped">0</strong></div>
+              <div class="hud-stat"><span>Shield</span><strong id="scope-health-text">4/4</strong></div>
+              <div class="hud-overload scope-timer">
+                <div><span>Time</span><strong id="scope-time">45s</strong></div>
+                <progress id="scope-time-progress" max="45000" value="45000">45 seconds remaining</progress>
+              </div>
+              <button class="arcade-action arcade-action-small" type="button" data-scope-pause>Pause <span aria-hidden="true">Ⅱ</span></button>
+            </div>
+
+            <div class="scope-playfield scope-shooter" id="scope-playfield" tabindex="0" aria-describedby="scope-play-help">
+              <p class="visually-hidden" id="scope-play-help">Move with Left and Right or A and D. Press Space to shoot unproven requests. Let evidence-backed ideas reach the product. Press P to pause.</p>
+              <div class="scope-field-status">
+                <span>Product goal</span>
+                <strong>Keep the journey useful and easy to complete.</strong>
+                <em id="scope-field-message" role="status" aria-live="polite">Incoming requests</em>
+              </div>
+
+              <div class="scope-flight-zone" id="scope-flight-zone" aria-hidden="true">
+                <div class="scope-stars" aria-hidden="true"></div>
+                <div class="scope-lanes" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+                <div class="scope-request-layer" id="scope-request-layer"></div>
+                <div class="scope-projectile-layer" id="scope-projectile-layer"></div>
+                <div class="scope-ship" id="scope-ship"><i></i><span>Product</span></div>
+              </div>
+
+              <div class="scope-touch-controls" data-scope-touch-controls aria-label="Touch game controls">
+                <div>
+                  <button type="button" data-scope-control="left" aria-label="Move left">←</button>
+                  <button type="button" data-scope-control="right" aria-label="Move right">→</button>
+                </div>
+                <button class="scope-fire-control" type="button" data-scope-control="fire">Fire <span aria-hidden="true">●</span></button>
+              </div>
+
+              <div class="pause-panel" data-scope-pause-panel hidden>
+                <div>
+                  <p class="arcade-kicker">Game paused</p>
+                  <h3>The backlog can wait.</h3>
+                  <div class="pause-actions">
+                    <button class="arcade-action arcade-action-primary" type="button" data-scope-resume>Resume <span aria-hidden="true">▶</span></button>
+                    <button class="arcade-action arcade-action-quiet" type="button" data-scope-exit>Exit arcade</button>
+                  </div>
+                </div>
+              </div>
+              <div class="visually-hidden" id="scope-live-status" aria-live="polite"></div>
+            </div>
+          </section>
+
+          <section class="arcade-game-view arcade-result scope-result" data-scope-screen="result" aria-live="polite" hidden>
+            <p class="arcade-kicker" id="scope-result-kicker">45 seconds complete</p>
+            <h2 id="scope-result-title">The product stayed focused.</h2>
+            <p class="result-copy" id="scope-result-copy">You challenged weak scope and made room for work that solves a real problem.</p>
+            <div class="result-scoreboard">
+              <div><span>Final score</span><strong id="scope-final-score">0000</strong></div>
+              <div><span>Personal best</span><strong id="scope-best-score">0000</strong></div>
+              <div><span>Weak scope stopped</span><strong id="scope-final-correct">0</strong></div>
+            </div>
+            <div class="result-actions">
+              <button class="arcade-action arcade-action-primary" type="button" data-scope-play-again>Play again <span aria-hidden="true">↻</span></button>
+              <button class="arcade-action" type="button" data-scope-choose>Choose another game</button>
+              <button class="arcade-action arcade-action-quiet" type="button" data-scope-exit>Exit arcade</button>
+            </div>
+          </section>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="arcade-dialog captcha-dialog" id="captcha-dialog" aria-labelledby="captcha-screen-title">
+      <div class="arcade-cabinet">
+        <header class="arcade-game-header">
+          <div class="arcade-game-brand" aria-label="UX Arcade, Are You Human?">
+            <span>UX Arcade</span>
+            <strong>Are You Human?</strong>
+          </div>
+          <div class="arcade-game-header-actions">
+            <button class="arcade-icon-button" type="button" data-sound-toggle aria-pressed="false" aria-label="Sound is off. Turn sound on.">
+              <span aria-hidden="true">♪</span>
+              <span data-sound-label>Sound: off</span>
+            </button>
+            <button class="arcade-icon-button" type="button" data-captcha-exit>
+              Exit arcade <span aria-hidden="true">×</span>
+            </button>
+          </div>
+        </header>
+
+        <div class="arcade-screen captcha-screen">
+          <section class="arcade-game-view arcade-instructions" data-captcha-screen="instructions">
+            <div class="instruction-art captcha-instruction-art" role="img" aria-label="Pixel-art runner crossing platforms made from CAPTCHA image tiles"></div>
+            <div class="instruction-copy">
+              <p class="arcade-kicker">Game 05 · Friction with a finish line</p>
+              <h2 id="captcha-screen-title">Are You Human?</h2>
+              <p class="instruction-lead">Reach the website by crossing five obstacles and passing five CAPTCHA checkpoints.</p>
+              <ul class="instruction-list">
+                <li>Cross each obstacle, then solve the CAPTCHA that blocks the route.</li>
+                <li>Every checkpoint is a puzzle. They become increasingly unreasonable.</li>
+              </ul>
+              <div class="game-controls" aria-label="Game controls">
+                <span><strong>Desktop</strong> Move with arrows / A-D or the buttons. Jump with <kbd>Space</kbd>, <kbd>↑</kbd> or the Jump button</span>
+                <span><strong>Mobile</strong> Use the move and Jump buttons</span>
+                <span><strong>Checkpoints</strong> Click or tap, or use <kbd>Tab</kbd> + <kbd>Enter</kbd></span>
+                <span><kbd>P</kbd> pause</span>
+              </div>
+              <div class="instruction-actions">
+                <button class="arcade-action arcade-action-primary" type="button" data-captcha-start>Start game <span aria-hidden="true">▶</span></button>
+                <button class="arcade-action arcade-action-quiet" type="button" data-captcha-exit>Exit arcade</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="arcade-game-view arcade-playing captcha-playing" data-captcha-screen="playing" aria-labelledby="captcha-playing-title" hidden>
+            <h2 class="visually-hidden" id="captcha-playing-title">Are You Human? in progress</h2>
+            <div class="game-hud captcha-hud">
+              <div class="hud-stat"><span>Score</span><strong id="captcha-score">0000</strong></div>
+              <div class="hud-stat"><span>Checks</span><strong><span id="captcha-checks">0</span>/5</strong></div>
+              <div class="hud-stat"><span>Obstacles</span><strong><span id="captcha-obstacles">0</span>/5</strong></div>
+              <div class="hud-stat"><span>Patience</span><strong id="captcha-patience">3/3</strong></div>
+              <div class="hud-overload captcha-progress">
+                <div><span>Website progress</span><strong><span id="captcha-progress-text">0%</span> · <span id="captcha-time">90s</span></strong></div>
+                <progress id="captcha-progress" max="100" value="0">0% complete</progress>
+              </div>
+              <button class="arcade-action arcade-action-small" type="button" data-captcha-pause>Pause <span aria-hidden="true">Ⅱ</span></button>
+            </div>
+
+            <div class="captcha-playfield" id="captcha-playfield" tabindex="0" aria-describedby="captcha-play-help">
+              <p class="visually-hidden" id="captcha-play-help">Use Left and Right or A and D to move. Use Space, Up or W to jump. Press P to pause.</p>
+
+              <div class="captcha-mission">
+                <span>Next checkpoint</span>
+                <strong id="captcha-mission-text">Jump the pop-up, then find the human hidden among robots.</strong>
+              </div>
+
+              <div class="captcha-world-viewport" id="captcha-world-viewport" aria-hidden="true">
+                <div class="captcha-world" id="captcha-world">
+                  <div class="captcha-platform-layer" id="captcha-platform-layer"></div>
+                  <div class="captcha-obstacle-layer" id="captcha-obstacle-layer"></div>
+                  <div class="captcha-coin-layer" id="captcha-coin-layer"></div>
+                  <div class="captcha-gate-layer" id="captcha-gate-layer"></div>
+                  <div class="captcha-check-layer" id="captcha-check-layer"></div>
+                  <div class="captcha-player" id="captcha-player"><i></i></div>
+                  <div class="captcha-finish"><span>Website</span><strong>WWW</strong></div>
+                </div>
+              </div>
+
+              <div class="captcha-touch-controls" data-captcha-touch-controls aria-label="Touch game controls">
+                <div>
+                  <button type="button" data-captcha-control="left" aria-label="Move left">←</button>
+                  <button type="button" data-captcha-control="right" aria-label="Move right">→</button>
+                </div>
+                <button class="captcha-jump-control" type="button" data-captcha-control="jump">Jump <span aria-hidden="true">↑</span></button>
+              </div>
+
+              <section class="human-checkpoint-overlay" id="human-checkpoint" data-human-checkpoint role="dialog" aria-labelledby="human-checkpoint-title" hidden>
+                <div class="human-checkpoint-window">
+                  <div class="human-checkpoint-heading">
+                    <span id="human-checkpoint-stage">Checkpoint 1 of 5</span>
+                    <strong>Human verification</strong>
+                  </div>
+                  <div class="human-checkpoint-copy">
+                    <h3 id="human-checkpoint-title">Find the human.</h3>
+                    <p id="human-checkpoint-intro">The portraits are less distinct than they need to be.</p>
+                  </div>
+                  <div class="human-checkpoint-body" id="human-checkpoint-body"></div>
+                  <p class="human-checkpoint-feedback" id="human-checkpoint-feedback" role="status" aria-live="polite"></p>
+                </div>
+              </section>
+
+              <div class="pause-panel" data-captcha-pause-panel hidden>
+                <div>
+                  <p class="arcade-kicker">Game paused</p>
+                  <h3>Humanity can wait.</h3>
+                  <div class="pause-actions">
+                    <button class="arcade-action arcade-action-primary" type="button" data-captcha-resume>Resume <span aria-hidden="true">▶</span></button>
+                    <button class="arcade-action arcade-action-quiet" type="button" data-captcha-exit>Exit arcade</button>
+                  </div>
+                </div>
+              </div>
+              <div class="visually-hidden" id="captcha-live-status" aria-live="polite"></div>
+            </div>
+          </section>
+
+          <section class="arcade-game-view arcade-result captcha-result" data-captcha-screen="result" aria-live="polite" hidden>
+            <p class="arcade-kicker" id="captcha-result-kicker">Level complete</p>
+            <h2 id="captcha-result-title">Apparently, yes.</h2>
+            <p class="result-copy captcha-result-copy" id="captcha-result-copy">Your session has expired. Please try again.</p>
+            <div class="result-scoreboard">
+              <div><span>Final score</span><strong id="captcha-final-score">0000</strong></div>
+              <div><span>Personal best</span><strong id="captcha-best-score">0000</strong></div>
+              <div><span>Checks passed</span><strong id="captcha-final-checks">0/5</strong></div>
+            </div>
+            <div class="result-actions">
+              <button class="arcade-action arcade-action-primary" type="button" data-captcha-play-again>Play again <span aria-hidden="true">↻</span></button>
+              <button class="arcade-action" type="button" data-captcha-choose>Choose another game</button>
+              <button class="arcade-action arcade-action-quiet" type="button" data-captcha-exit>Exit arcade</button>
+            </div>
+          </section>
+        </div>
+      </div>
+    </dialog>
+  </body>
+</html>

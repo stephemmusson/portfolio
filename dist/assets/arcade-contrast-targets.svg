@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="470" viewBox="0 0 560 470" role="img" aria-labelledby="title description" shape-rendering="crispEdges">
+  <title id="title">Pixel-art contrast shooting range</title>
+  <desc id="description">A bright crosshair aims across targets that become smaller and less visible.</desc>
+  <rect width="560" height="470" fill="#0d1119"/>
+  <rect x="12" y="12" width="536" height="446" fill="#191c22" stroke="#f7f7f3" stroke-width="6"/>
+  <path d="M16 86H544M16 164H544M16 242H544M16 320H544M96 16V454M176 16V454M256 16V454M336 16V454M416 16V454M496 16V454" stroke="#292d36" stroke-width="3"/>
+  <rect x="34" y="34" width="250" height="38" fill="#5d67f6" stroke="#f7f7f3" stroke-width="4"/>
+  <text x="48" y="60" fill="#f2ff3d" font-family="monospace" font-size="20" font-weight="900">CONTRAST RANGE</text>
+
+  <g transform="translate(104 142)">
+    <rect x="-54" y="-54" width="108" height="108" fill="#f7f7f3"/>
+    <rect x="-39" y="-39" width="78" height="78" fill="#5d67f6"/>
+    <rect x="-24" y="-24" width="48" height="48" fill="#f7f7f3"/>
+    <rect x="-9" y="-9" width="18" height="18" fill="#ff70ad"/>
+  </g>
+  <text x="68" y="218" fill="#f7f7f3" font-family="monospace" font-size="16" font-weight="900">+50</text>
+
+  <g transform="translate(284 176)" opacity=".66">
+    <rect x="-42" y="-42" width="84" height="84" fill="#b2b4b7"/>
+    <rect x="-29" y="-29" width="58" height="58" fill="#343840"/>
+    <rect x="-16" y="-16" width="32" height="32" fill="#92959a"/>
+    <rect x="-6" y="-6" width="12" height="12" fill="#343840"/>
+  </g>
+  <text x="252" y="236" fill="#b2b4b7" font-family="monospace" font-size="16" font-weight="900">+180</text>
+
+  <g transform="translate(446 140)" opacity=".35">
+    <rect x="-27" y="-27" width="54" height="54" fill="#747880"/>
+    <rect x="-18" y="-18" width="36" height="36" fill="#292d35"/>
+    <rect x="-9" y="-9" width="18" height="18" fill="#696d75"/>
+  </g>
+  <text x="417" y="187" fill="#747880" font-family="monospace" font-size="14" font-weight="900">+450</text>
+
+  <g stroke="#f2ff3d" stroke-width="6" fill="none">
+    <rect x="375" y="269" width="86" height="86"/>
+    <path d="M418 244V286M418 338V380M350 312H392M444 312H486"/>
+  </g>
+  <rect x="408" y="302" width="20" height="20" fill="#ff70ad" stroke="#0d1119" stroke-width="4"/>
+  <g opacity=".26" transform="translate(418 312)">
+    <rect x="-17" y="-17" width="34" height="34" fill="#686c74"/>
+    <rect x="-10" y="-10" width="20" height="20" fill="#252a32"/>
+  </g>
+
+  <rect x="34" y="400" width="492" height="34" fill="#0d1119" stroke="#f7f7f3" stroke-width="4"/>
+  <rect x="42" y="408" width="118" height="18" fill="#f2ff3d"/>
+  <rect x="168" y="408" width="88" height="18" fill="#61c4ff"/>
+  <rect x="264" y="408" width="54" height="18" fill="#ff70ad"/>
+  <rect x="326" y="408" width="26" height="18" fill="#4c515a"/>
+</svg>

@@ -1,0 +1,51 @@
+name: Deploy to Site5
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: site5-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Check out portfolio
+        uses: actions/checkout@v4
+
+      - name: Check deployment settings
+        env:
+          SITE5_SERVER: ${{ secrets.SITE5_SERVER }}
+          SITE5_USERNAME: ${{ secrets.SITE5_USERNAME }}
+          SITE5_PASSWORD: ${{ secrets.SITE5_PASSWORD }}
+          SITE5_REMOTE_DIR: ${{ secrets.SITE5_REMOTE_DIR }}
+        run: |
+          test -n "$SITE5_SERVER"
+          test -n "$SITE5_USERNAME"
+          test -n "$SITE5_PASSWORD"
+          test -n "$SITE5_REMOTE_DIR"
+
+      - name: Install secure transfer client
+        run: sudo apt-get update && sudo apt-get install --yes lftp
+
+      - name: Upload site
+        env:
+          SITE5_SERVER: ${{ secrets.SITE5_SERVER }}
+          SITE5_USERNAME: ${{ secrets.SITE5_USERNAME }}
+          SITE5_PASSWORD: ${{ secrets.SITE5_PASSWORD }}
+          SITE5_REMOTE_DIR: ${{ secrets.SITE5_REMOTE_DIR }}
+        run: |
+          lftp <<LFTP
+          set ftp:ssl-force true
+          set ftp:ssl-protect-data true
+          set ssl:verify-certificate true
+          open "ftps://$SITE5_SERVER"
+          user "$SITE5_USERNAME" "$SITE5_PASSWORD"
+          mirror --reverse --verbose --only-newer --exclude-glob .openai/** dist/ "$SITE5_REMOTE_DIR"
+          bye
+          LFTP
