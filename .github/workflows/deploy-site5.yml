@@ -44,7 +44,7 @@ jobs:
           set ftp:ssl-force true
           set ftp:ssl-protect-data true
           set ssl:verify-certificate true
-          open "ftps://$SITE5_SERVER"
+          open --port 21 "ftp://$SITE5_SERVER"
           user "$SITE5_USERNAME" "$SITE5_PASSWORD"
           mirror --reverse --verbose --only-newer --exclude-glob .openai/** dist/ "$SITE5_REMOTE_DIR"
           bye
