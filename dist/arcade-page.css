@@ -82,12 +82,7 @@
   grid-template-rows: auto 1fr;
   overflow: hidden;
   padding: clamp(0.75rem, 2vw, 1.5rem);
-  background:
-    radial-gradient(circle at 50% 46%, rgba(93, 103, 246, 0.35), transparent 34%),
-    linear-gradient(90deg, rgba(242, 255, 61, 0.045) 1px, transparent 1px),
-    linear-gradient(rgba(242, 255, 61, 0.045) 1px, transparent 1px),
-    #090c12;
-  background-size: auto, 1.5rem 1.5rem, 1.5rem 1.5rem, auto;
+  background: #050817;
   color: var(--paper);
   isolation: isolate;
   transition: opacity 260ms steps(4, end), transform 260ms steps(4, end);
@@ -160,71 +155,17 @@
 .arcade-opening-gallery {
   position: absolute;
   z-index: -1;
-  inset: 4% 2% 12%;
+  inset: -4rem -2rem -3rem;
   overflow: hidden;
-  pointer-events: none;
-}
-
-.arcade-opening-ghost {
-  position: absolute;
-  width: clamp(8rem, 18vw, 18rem);
-  aspect-ratio: 4 / 3;
-  border: 3px solid rgba(255, 255, 255, 0.16);
-  background-position: center;
-  background-size: cover;
+  background:
+    linear-gradient(180deg, rgba(5, 8, 23, 0.2), rgba(5, 8, 23, 0.04) 44%, rgba(5, 8, 23, 0.74) 86%),
+    radial-gradient(circle at 50% 48%, rgba(5, 8, 23, 0.04) 0 20%, rgba(5, 8, 23, 0.58) 58%, rgba(5, 8, 23, 0.82) 100%),
+    url("assets/ux-arcade-home-bg.png") center / cover no-repeat;
   image-rendering: pixelated;
-  opacity: 0.14;
-  filter: saturate(0.85) contrast(1.1);
-  transform: rotate(var(--ghost-rotation, 0deg));
-  animation: arcade-ghost-drift 6s var(--ghost-delay, 0s) steps(6, end) infinite;
-}
-
-.arcade-opening-ghost::after {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(9, 12, 18, 0.05), rgba(9, 12, 18, 0.72));
-  content: "";
-}
-
-.arcade-opening-ghost-popup {
-  --ghost-rotation: -5deg;
-  top: 8%;
-  left: 1%;
-  background-image: url("assets/arcade-popup-panic.png");
-}
-
-.arcade-opening-ghost-contrast {
-  --ghost-delay: -1s;
-  --ghost-rotation: 4deg;
-  top: 2%;
-  right: 2%;
-  background-image: url("assets/arcade-contrast-crash.png");
-}
-
-.arcade-opening-ghost-menu {
-  --ghost-delay: -2s;
-  --ghost-rotation: 3deg;
-  bottom: 6%;
-  left: 8%;
-  background-image: url("assets/arcade-mega-menu.png");
-}
-
-.arcade-opening-ghost-scope {
-  --ghost-delay: -3s;
-  --ghost-rotation: -4deg;
-  right: 8%;
-  bottom: 5%;
-  background-image: url("assets/arcade-scope-invaders.png");
-}
-
-.arcade-opening-ghost-human {
-  --ghost-delay: -4s;
-  top: 44%;
-  left: 50%;
-  width: clamp(7rem, 14vw, 13rem);
-  background-image: url("assets/arcade-captcha-boss.png");
-  opacity: 0.1;
-  transform: translate(-50%, -50%);
+  opacity: 0.82;
+  pointer-events: none;
+  transform: scale(1.025);
+  animation: arcade-home-drift 9s steps(8, end) infinite alternate;
 }
 
 .arcade-versus {
@@ -272,6 +213,7 @@
   display: grid;
   place-items: center;
   text-align: center;
+  filter: drop-shadow(0 0 1.25rem rgba(5, 8, 23, 0.95));
 }
 
 .arcade-opening-kicker {
@@ -351,7 +293,7 @@
 .arcade-opening-selector {
   position: relative;
   z-index: 2;
-  width: min(72rem, 94vw);
+  width: min(92rem, 96vw);
   opacity: 0;
   transform: translateY(1rem);
   animation: arcade-start-arrive 320ms 1.65s steps(4, end) forwards;
@@ -365,7 +307,7 @@
   margin-bottom: 0.6rem;
   color: var(--acid);
   font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 900;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -396,7 +338,7 @@
 
 .arcade-opening-selector-track {
   display: flex;
-  gap: 0.75rem;
+  gap: 1rem;
   overflow-x: auto;
   padding: 0.2rem 0.45rem 0.75rem 0.2rem;
   scroll-behavior: smooth;
@@ -408,15 +350,15 @@
 
 .arcade-opening-game {
   position: relative;
-  flex: 0 0 clamp(11.5rem, 22vw, 15.5rem);
-  min-height: 8.5rem;
+  flex: 0 0 clamp(17rem, 28vw, 23rem);
+  min-height: clamp(11.5rem, 24vh, 15rem);
   display: grid;
   align-content: end;
   justify-items: start;
   gap: 0.25rem;
   overflow: hidden;
-  padding: 0.8rem;
-  border: 3px solid var(--paper);
+  padding: 1.15rem;
+  border: 4px solid var(--paper);
   border-radius: 0;
   background-color: #242833;
   background-position: center;
@@ -447,19 +389,19 @@
 
 .arcade-opening-game span {
   color: var(--acid);
-  font-size: 0.65rem;
+  font-size: 0.78rem;
   font-weight: 900;
 }
 
 .arcade-opening-game strong {
   max-width: 13ch;
-  font-size: clamp(0.85rem, 1.4vw, 1.05rem);
+  font-size: clamp(1.05rem, 1.7vw, 1.35rem);
   line-height: 1.05;
 }
 
 .arcade-opening-game small {
   color: rgba(255, 255, 255, 0.75);
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   font-weight: 900;
   letter-spacing: 0.05em;
 }
@@ -480,9 +422,9 @@
 .arcade-opening-game-scope { background-image: url("assets/arcade-scope-invaders.png"); }
 .arcade-opening-game-human { background-image: url("assets/arcade-captcha-boss.png"); }
 
-@keyframes arcade-ghost-drift {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 -0.7rem; }
+@keyframes arcade-home-drift {
+  from { transform: scale(1.025) translate3d(-0.3%, 0, 0); }
+  to { transform: scale(1.055) translate3d(0.3%, -0.35%, 0); }
 }
 
 @keyframes arcade-versus-arrive {
@@ -543,11 +485,9 @@
   }
 
   .arcade-opening-gallery {
-    inset: 8% -12% 20%;
-  }
-
-  .arcade-opening-ghost {
-    opacity: 0.1;
+    inset: -2rem -8rem -2rem;
+    background-position: 50% center;
+    opacity: 0.7;
   }
 
   .arcade-opening-selector {
@@ -555,8 +495,8 @@
   }
 
   .arcade-opening-game {
-    flex-basis: min(72vw, 14rem);
-    min-height: 7.6rem;
+    flex-basis: min(84vw, 19rem);
+    min-height: 12rem;
   }
 
   .arcade-pixel-burst i:nth-child(1) { --burst-x: 9rem; }
@@ -567,6 +507,25 @@
   .arcade-pixel-burst i:nth-child(6) { --burst-x: -6.5rem; --burst-y: 5rem; }
   .arcade-pixel-burst i:nth-child(7) { --burst-x: 6.5rem; --burst-y: -5rem; }
   .arcade-pixel-burst i:nth-child(8) { --burst-x: -6.5rem; --burst-y: -5rem; }
+}
+
+@media (max-height: 820px) and (min-width: 761px) {
+  .arcade-opening-stage {
+    padding-block: 0.75rem;
+  }
+
+  .arcade-opening h1 {
+    font-size: clamp(4rem, 14vh, 8.5rem);
+  }
+
+  .arcade-opening-title-wrap > p:last-child {
+    margin-top: 0.8rem;
+  }
+
+  .arcade-opening-game {
+    flex-basis: clamp(15rem, 25vw, 19rem);
+    min-height: 9.5rem;
+  }
 }
 
 @media (max-height: 650px) and (orientation: landscape) {
@@ -598,9 +557,13 @@
     animation: none;
   }
 
-  .arcade-pixel-burst,
-  .arcade-opening-gallery {
+  .arcade-pixel-burst {
     display: none;
+  }
+
+  .arcade-opening-gallery {
+    transform: none;
+    animation: none;
   }
 
   .arcade-opening-selector-track {
