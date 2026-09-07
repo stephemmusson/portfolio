@@ -26,7 +26,7 @@
     <script src="arcade-entry.js" defer></script>
   </head>
   <body class="arcade-page arcade-intro-active">
-    <a class="skip-link" data-arcade-skip href="#arcade-opening-title">Skip to Arcade start</a>
+    <a class="skip-link" data-arcade-skip href="#arcade-opening-selector">Skip to game selector</a>
 
     <section class="arcade-opening" data-arcade-opening aria-labelledby="arcade-opening-title">
       <div class="arcade-opening-scanlines" aria-hidden="true"></div>
@@ -38,6 +38,13 @@
         </button>
       </div>
       <div class="arcade-opening-stage">
+        <div class="arcade-opening-gallery" aria-hidden="true">
+          <i class="arcade-opening-ghost arcade-opening-ghost-popup"></i>
+          <i class="arcade-opening-ghost arcade-opening-ghost-contrast"></i>
+          <i class="arcade-opening-ghost arcade-opening-ghost-menu"></i>
+          <i class="arcade-opening-ghost arcade-opening-ghost-scope"></i>
+          <i class="arcade-opening-ghost arcade-opening-ghost-human"></i>
+        </div>
         <div class="arcade-versus" aria-hidden="true">
           <span><small>Player 1</small>Judgement</span>
           <strong>VS</strong>
@@ -49,9 +56,32 @@
           <h1 id="arcade-opening-title"><span>UX</span> Arcade</h1>
           <p>Five avoidable problems. One useful way through.</p>
         </div>
-        <button class="arcade-opening-start" type="button" data-arcade-start>
-          Start game <span aria-hidden="true">▶</span>
-        </button>
+        <div class="arcade-opening-selector" id="arcade-opening-selector" aria-label="Choose a UX Arcade game">
+          <div class="arcade-opening-selector-head">
+            <p>Choose a game</p>
+            <div class="arcade-opening-selector-arrows">
+              <button type="button" data-opening-selector-prev aria-label="Show previous game">←</button>
+              <button type="button" data-opening-selector-next aria-label="Show next game">→</button>
+            </div>
+          </div>
+          <div class="arcade-opening-selector-track" data-opening-selector-track tabindex="0">
+            <button class="arcade-opening-game arcade-opening-game-popup" type="button" data-opening-game="popup-panic">
+              <span>01</span><strong>Pop-up Panic</strong><small>Play game →</small>
+            </button>
+            <button class="arcade-opening-game arcade-opening-game-contrast" type="button" data-opening-game="contrast-crash">
+              <span>02</span><strong>Contrast Target</strong><small>Play game →</small>
+            </button>
+            <button class="arcade-opening-game arcade-opening-game-menu" type="button" data-opening-game="mega-menu-mayhem">
+              <span>03</span><strong>Mega Menu Mayhem</strong><small>Play game →</small>
+            </button>
+            <button class="arcade-opening-game arcade-opening-game-scope" type="button" data-opening-game="scope-invaders">
+              <span>04</span><strong>Scope Invaders</strong><small>Play game →</small>
+            </button>
+            <button class="arcade-opening-game arcade-opening-game-human" type="button" data-opening-game="captcha-boss">
+              <span>05</span><strong>Are You Human?</strong><small>Play game →</small>
+            </button>
+          </div>
+        </div>
       </div>
     </section>
 
