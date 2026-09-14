@@ -1,0 +1,998 @@
+/* Dedicated UX Arcade route and opening sequence. */
+
+.arcade-page {
+  background: var(--ink);
+}
+
+.arcade-page > .welcome-bar,
+.arcade-page > .site-header,
+.arcade-page main > :not(.ux-arcade),
+.arcade-page > .site-footer {
+  display: none;
+}
+
+.arcade-page .ux-arcade {
+  min-height: 100vh;
+  padding-top: 1.25rem;
+}
+
+.arcade-page-nav {
+  min-height: 3.75rem;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding: 0.65rem 0.8rem;
+  border: 3px solid var(--paper);
+  background: #10131a;
+  box-shadow: 0.35rem 0.35rem 0 var(--blue);
+  color: var(--paper);
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.arcade-page-nav > span {
+  color: var(--acid);
+  text-align: center;
+}
+
+.arcade-page-nav a,
+.arcade-page-nav button {
+  width: fit-content;
+  min-height: 2.35rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.65rem;
+  border: 2px solid var(--paper);
+  border-radius: 0;
+  background: #202b61;
+  color: var(--paper);
+  cursor: pointer;
+  font: inherit;
+  text-decoration: none;
+}
+
+.arcade-page-nav button {
+  justify-self: end;
+}
+
+.arcade-page-nav a:hover,
+.arcade-page-nav a:focus-visible,
+.arcade-page-nav button:hover,
+.arcade-page-nav button:focus-visible {
+  background: var(--acid);
+  color: var(--ink);
+}
+
+.arcade-intro-active {
+  overflow: hidden;
+}
+
+.arcade-opening {
+  position: fixed;
+  z-index: 5000;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+  background:
+    linear-gradient(180deg, rgba(2, 10, 45, 0.58), rgba(3, 14, 58, 0.45) 44%, rgba(2, 8, 38, 0.88) 88%),
+    radial-gradient(circle at 50% 48%, rgba(4, 18, 72, 0.32) 0 18%, rgba(2, 10, 46, 0.72) 62%, rgba(1, 6, 30, 0.92) 100%),
+    url("assets/ux-arcade-home-bg.png") center / cover no-repeat,
+    #050817;
+  image-rendering: pixelated;
+  color: var(--paper);
+  isolation: isolate;
+  transition: opacity 260ms steps(4, end), transform 260ms steps(4, end);
+}
+
+.arcade-opening[hidden] {
+  display: none;
+}
+
+.arcade-opening.is-leaving {
+  opacity: 0;
+  transform: scale(1.035);
+}
+
+.arcade-opening-scanlines {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent 0 4px, rgba(0, 0, 0, 0.24) 4px 6px);
+  pointer-events: none;
+}
+
+.arcade-opening-topline {
+  position: relative;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  isolation: isolate;
+}
+
+.arcade-opening-back,
+.arcade-opening-sound {
+  min-height: 2.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.75rem;
+  border: 4px solid var(--paper);
+  border-radius: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #202b61 !important;
+  background-image: none !important;
+  box-shadow: 0.28rem 0.28rem 0 var(--acid);
+  color: var(--paper);
+  cursor: pointer;
+  font: inherit;
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 0.72rem;
+  font-weight: 900;
+  line-height: 1.15;
+  text-decoration: none;
+  text-transform: uppercase;
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  backdrop-filter: none !important;
+  isolation: isolate;
+}
+
+.arcade-opening-back {
+  background-color: #f7f7f3 !important;
+  background-image: none !important;
+  color: #191c22 !important;
+}
+
+.arcade-opening-back img,
+.arcade-page-nav a img {
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+.arcade-opening-sound {
+  background-color: #5d67f6 !important;
+  background-image: none !important;
+  color: #ffffff !important;
+}
+
+.arcade-opening-back:hover,
+.arcade-opening-back:focus-visible,
+.arcade-opening-sound:hover,
+.arcade-opening-sound:focus-visible {
+  background-color: var(--acid) !important;
+  background-image: none !important;
+  color: var(--ink) !important;
+}
+
+.arcade-page .arcade-game-header .arcade-icon-button,
+.arcade-page .arcade-page-nav a,
+.arcade-page .arcade-page-nav button {
+  -webkit-appearance: none;
+  appearance: none;
+  border-color: #f7f7f3;
+  background-color: #202b61 !important;
+  background-image: none !important;
+  box-shadow: 0.22rem 0.22rem 0 #f2ff3d;
+  color: #ffffff;
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  backdrop-filter: none !important;
+}
+
+.arcade-page .arcade-game-header .arcade-icon-button:hover,
+.arcade-page .arcade-game-header .arcade-icon-button:focus-visible,
+.arcade-page .arcade-page-nav a:hover,
+.arcade-page .arcade-page-nav a:focus-visible,
+.arcade-page .arcade-page-nav button:hover,
+.arcade-page .arcade-page-nav button:focus-visible {
+  background-color: #f2ff3d !important;
+  color: #191c22 !important;
+}
+
+.arcade-opening-stage {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  place-items: center;
+  padding: clamp(1rem, 4vw, 3.5rem) 0 clamp(1rem, 4vw, 2.5rem);
+}
+
+.arcade-opening-gallery {
+  display: none;
+}
+
+.arcade-opening-title-wrap {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  filter: drop-shadow(0 0 1.25rem rgba(5, 8, 23, 0.95));
+}
+
+.arcade-title-runner {
+  position: absolute;
+  z-index: 6;
+  left: 1%;
+  bottom: 92%;
+  width: clamp(2.5rem, 5vw, 4.3rem);
+  aspect-ratio: 1;
+  opacity: 0;
+  pointer-events: none;
+  animation: arcade-stephen-title-run 5.2s 2.4s linear infinite;
+}
+
+.arcade-title-runner::before {
+  position: absolute;
+  inset: 0;
+  background: url("assets/stephen-arcade-sprite.png") 50% 0 / 300% 100% no-repeat;
+  filter: drop-shadow(0.18rem 0.18rem 0 #08143f);
+  image-rendering: pixelated;
+  content: "";
+  animation: arcade-stephen-stride 5.2s 2.4s steps(1, end) infinite;
+}
+
+@keyframes arcade-stephen-title-run {
+  0%, 8% { left: 1%; bottom: 92%; opacity: 0; transform: rotate(0); }
+  10% { opacity: 1; }
+  30% { left: 24%; bottom: 92%; opacity: 1; transform: rotate(0); }
+  38% { left: 31%; bottom: 142%; opacity: 1; transform: rotate(-7deg); }
+  46% { left: 39%; bottom: 92%; opacity: 1; transform: rotate(0); }
+  76% { left: 91%; bottom: 92%; opacity: 1; transform: rotate(0); }
+  86% { left: 105%; bottom: 148%; opacity: 1; transform: rotate(-12deg); }
+  95% { left: 119%; bottom: 22%; opacity: 1; transform: rotate(18deg); }
+  96%, 100% { left: 119%; bottom: 22%; opacity: 0; }
+}
+
+@keyframes arcade-stephen-stride {
+  0%, 9% { background-position: 0 0; }
+  10%, 14%, 20%, 26%, 48%, 54%, 60%, 66%, 72% { background-position: 50% 0; }
+  15%, 21%, 27%, 49%, 55%, 61%, 67%, 73% { background-position: 0 0; }
+  31%, 47%, 77%, 100% { background-position: 100% 0; }
+}
+
+.arcade-opening-summary {
+  max-width: 40rem;
+  margin-top: clamp(1rem, 3vw, 2rem);
+  color: rgba(255, 255, 255, 0.82);
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: clamp(0.78rem, 1.7vw, 1rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  text-shadow: 0.16rem 0.16rem 0 #202b61;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: arcade-copy-arrive 300ms 1.28s steps(4, end) forwards;
+}
+
+.arcade-opening-prompt {
+  position: relative;
+  z-index: 2;
+  top: -40px;
+  margin: clamp(1.5rem, 4vh, 3.5rem) 0 clamp(1.25rem, 3vh, 2.5rem);
+  color: var(--acid);
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: clamp(1rem, 2.5vw, 1.65rem);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  line-height: 1.15;
+  text-transform: uppercase;
+  text-align: center;
+  opacity: 0;
+  text-shadow: 0 0 0.7rem rgba(242, 255, 61, 0.72);
+  animation: arcade-insert-flash 900ms 1.3s steps(1, end) infinite;
+}
+
+.arcade-opening h1 {
+  position: relative;
+  margin: 0;
+  color: var(--paper);
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: clamp(4rem, 15vw, 13rem);
+  font-weight: 900;
+  letter-spacing: -0.12em;
+  line-height: 0.78;
+  text-transform: uppercase;
+  text-shadow:
+    0.07em 0.07em 0 var(--blue),
+    -0.045em -0.045em 0 var(--coral),
+    0.12em 0.12em 0 #000;
+  transform: scale(4.5);
+  opacity: 0;
+  animation: arcade-title-impact 620ms 720ms steps(8, end) forwards;
+}
+
+.arcade-opening h1 .arcade-opening-ux {
+  color: var(--acid);
+  animation: arcade-ux-flicker 3.8s 1.8s steps(1, end) infinite;
+}
+
+.arcade-beta-anchor {
+  position: relative;
+  color: inherit;
+}
+
+.arcade-beta-tag {
+  position: absolute;
+  right: -0.48em;
+  bottom: 88%;
+  display: block;
+  padding: 0.24em 0.4em 0.2em;
+  border: 1px solid currentColor;
+  background: var(--coral);
+  color: var(--ink);
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: clamp(0.45rem, 0.07em, 0.72rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-shadow: none;
+  text-transform: uppercase;
+  transform: translateY(0.3em) rotate(2deg);
+}
+
+.arcade-opening .arcade-beta-tag {
+  opacity: 0;
+  animation: arcade-beta-stamp 260ms 6.15s steps(3, end) forwards;
+}
+
+.arcade-intro .arcade-beta-tag {
+  right: -0.72em;
+  bottom: 88%;
+  font-size: clamp(0.45rem, 0.13em, 0.65rem);
+  transform: translateY(0.15em) rotate(2deg);
+}
+
+@keyframes arcade-beta-stamp {
+  0% {
+    opacity: 0;
+    transform: translateY(-0.9em) scale(1.7) rotate(-8deg);
+  }
+  45% {
+    opacity: 1;
+    transform: translateY(0.2em) scale(1.18) rotate(4deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0.3em) scale(1) rotate(2deg);
+  }
+}
+
+.arcade-pixel-burst {
+  position: absolute;
+  z-index: -1;
+  width: min(42rem, 72vw);
+  aspect-ratio: 1;
+  pointer-events: none;
+}
+
+.arcade-pixel-burst i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: clamp(0.55rem, 1.5vw, 1.2rem);
+  aspect-ratio: 1;
+  background: var(--acid);
+  box-shadow: 1em 0 var(--coral), 0 1em var(--blue);
+  opacity: 0;
+  animation: arcade-pixel-explode 540ms 1s steps(6, end) forwards;
+}
+
+.arcade-pixel-burst i:nth-child(1) { --burst-x: 18rem; --burst-y: 0rem; }
+.arcade-pixel-burst i:nth-child(2) { --burst-x: -18rem; --burst-y: 0rem; }
+.arcade-pixel-burst i:nth-child(3) { --burst-x: 0rem; --burst-y: 14rem; }
+.arcade-pixel-burst i:nth-child(4) { --burst-x: 0rem; --burst-y: -14rem; }
+.arcade-pixel-burst i:nth-child(5) { --burst-x: 13rem; --burst-y: 10rem; }
+.arcade-pixel-burst i:nth-child(6) { --burst-x: -13rem; --burst-y: 10rem; }
+.arcade-pixel-burst i:nth-child(7) { --burst-x: 13rem; --burst-y: -10rem; }
+.arcade-pixel-burst i:nth-child(8) { --burst-x: -13rem; --burst-y: -10rem; }
+
+.arcade-opening-selector {
+  position: relative;
+  z-index: 2;
+  width: min(92rem, 96vw);
+  opacity: 0;
+  transform: translateY(1rem);
+  animation: arcade-start-arrive 320ms 1.65s steps(4, end) forwards;
+}
+
+.arcade-opening-selector-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.6rem;
+  color: var(--acid);
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.arcade-opening-selector-arrows {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.arcade-opening-selector-arrows button {
+  width: 2.6rem;
+  height: 2.35rem;
+  border: 2px solid var(--paper);
+  border-radius: 0;
+  background: #10131a;
+  color: var(--paper);
+  cursor: pointer;
+  font: inherit;
+  font-size: 1rem;
+}
+
+.arcade-opening-selector-arrows button:hover,
+.arcade-opening-selector-arrows button:focus-visible {
+  background: var(--acid);
+  color: var(--ink);
+}
+
+.arcade-opening-selector-track {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 0.2rem 0.45rem 0.75rem 0.2rem;
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+  scrollbar-color: var(--acid) rgba(255, 255, 255, 0.16);
+  scrollbar-width: thin;
+  overscroll-behavior-x: contain;
+}
+
+.arcade-opening-game {
+  position: relative;
+  flex: 0 0 clamp(17rem, 28vw, 23rem);
+  min-height: clamp(11.5rem, 24vh, 15rem);
+  display: grid;
+  align-content: end;
+  justify-items: start;
+  gap: 0.25rem;
+  overflow: hidden;
+  padding: 1.15rem;
+  border: 4px solid var(--paper);
+  border-radius: 0;
+  background-color: #242833;
+  background-position: center;
+  background-size: cover;
+  box-shadow: 0.28rem 0.28rem 0 var(--blue);
+  color: var(--paper);
+  cursor: pointer;
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  text-align: left;
+  text-transform: uppercase;
+  scroll-snap-align: start;
+  image-rendering: pixelated;
+  transition: box-shadow 140ms steps(2, end), transform 140ms steps(2, end);
+}
+
+.arcade-opening-game::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(9, 12, 18, 0.04) 5%, rgba(9, 12, 18, 0.92) 78%);
+  content: "";
+}
+
+.arcade-opening-game > * {
+  position: relative;
+  z-index: 1;
+}
+
+.arcade-opening-game span {
+  color: var(--acid);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.arcade-opening-game strong {
+  max-width: 13ch;
+  font-size: clamp(1.05rem, 1.7vw, 1.35rem);
+  line-height: 1.05;
+}
+
+.arcade-opening-game small {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+}
+
+.arcade-opening-game:hover:not(:disabled),
+.arcade-opening-game:focus-visible:not(:disabled) {
+  box-shadow: 0.42rem 0.42rem 0 var(--acid);
+  transform: translate(-0.1rem, -0.1rem);
+}
+
+.arcade-opening-game:disabled {
+  cursor: wait;
+}
+
+.arcade-opening-game-popup { background-image: url("assets/arcade-popup-panic.png"); }
+.arcade-opening-game-contrast { background-image: url("assets/arcade-contrast-targets.png"); }
+.arcade-opening-game-menu { background-image: url("assets/arcade-mega-menu.png"); }
+.arcade-opening-game-scope { background-image: url("assets/arcade-scope-invaders.png"); }
+.arcade-opening-game-human { background-image: url("assets/arcade-are-you-human-card-v2.png"); }
+.arcade-opening-game-pac { background-image: url("assets/arcade-pac-facts.png"); }
+.arcade-opening-game-debt { background-image: url("assets/arcade-design-debt.png"); }
+
+.arcade-opening-game-scores {
+  background-color: #07123a;
+  background-image:
+    linear-gradient(180deg, rgba(8, 13, 37, 0.04) 0 46%, rgba(8, 13, 37, 0.95) 82%),
+    repeating-linear-gradient(0deg, transparent 0 1.9rem, rgba(242, 255, 61, 0.16) 1.9rem 2rem),
+    repeating-linear-gradient(90deg, rgba(79, 87, 255, 0.28) 0 18%, transparent 18% 21%);
+}
+
+.arcade-opening-game-scores::after {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  color: var(--acid);
+  content: "01  999999\A 02  975300\A 03  948750\A 04  918400";
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: clamp(0.78rem, 1.2vw, 1rem);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  line-height: 1.55;
+  opacity: 0.88;
+  text-shadow: 0.12rem 0.12rem 0 #4f57ff;
+  white-space: pre;
+}
+
+.high-scores-dialog {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: clamp(0.55rem, 2vw, 1.2rem);
+  overflow: auto;
+  border: 0;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(79, 87, 255, 0.34), transparent 34rem),
+    #070b1b;
+  color: var(--paper);
+}
+
+body.high-scores-open {
+  overflow: hidden;
+}
+
+.high-scores-dialog[open] {
+  display: grid;
+  place-items: center;
+}
+
+.high-scores-dialog::backdrop {
+  background: rgba(3, 5, 14, 0.94);
+}
+
+.high-scores-cabinet {
+  width: min(56rem, 100%);
+  overflow: hidden;
+  border: 4px solid var(--acid);
+  background: #101522;
+  box-shadow: 0 0 0 4px var(--blue), 0.75rem 0.75rem 0 rgba(0, 0, 0, 0.72);
+}
+
+.high-scores-header {
+  min-height: 4.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 3px solid var(--paper);
+  background: var(--ink);
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  text-transform: uppercase;
+}
+
+.high-scores-header div {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.high-scores-header span {
+  color: var(--acid);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.high-scores-header strong {
+  font-size: clamp(0.92rem, 2vw, 1.15rem);
+}
+
+.high-scores-header button {
+  width: 3rem;
+  height: 3rem;
+  border: 3px solid var(--paper);
+  border-radius: 0;
+  background: #202b61;
+  box-shadow: 0.28rem 0.28rem 0 var(--acid);
+  color: var(--paper);
+  cursor: pointer;
+  font: 900 1.45rem/1 ui-monospace, "SFMono-Regular", Consolas, monospace;
+}
+
+.high-scores-screen {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(1.5rem, 5vw, 3.5rem);
+  background:
+    repeating-linear-gradient(0deg, transparent 0 3px, rgba(255, 255, 255, 0.035) 3px 4px),
+    radial-gradient(circle at 50% 0, rgba(79, 87, 255, 0.25), transparent 28rem),
+    #081135;
+  text-align: center;
+}
+
+.high-scores-kicker,
+.high-scores-insert {
+  margin: 0;
+  color: var(--acid);
+  font: 900 clamp(0.75rem, 2vw, 0.95rem)/1.2 ui-monospace, "SFMono-Regular", Consolas, monospace;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.high-scores-screen h2 {
+  margin: 0.3rem 0 0.65rem;
+  color: var(--paper);
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: clamp(2.8rem, 9vw, 6.5rem);
+  line-height: 0.9;
+  text-shadow: 0.08em 0.08em 0 var(--blue), -0.04em -0.04em 0 var(--coral);
+  text-transform: uppercase;
+}
+
+#high-scores-note {
+  max-width: 34rem;
+  margin: 0 auto clamp(1.25rem, 3vw, 2rem);
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.9rem;
+}
+
+.high-scores-list {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.high-scores-list li {
+  display: grid;
+  grid-template-columns: 2.4rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 4.25rem;
+  padding: 0.55rem 0.8rem;
+  border: 2px solid rgba(255, 255, 255, 0.34);
+  background: rgba(5, 9, 29, 0.82);
+  color: var(--paper);
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  box-shadow: 0.22rem 0.22rem 0 rgba(79, 87, 255, 0.5);
+}
+
+.high-scores-list li.is-champion {
+  border-color: var(--acid);
+  color: var(--acid);
+}
+
+.high-scores-list li.is-player {
+  border-color: var(--coral);
+  background: rgba(255, 107, 99, 0.14);
+}
+
+.high-scores-rank,
+.high-scores-list data {
+  font-size: clamp(0.9rem, 2.5vw, 1.15rem);
+  font-weight: 900;
+}
+
+.high-scores-list a {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.high-scores-list a:hover strong,
+.high-scores-list a:focus-visible strong {
+  text-decoration: underline;
+  text-decoration-thickness: 0.16rem;
+  text-underline-offset: 0.2rem;
+}
+
+.high-scores-initials {
+  width: 2.3rem;
+  height: 2.3rem;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 2px solid currentColor;
+  background: #202b61;
+  color: var(--paper);
+  font-size: 0.75rem;
+  font-weight: 900;
+}
+
+.high-scores-list strong {
+  overflow: hidden;
+  font-size: clamp(0.85rem, 2.8vw, 1.15rem);
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.high-scores-list data {
+  color: var(--acid);
+  letter-spacing: 0.06em;
+}
+
+.high-scores-insert {
+  margin-top: clamp(1.25rem, 4vw, 2rem);
+  animation: arcade-insert-flash 900ms steps(1, end) infinite;
+}
+
+.high-scores-back {
+  width: 100%;
+  min-height: 4.25rem;
+  margin-top: 1rem;
+  border: 3px solid var(--ink);
+  border-radius: 0;
+  background: var(--acid);
+  box-shadow: 0.35rem 0.35rem 0 var(--blue);
+  color: var(--ink);
+  cursor: pointer;
+  font: 900 clamp(0.9rem, 2.5vw, 1.1rem)/1 ui-monospace, "SFMono-Regular", Consolas, monospace;
+  text-transform: uppercase;
+}
+
+.high-scores-header button:hover,
+.high-scores-header button:focus-visible,
+.high-scores-back:hover,
+.high-scores-back:focus-visible {
+  outline: 3px solid var(--paper);
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .high-scores-dialog {
+    padding: 0.45rem;
+  }
+
+  .high-scores-cabinet {
+    border-width: 3px;
+    box-shadow: 0 0 0 3px var(--blue);
+  }
+
+  .high-scores-header {
+    min-height: 3.75rem;
+    padding: 0.55rem 0.65rem;
+  }
+
+  .high-scores-header div {
+    display: grid;
+    gap: 0.15rem;
+  }
+
+  .high-scores-screen {
+    padding: 1.35rem 0.7rem 1.1rem;
+  }
+
+  .high-scores-list li {
+    grid-template-columns: 1.8rem minmax(0, 1fr) auto;
+    gap: 0.45rem;
+    min-height: 3.65rem;
+    padding: 0.45rem;
+  }
+
+  .high-scores-initials {
+    width: 1.9rem;
+    height: 1.9rem;
+    font-size: 0.65rem;
+  }
+
+  .high-scores-list data {
+    font-size: 0.78rem;
+    letter-spacing: 0;
+  }
+}
+
+@keyframes arcade-copy-arrive {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes arcade-insert-flash {
+  0%, 46% { opacity: 1; }
+  47%, 78% { opacity: 0.16; }
+  79%, 100% { opacity: 1; }
+}
+
+@keyframes arcade-ux-flicker {
+  0%, 88%, 92%, 96%, 100% { opacity: 1; }
+  89%, 95% { opacity: 0.34; }
+}
+
+@keyframes arcade-title-impact {
+  0% { opacity: 0; transform: scale(4.5); }
+  70% { opacity: 1; transform: scale(0.86); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes arcade-pixel-explode {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(0.3); }
+  85% { opacity: 1; transform: translate(calc(-50% + var(--burst-x)), calc(-50% + var(--burst-y))) scale(1); }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--burst-x)), calc(-50% + var(--burst-y))) scale(0); }
+}
+
+@keyframes arcade-start-arrive {
+  from { opacity: 0; transform: translateY(1rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 760px) {
+  .arcade-page .ux-arcade {
+    padding-top: 0.65rem;
+  }
+
+  .arcade-page-nav {
+    grid-template-columns: 1fr auto;
+  }
+
+  .arcade-page-nav > span {
+    display: none;
+  }
+
+  .arcade-opening-topline {
+    align-items: stretch;
+  }
+
+  .arcade-opening-back,
+  .arcade-opening-sound {
+    min-height: 3.2rem;
+  }
+
+  .arcade-opening-back {
+    max-width: 10.5rem;
+  }
+
+  .arcade-opening-gallery {
+    inset: -2rem -8rem -2rem;
+    background-position: 50% center;
+    opacity: 0.7;
+  }
+
+  .arcade-opening-selector {
+    width: 96vw;
+  }
+
+  .arcade-opening-prompt {
+    top: 0;
+  }
+
+  .arcade-opening-game {
+    flex-basis: min(84vw, 19rem);
+    min-height: 12rem;
+  }
+
+  .arcade-pixel-burst i:nth-child(1) { --burst-x: 9rem; }
+  .arcade-pixel-burst i:nth-child(2) { --burst-x: -9rem; }
+  .arcade-pixel-burst i:nth-child(3) { --burst-y: 8rem; }
+  .arcade-pixel-burst i:nth-child(4) { --burst-y: -8rem; }
+  .arcade-pixel-burst i:nth-child(5) { --burst-x: 6.5rem; --burst-y: 5rem; }
+  .arcade-pixel-burst i:nth-child(6) { --burst-x: -6.5rem; --burst-y: 5rem; }
+  .arcade-pixel-burst i:nth-child(7) { --burst-x: 6.5rem; --burst-y: -5rem; }
+  .arcade-pixel-burst i:nth-child(8) { --burst-x: -6.5rem; --burst-y: -5rem; }
+}
+
+@media (max-height: 820px) and (min-width: 761px) {
+  .arcade-opening-stage {
+    padding-block: 0.75rem;
+  }
+
+  .arcade-opening h1 {
+    font-size: clamp(4rem, 14vh, 8.5rem);
+  }
+
+  .arcade-opening-summary {
+    margin-top: 0.8rem;
+  }
+
+  .arcade-opening-prompt {
+    top: -30px;
+    margin-top: 0.8rem;
+  }
+
+  .arcade-opening-game {
+    flex-basis: clamp(15rem, 25vw, 19rem);
+    min-height: 9.5rem;
+  }
+}
+
+@media (max-height: 650px) and (orientation: landscape) {
+  .arcade-opening-stage {
+    padding-block: 0.5rem;
+  }
+
+  .arcade-opening h1 {
+    font-size: clamp(3.5rem, 17vh, 7rem);
+  }
+
+  .arcade-opening-summary {
+    margin-top: 0.65rem;
+  }
+
+  .arcade-opening-prompt {
+    top: 0;
+    margin-top: 0.65rem;
+  }
+
+  .arcade-opening-game {
+    min-height: 6.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arcade-opening-summary,
+  .arcade-opening-prompt,
+  .arcade-opening h1,
+  .arcade-opening h1 span,
+  .arcade-opening .arcade-beta-tag,
+  .arcade-opening-selector {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .arcade-pixel-burst {
+    display: none;
+  }
+
+  .arcade-title-runner {
+    left: 86%;
+    bottom: 92%;
+    opacity: 1;
+    animation: none;
+  }
+
+  .arcade-title-runner::before {
+    background-position: 0 0;
+    animation: none;
+  }
+
+  .arcade-opening-selector-track {
+    scroll-behavior: auto;
+  }
+}
