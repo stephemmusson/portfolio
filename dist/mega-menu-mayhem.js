@@ -30,7 +30,8 @@
   const reducedMotion = framework.isReducedMotion;
   const touchFirst = window.matchMedia('(hover: none)').matches;
   const sessionDuration = 30000;
-  const wrongTurnPenalty = 2000;
+  const baseWrongTurnPenalty = 2000;
+  const correctRouteBonus = 2000;
 
   const tasks = [
     {
@@ -54,7 +55,6 @@
       groups: [
         ['Your account', [['Profile', 'profile'], ['Delivery addresses', 'delivery-addresses'], ['Payment methods', 'payment']]],
         ['Orders', [['Change delivery', 'current-delivery'], ['Track order', 'track'], ['Order history', 'history']]],
-        ['Manage', [['Preferences', 'preferences'], ['Your details', 'details'], ['Security', 'security']]],
         ['Help', [['Address help', 'address-help'], ['Delivery questions', 'delivery-help'], ['Contact', 'contact']]]
       ]
     },
@@ -63,46 +63,135 @@
       groups: [
         ['Documents', [['Policies', 'policies'], ['Product guides', 'guides'], ['Downloads', 'downloads']]],
         ['Orders', [['Order details', 'details'], ['Download invoice', 'invoice'], ['Receipts', 'receipts']]],
-        ['Business', [['Billing help', 'billing'], ['Tax settings', 'tax'], ['Statements', 'statements']]],
-        ['More', [['Files', 'files'], ['Archive', 'archive'], ['Data requests', 'data']]]
+        ['Business', [['Billing help', 'billing'], ['Tax settings', 'tax'], ['Statements', 'statements']]]
       ]
     },
     {
-      task: 'Cancel a membership.', phase: 'Duplicates', answer: 'cancel-action',
+      task: 'Cancel a membership.', phase: 'Vague labels', answer: 'cancel-action',
       groups: [
-        ['Account', [['Manage membership', 'upsell'], ['Close account', 'close'], ['Billing', 'billing']]],
-        ['More', [['Membership options', 'options'], ['Cancel membership', 'cancel-action'], ['Preferences', 'preferences']]],
-        ['Help', [['Cancel membership', 'cancel-article'], ['Cancellation policy', 'policy'], ['Contact', 'contact']]],
+        ['Account', [['Manage membership', 'upsell'], ['Cancel membership', 'cancel-action'], ['Billing', 'billing']]],
+        ['Help', [['Cancellation guidance', 'cancel-article'], ['Cancellation policy', 'policy'], ['Contact', 'contact']]],
         ['Offers', [['Change plan', 'plan'], ['Pause membership', 'pause'], ['Member prices', 'prices']]]
       ]
     },
     {
-      task: 'Find accessibility information.', phase: 'Unstable layout', answer: 'accessibility-info', unstable: 1,
+      task: 'Find accessibility information.', phase: 'Buried language', answer: 'accessibility-info',
       groups: [
         ['About', [['Our story', 'story'], ['Jobs', 'jobs'], ['Inclusive hiring', 'hiring']]],
         ['The small print', [['Privacy', 'privacy'], ['Accessibility information', 'accessibility-info'], ['Terms', 'terms']]],
-        ['Shop', [['Accessible products', 'products'], ['Filters', 'filters'], ['Size guide', 'size']]],
-        ['More', [['Accessibility', 'dead-end'], ['Site map', 'map'], ['Help', 'help']]]
+        ['Shop', [['Accessible products', 'products'], ['Filters', 'filters'], ['Size guide', 'size']]]
       ]
     },
     {
-      task: 'Report a faulty product.', phase: 'Moving duplicates', answer: 'report-fault', unstable: 2,
+      task: 'Report a faulty product.', phase: 'Similar routes', answer: 'report-fault',
       groups: [
         ['After you buy', [['Product care', 'care'], ['Report a fault', 'report-fault'], ['Warranty', 'warranty']]],
         ['Help', [['Returns', 'returns'], ['Report a problem', 'article'], ['Chat', 'chat']]],
-        ['Support', [['Technical support', 'technical'], ['Report a fault', 'technical-fault'], ['Manuals', 'manuals']]],
-        ['More help', [['Contact us', 'contact'], ['Complaints', 'complaints'], ['FAQs', 'faqs']]],
-        ['Your stuff', [['Orders', 'orders'], ['Saved items', 'saved'], ['Account', 'account']]]
+        ['Support', [['Technical support', 'technical'], ['Troubleshoot a fault', 'technical-fault'], ['Manuals', 'manuals']]]
       ]
     },
     {
-      task: 'Speak to a person.', phase: 'Maximum mayhem', answer: 'call-support', unstable: 2,
+      task: 'Speak to a person.', phase: 'Human hidden', answer: 'call-support',
       groups: [
         ['Help centre', [['Popular answers', 'answers'], ['Ask the chatbot', 'bot'], ['FAQs', 'faqs']]],
         ['Contact', [['Send a message', 'message'], ['Community', 'community'], ['Virtual assistant', 'assistant']]],
-        ['More support', [['Chat with our bot', 'another-bot'], ['Troubleshoot', 'troubleshoot'], ['Self-service', 'self']]],
-        ['Still stuck?', [['Call support', 'call-support'], ['Request a callback', 'callback'], ['Opening hours', 'hours']]],
-        ['Other', [['About', 'about'], ['Accessibility', 'accessibility-info'], ['Complaints', 'complaints']]]
+        ['Still stuck?', [['Call support', 'call-support'], ['Request a callback', 'callback'], ['Opening hours', 'hours']]]
+      ]
+    },
+    {
+      task: 'Reset your password.', phase: 'Security maze', answer: 'reset-password',
+      groups: [
+        ['Your account', [['Profile', 'profile'], ['Sign-in & security', 'security'], ['Communication settings', 'comms']]],
+        ['Help centre', [['Reset your password', 'reset-password'], ['Unlock your account', 'unlock'], ['Sign-in problems', 'sign-in-help']]],
+        ['Privacy', [['Your data', 'data'], ['Device history', 'devices'], ['Permissions', 'permissions']]]
+      ]
+    },
+    {
+      task: 'Check the size guide.', phase: 'Product detour', answer: 'size-guide',
+      groups: [
+        ['Shop', [['Clothing', 'clothing'], ['Collections', 'collections'], ['New this week', 'new-week']]],
+        ['Before you buy', [['Size guide', 'size-guide'], ['Product information', 'product-info'], ['Stock checks', 'stock']]],
+        ['Help', [['Fit advice', 'fit-advice'], ['Returns', 'returns'], ['Contact', 'contact']]]
+      ]
+    },
+    {
+      task: 'Track your delivery.', phase: 'Status overload', answer: 'track-delivery',
+      groups: [
+        ['Orders', [['Order history', 'history'], ['Track delivery', 'track-delivery'], ['Change an order', 'change-order']]],
+        ['Delivery', [['Delivery options', 'options'], ['Estimated times', 'estimates'], ['Courier information', 'couriers']]],
+        ['Help', [['Where is my order?', 'where-order'], ['Late deliveries', 'late'], ['Missing items', 'missing']]]
+      ]
+    },
+    {
+      task: 'Delete your account.', phase: 'Exit concealed', answer: 'delete-account',
+      groups: [
+        ['Account', [['Your details', 'details'], ['Account controls', 'controls'], ['Delete account', 'delete-account']]],
+        ['Privacy', [['Download your data', 'download-data'], ['Data choices', 'choices'], ['Cookie settings', 'cookies']]],
+        ['Help', [['Close membership', 'close-membership'], ['Leaving us', 'leaving'], ['Contact support', 'support']]]
+      ]
+    },
+    {
+      task: 'Redeem a gift card.', phase: 'Payment puzzle', answer: 'redeem-gift-card',
+      groups: [
+        ['Shop', [['Gift cards', 'gift-cards'], ['Offers', 'offers'], ['Member prices', 'member-prices']]],
+        ['Checkout help', [['Payment methods', 'payment-methods'], ['Redeem a gift card', 'redeem-gift-card'], ['Promotional codes', 'promo-codes']]],
+        ['Account', [['Credit balance', 'credit'], ['Saved payments', 'saved-payments'], ['Billing history', 'billing-history']]]
+      ]
+    },
+    {
+      task: 'Find a store’s opening hours.', phase: 'Location loop', answer: 'store-hours',
+      groups: [
+        ['Visit us', [['Find a store', 'find-store'], ['Store opening hours', 'store-hours'], ['Accessibility in store', 'store-access']]],
+        ['About', [['Our locations', 'locations'], ['Where we work', 'work'], ['Contact us', 'contact']]],
+        ['Help', [['Holiday opening', 'holiday'], ['Collection points', 'collection'], ['Local services', 'local']]]
+      ]
+    },
+    {
+      task: 'Download a returns label.', phase: 'Returns maze', answer: 'returns-label',
+      groups: [
+        ['Orders', [['Order details', 'order-details'], ['Previous returns', 'previous-returns'], ['Receipts', 'receipts']]],
+        ['Returns', [['Start a return', 'start-return'], ['Download returns label', 'returns-label'], ['Refund status', 'refund-status']]],
+        ['Delivery help', [['Parcel guidance', 'parcel'], ['Printer-free returns', 'printer-free'], ['Drop-off points', 'drop-off']]]
+      ]
+    },
+    {
+      task: 'Stop promotional emails.', phase: 'Preference fog', answer: 'email-preferences',
+      groups: [
+        ['Your account', [['Profile', 'profile'], ['Email preferences', 'email-preferences'], ['Notification history', 'notifications']]],
+        ['Privacy', [['Marketing choices', 'marketing-choices'], ['Cookie controls', 'cookie-controls'], ['Data permissions', 'data-permissions']]],
+        ['Help', [['Unsubscribe help', 'unsubscribe-help'], ['Missing emails', 'missing-emails'], ['Contact', 'contact']]]
+      ]
+    },
+    {
+      task: 'Replace a damaged item.', phase: 'Support shuffle', answer: 'replace-damaged',
+      groups: [
+        ['After delivery', [['Report damage', 'report-damage'], ['Replace a damaged item', 'replace-damaged'], ['Missing parts', 'missing-parts']]],
+        ['Returns', [['Return an item', 'return-item'], ['Refund options', 'refund-options'], ['Exchange sizes', 'exchange-size']]],
+        ['Product help', [['Care instructions', 'care'], ['Warranty', 'warranty'], ['Repairs', 'repairs']]]
+      ]
+    },
+    {
+      task: 'Review your privacy controls.', phase: 'Small-print finale', answer: 'privacy-controls',
+      groups: [
+        ['Privacy', [['Privacy notice', 'privacy-notice'], ['Privacy controls', 'privacy-controls'], ['Data requests', 'data-requests']]],
+        ['Account', [['Security', 'security'], ['Connected apps', 'connected-apps'], ['Sign-in history', 'sign-in-history']]],
+        ['Legal', [['Terms of use', 'terms'], ['Cookie policy', 'cookie-policy'], ['Consent records', 'consent-records']]]
+      ]
+    },
+    {
+      task: 'Find directions to your nearest store.', phase: 'Location language', answer: 'store-directions',
+      groups: [
+        ['Stores', [['Find a location', 'find-location'], ['Directions to a store', 'store-directions'], ['Store services', 'store-services']]],
+        ['Visit us', [['Opening hours', 'opening-hours'], ['Parking information', 'parking'], ['Accessibility', 'accessibility']]],
+        ['Help', [['Delivery areas', 'delivery-areas'], ['Collection points', 'collection-points'], ['Contact a store', 'contact-store']]]
+      ]
+    },
+    {
+      task: 'Register for the newsletter.', phase: 'Sign-up scattered', answer: 'newsletter-register',
+      groups: [
+        ['Stay in touch', [['Register for the newsletter', 'newsletter-register'], ['Follow us', 'social'], ['Latest stories', 'stories']]],
+        ['Your account', [['Communication settings', 'communication-settings'], ['Create an account', 'create-account'], ['Saved interests', 'interests']]],
+        ['Offers', [['Member rewards', 'rewards'], ['Email-only offers', 'email-offers'], ['Promotion terms', 'promotion-terms']]]
       ]
     }
   ];
@@ -111,7 +200,7 @@
     status: 'idle', score: 0, found: 0, streak: 0, tasksShown: 0,
     taskIndex: 0, sessionElapsed: 0, sessionStartedAt: 0, frame: null,
     locked: false, shuffleCount: 0, pointerShuffleArmed: false,
-    timers: [], focusBeforePause: null, keyboardMode: false
+    timers: [], focusBeforePause: null, keyboardMode: false, taskOrder: [], taskCursor: 0
   };
   let returnFocusTarget;
 
@@ -119,6 +208,11 @@
     const labels = { instructions: 'menu-screen-title', playing: 'menu-playing-title', result: 'menu-result-title' };
     screens.forEach((screen) => { screen.hidden = screen.dataset.menuScreen !== name; });
     dialog.setAttribute('aria-labelledby', labels[name]);
+    requestAnimationFrame(() => {
+      dialog.scrollTop = 0;
+      dialog.querySelector('.arcade-screen')?.scrollTo(0, 0);
+      screens.find((screen) => !screen.hidden)?.scrollTo(0, 0);
+    });
   }
 
   function openGame(trigger) {
@@ -128,7 +222,9 @@
     document.body.classList.add('arcade-open');
     if (typeof dialog.showModal === 'function') dialog.showModal();
     else dialog.setAttribute('open', '');
-    window.requestAnimationFrame(() => startButton?.focus());
+    window.requestAnimationFrame(() => {
+      if (!window.matchMedia('(pointer: coarse)').matches) startButton?.focus({ preventScroll: true });
+    });
     framework.playSound('open');
   }
 
@@ -161,7 +257,8 @@
     Object.assign(game, {
       status: 'idle', score: 0, found: 0, streak: 0, tasksShown: 0,
       taskIndex: 0, sessionElapsed: 0, sessionStartedAt: 0, locked: false,
-      shuffleCount: 0, pointerShuffleArmed: false, focusBeforePause: null, keyboardMode: false
+      shuffleCount: 0, pointerShuffleArmed: false, focusBeforePause: null, keyboardMode: false,
+      taskOrder: [], taskCursor: 0
     });
     pausePanel.hidden = true;
     pauseButton.disabled = false;
@@ -175,8 +272,15 @@
 
   function startGame() {
     resetGame();
+    if (tasks.some((task) => !validateTask(task))) {
+      feedbackLine.textContent = 'This menu has failed its route check.';
+      announce('The game could not start because a task has no unique correct route.');
+      return;
+    }
     switchScreen('playing');
     game.status = 'playing';
+    game.taskOrder = shuffle(tasks.map((_, index) => index));
+    game.taskCursor = 0;
     game.sessionStartedAt = performance.now();
     loadTask();
     game.frame = window.requestAnimationFrame(runFrame);
@@ -187,7 +291,14 @@
   function loadTask(message = 'The answer is in here somewhere.') {
     if (game.status !== 'playing') return;
     clearInstability();
-    game.taskIndex = game.tasksShown % tasks.length;
+    if (game.taskCursor >= game.taskOrder.length) {
+      const previousTask = game.taskIndex;
+      game.taskOrder = shuffle(tasks.map((_, taskIndex) => taskIndex));
+      if (game.taskOrder[0] === previousTask) game.taskOrder.push(game.taskOrder.shift());
+      game.taskCursor = 0;
+    }
+    game.taskIndex = game.taskOrder[game.taskCursor];
+    game.taskCursor += 1;
     game.locked = false;
     game.shuffleCount = 0;
     const task = tasks[game.taskIndex];
@@ -239,9 +350,14 @@
     categoryGrid.replaceChildren(fragment);
   }
 
+  function validateTask(task) {
+    const matches = task.groups.flatMap(([, links]) => links).filter(([, destination]) => destination === task.answer);
+    return matches.length === 1;
+  }
+
   function runFrame(now) {
     if (game.status !== 'playing') return;
-    const elapsed = game.sessionElapsed + (now - game.sessionStartedAt);
+    const elapsed = game.sessionElapsed + ((now - game.sessionStartedAt) * getTimerRate());
     updateHud(elapsed);
     if (elapsed >= sessionDuration) {
       finishGame();
@@ -254,39 +370,52 @@
     if (game.status !== 'playing' || game.locked || button.classList.contains('is-wrong')) return;
     const task = tasks[game.taskIndex];
     if (destination === task.answer) {
+      captureElapsed();
+      game.sessionElapsed = Math.max(0, game.sessionElapsed - correctRouteBonus);
       game.locked = true;
       game.found += 1;
       game.streak += 1;
       game.score += 150 + Math.min(180, (game.streak - 1) * 20) + (game.taskIndex * 15);
       game.tasksShown += 1;
       framework.playSound('good');
-      announce(`Destination found. ${game.found} found.`);
+      announce(`Destination found. Two seconds restored. ${game.found} found.`);
       updateHud(getElapsed());
-      window.requestAnimationFrame(() => loadTask('Correct route. Next task.'));
+      window.requestAnimationFrame(() => loadTask(`Correct route. +2 seconds. Countdown now ${getTimerRate().toFixed(1)}× speed.`));
       return;
     }
 
     captureElapsed();
+    const wrongTurnPenalty = getWrongTurnPenalty();
     game.sessionElapsed += wrongTurnPenalty;
     game.score = Math.max(0, game.score - 40);
     game.streak = 0;
     button.classList.add('is-wrong');
     button.setAttribute('aria-disabled', 'true');
-    feedbackLine.textContent = 'Wrong turn. Two seconds lost.';
+    feedbackLine.textContent = `Wrong turn. ${wrongTurnPenalty / 1000} seconds lost.`;
     framework.playSound('bad');
-    announce('Wrong turn. Forty points and two seconds lost.');
+    announce(`Wrong turn. Forty points and ${wrongTurnPenalty / 1000} seconds lost.`);
     updateHud(game.sessionElapsed);
     if (game.sessionElapsed >= sessionDuration) finishGame();
   }
 
   function getElapsed() {
-    return game.status === 'playing' ? game.sessionElapsed + (performance.now() - game.sessionStartedAt) : game.sessionElapsed;
+    return game.status === 'playing'
+      ? game.sessionElapsed + ((performance.now() - game.sessionStartedAt) * getTimerRate())
+      : game.sessionElapsed;
+  }
+
+  function getTimerRate() {
+    return Math.min(1.85, 1 + (game.found * 0.08));
+  }
+
+  function getWrongTurnPenalty() {
+    return Math.min(5000, baseWrongTurnPenalty + (Math.floor(game.found / 3) * 1000));
   }
 
   function captureElapsed() {
     if (game.status !== 'playing') return;
     const now = performance.now();
-    game.sessionElapsed += now - game.sessionStartedAt;
+    game.sessionElapsed += (now - game.sessionStartedAt) * getTimerRate();
     game.sessionStartedAt = now;
   }
 
@@ -295,7 +424,7 @@
     scoreOutput.textContent = framework.formatScore(game.score);
     foundOutput.textContent = String(game.found);
     streakOutput.textContent = String(game.streak);
-    timeOutput.textContent = `${Math.ceil(remaining / 1000)}s`;
+    timeOutput.textContent = `${Math.ceil(remaining / 1000)}s · ${getTimerRate().toFixed(1)}×`;
     timeProgress.max = sessionDuration;
     timeProgress.value = remaining;
     timeProgress.textContent = `${Math.ceil(remaining / 1000)} seconds remaining`;
@@ -391,7 +520,7 @@
     const savedProgress = framework.saveGameProgress('mega-menu-mayhem', game.score, true);
     if (game.found >= 9) {
       resultTitle.textContent = 'You found the useful route.';
-      resultCopy.textContent = 'You navigated the vague labels, duplicates and shifting categories. Clear information architecture should be less exciting.';
+      resultCopy.textContent = 'You navigated the vague labels and crowded categories. Clear information architecture should be less exciting.';
     } else if (game.found >= 5) {
       resultTitle.textContent = 'The destination was in there somewhere.';
       resultCopy.textContent = 'You found several routes despite a menu working hard to turn simple tasks into detective work.';
@@ -431,12 +560,12 @@
   dialog.querySelectorAll('[data-menu-exit]').forEach((button) => {
     button.addEventListener('click', framework.exitArcade);
   });
-  startButton?.addEventListener('click', startGame);
+  startButton?.addEventListener('click', () => framework.startCountdown(dialog, startGame));
   pauseButton?.addEventListener('click', pauseGame);
   resumeButton?.addEventListener('click', resumeGame);
   categoryGrid.addEventListener('pointermove', handlePointerEntry);
   dialog.querySelector('[data-menu-play-again]')?.addEventListener('click', startGame);
-  dialog.querySelector('[data-menu-choose]')?.addEventListener('click', () => closeGame(true));
+  dialog.querySelector('[data-menu-choose]')?.addEventListener('click', framework.exitArcade);
 
   dialog.addEventListener('cancel', (event) => {
     event.preventDefault();

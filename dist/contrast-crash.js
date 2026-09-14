@@ -65,6 +65,11 @@
     const labels = { instructions: 'contrast-screen-title', playing: 'contrast-playing-title', result: 'contrast-result-title' };
     screens.forEach((screen) => { screen.hidden = screen.dataset.contrastScreen !== name; });
     dialog.setAttribute('aria-labelledby', labels[name]);
+    requestAnimationFrame(() => {
+      dialog.scrollTop = 0;
+      dialog.querySelector('.arcade-screen')?.scrollTo(0, 0);
+      screens.find((screen) => !screen.hidden)?.scrollTo(0, 0);
+    });
   }
 
   function openGame(trigger) {
@@ -74,7 +79,9 @@
     document.body.classList.add('arcade-open');
     if (typeof dialog.showModal === 'function') dialog.showModal();
     else dialog.setAttribute('open', '');
-    window.requestAnimationFrame(() => startButton?.focus());
+    window.requestAnimationFrame(() => {
+      if (!window.matchMedia('(pointer: coarse)').matches) startButton?.focus({ preventScroll: true });
+    });
     framework.playSound('open');
   }
 
@@ -263,6 +270,7 @@
     }
 
     removeTarget(hit);
+    showTargetExplosion(hit.x, hit.y, hit.size);
     game.hits += 1;
     game.streak += 1;
     const streakBonus = Math.min(150, Math.max(0, game.streak - 1) * 15);
@@ -291,6 +299,17 @@
     shotFlash.classList.remove('is-fired');
     void shotFlash.offsetWidth;
     shotFlash.classList.add('is-fired');
+  }
+
+  function showTargetExplosion(x, y, size) {
+    const explosion = document.createElement('span');
+    explosion.className = 'contrast-target-explosion';
+    explosion.style.left = `${x}px`;
+    explosion.style.top = `${y}px`;
+    explosion.style.setProperty('--burst-size', `${Math.max(42, size * 1.25)}px`);
+    explosion.innerHTML = '<i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>';
+    targetLayer.append(explosion);
+    window.setTimeout(() => explosion.remove(), reducedMotion ? 260 : 620);
   }
 
   function updateAim(delta) {
@@ -455,11 +474,11 @@
   dialog.querySelectorAll('[data-contrast-exit]').forEach((button) => {
     button.addEventListener('click', framework.exitArcade);
   });
-  startButton?.addEventListener('click', startGame);
+  startButton?.addEventListener('click', () => framework.startCountdown(dialog, startGame));
   pauseButton?.addEventListener('click', pauseGame);
   resumeButton?.addEventListener('click', resumeGame);
   dialog.querySelector('[data-contrast-play-again]')?.addEventListener('click', startGame);
-  dialog.querySelector('[data-contrast-choose]')?.addEventListener('click', () => closeGame(true));
+  dialog.querySelector('[data-contrast-choose]')?.addEventListener('click', framework.exitArcade);
 
   targetZone.addEventListener('pointermove', (event) => {
     if (game.status === 'playing' && event.pointerType === 'mouse') setAimFromPointer(event);

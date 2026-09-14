@@ -4,7 +4,7 @@
 
   if (!dialog || !playfield) return;
 
-  const gameIds = ['popup-panic', 'contrast-crash', 'mega-menu-mayhem', 'scope-invaders', 'captcha-boss'];
+  const gameIds = ['captcha-boss', 'design-debt', 'pac-facts', 'popup-panic', 'scope-invaders', 'contrast-crash', 'mega-menu-mayhem'];
   const progressKey = 'stephen-musson-ux-arcade-v1';
   const soundKey = 'stephen-musson-ux-arcade-sound';
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -35,6 +35,12 @@
   let audioContext;
   let returnFocusTarget;
   let popupSequence = 0;
+
+  const gameGrid = document.querySelector('.arcade-grid');
+  gameIds.forEach((gameId) => {
+    const card = gameGrid?.querySelector(`[data-game-card="${gameId}"]`);
+    if (card) gameGrid.append(card);
+  });
 
   const game = {
     status: 'idle',
@@ -116,7 +122,7 @@
   function updateProgressDisplay() {
     const playedCount = gameIds.filter((id) => progress[id]?.played).length;
     const progressText = document.querySelector('#arcade-progress-text');
-    if (progressText) progressText.textContent = `${playedCount} of 5 games played`;
+    if (progressText) progressText.textContent = `${playedCount} of ${gameIds.length} games played`;
 
     document.querySelectorAll('[data-progress-game]').forEach((pip) => {
       pip.classList.toggle('is-played', Boolean(progress[pip.dataset.progressGame]?.played));
@@ -161,6 +167,9 @@
     writeSoundPreference();
     updateSoundButtons();
     if (soundEnabled) playSound('select');
+    document.dispatchEvent(new CustomEvent('uxarcade:soundchange', {
+      detail: { enabled: soundEnabled }
+    }));
   }
 
   function playSound(type) {
@@ -198,7 +207,7 @@
   }
 
   function playIntroTheme() {
-    if (!soundEnabled) return;
+    if (!soundEnabled) return null;
     try {
       const AudioContext = window.AudioContext || window.webkitAudioContext;
       if (!AudioContext) return;
@@ -234,17 +243,84 @@
       impactGain.connect(audioContext.destination);
       impact.start(impactAt);
       impact.stop(impactAt + 0.31);
+      return impact;
     } catch (error) {
       // The intro remains fully usable without sound.
+      return null;
     }
   }
 
+  function unlockAudio() {
+    if (!soundEnabled || !audioContext || audioContext.state !== 'suspended') return;
+    audioContext.resume().catch(() => {
+      // A later visitor interaction can try again without interrupting the page.
+    });
+  }
+
   function exitArcade() {
-    window.location.assign('/');
+    document.querySelectorAll('.arcade-dialog[open]').forEach((openDialog) => {
+      if (typeof openDialog.close === 'function') openDialog.close();
+      else {
+        openDialog.removeAttribute('open');
+        openDialog.dispatchEvent(new Event('close'));
+      }
+    });
+    document.body.classList.remove('arcade-open');
+    document.dispatchEvent(new CustomEvent('uxarcade:return-home'));
   }
 
   function formatScore(value) {
     return String(Math.max(0, Math.round(value))).padStart(4, '0');
+  }
+
+  function startCountdown(countdownDialog, onComplete) {
+    if (!countdownDialog || typeof onComplete !== 'function') return;
+    if (countdownDialog.querySelector('.arcade-start-countdown')) return;
+
+    const overlay = document.createElement('div');
+    const value = document.createElement('strong');
+    const steps = ['3', '2', '1', 'GO'];
+    let step = 0;
+    let timer = null;
+
+    overlay.className = 'arcade-start-countdown';
+    overlay.setAttribute('role', 'status');
+    overlay.setAttribute('aria-live', 'assertive');
+    overlay.setAttribute('aria-label', 'Game starting');
+    overlay.append(value);
+    countdownDialog.append(overlay);
+
+    const cleanup = () => {
+      window.clearTimeout(timer);
+      countdownDialog.removeEventListener('close', cleanup);
+      overlay.remove();
+    };
+
+    const showStep = () => {
+      if (!countdownDialog.open) {
+        cleanup();
+        return;
+      }
+      value.textContent = steps[step];
+      value.classList.toggle('is-go', steps[step] === 'GO');
+      value.animate?.(
+        [{ transform: 'scale(.72)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }],
+        { duration: reducedMotion ? 1 : 180, easing: 'steps(3, end)' }
+      );
+      playSound(steps[step] === 'GO' ? 'good' : 'select');
+      step += 1;
+      if (step < steps.length) {
+        timer = window.setTimeout(showStep, 700);
+        return;
+      }
+      timer = window.setTimeout(() => {
+        cleanup();
+        if (countdownDialog.open) onComplete();
+      }, 560);
+    };
+
+    countdownDialog.addEventListener('close', cleanup, { once: true });
+    showStep();
   }
 
   window.UXArcade = {
@@ -256,10 +332,12 @@
     isSoundEnabled() {
       return soundEnabled;
     },
+    unlockAudio,
     exitArcade,
     playIntroTheme,
     playSound,
     saveGameProgress,
+    startCountdown,
     updateProgressDisplay
   };
 
@@ -269,6 +347,11 @@
       screen.hidden = screen.dataset.arcadeScreen !== name;
     });
     dialog.setAttribute('aria-labelledby', labels[name]);
+    requestAnimationFrame(() => {
+      dialog.scrollTop = 0;
+      dialog.querySelector('.arcade-screen')?.scrollTo(0, 0);
+      screens.find((screen) => !screen.hidden)?.scrollTo(0, 0);
+    });
   }
 
   function openArcade(trigger) {
@@ -278,7 +361,9 @@
     document.body.classList.add('arcade-open');
     if (typeof dialog.showModal === 'function') dialog.showModal();
     else dialog.setAttribute('open', '');
-    window.requestAnimationFrame(() => startButton?.focus());
+    window.requestAnimationFrame(() => {
+      if (!window.matchMedia('(pointer: coarse)').matches) startButton?.focus({ preventScroll: true });
+    });
     playSound('open');
   }
 
@@ -501,11 +586,11 @@
   dialog.querySelectorAll('[data-exit-game]').forEach((button) => {
     button.addEventListener('click', exitArcade);
   });
-  startButton?.addEventListener('click', startGame);
+  startButton?.addEventListener('click', () => startCountdown(dialog, startGame));
   pauseButton?.addEventListener('click', pauseGame);
   resumeButton?.addEventListener('click', resumeGame);
   dialog.querySelector('[data-play-again]')?.addEventListener('click', startGame);
-  dialog.querySelector('[data-choose-game]')?.addEventListener('click', () => closeArcade(true));
+  dialog.querySelector('[data-choose-game]')?.addEventListener('click', exitArcade);
 
   dialog.addEventListener('cancel', (event) => {
     event.preventDefault();

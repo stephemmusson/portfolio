@@ -124,6 +124,63 @@ if (heroCharacter) {
   }
 }
 
+function animateEmbeddedArtwork(object, animationName) {
+  if (!object || reducedMotion || object.dataset.artworkAnimated) return;
+
+  const svgDocument = object.contentDocument;
+  if (!svgDocument?.documentElement) return;
+  object.dataset.artworkAnimated = 'true';
+
+  if (animationName === 'charts') {
+    const chart = svgDocument.querySelector('.cls-5');
+    if (!chart || typeof chart.animate !== 'function') return;
+    chart.style.transformBox = 'fill-box';
+    chart.style.transformOrigin = 'center';
+    chart.animate([
+      { transform: 'scale(0.15) rotate(-45deg)', opacity: 0 },
+      { transform: 'scale(1.08) rotate(6deg)', opacity: 1, offset: 0.7 },
+      { transform: 'scale(1) rotate(0deg)', opacity: 1 }
+    ], { duration: 1100, delay: 300, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'both' });
+  }
+
+  if (animationName === 'plane') {
+    const pieces = [...svgDocument.querySelectorAll('.cls-1, .cls-2')].filter((piece) => {
+      try {
+        const box = piece.getBBox();
+        return box.x + box.width > 390 && box.y < 105;
+      } catch {
+        return false;
+      }
+    });
+
+    pieces.forEach((piece) => {
+      if (typeof piece.animate !== 'function') return;
+      piece.style.transformBox = 'view-box';
+      piece.style.transformOrigin = 'center';
+      piece.animate([
+        { transform: 'translate(0, 0) rotate(0deg)', opacity: 1, offset: 0 },
+        { transform: 'translate(0, 0) rotate(0deg)', opacity: 1, offset: 0.35 },
+        { transform: 'translate(72px, -34px) rotate(-8deg)', opacity: 0, offset: 0.72 },
+        { transform: 'translate(0, 0) rotate(0deg)', opacity: 0, offset: 0.74 },
+        { transform: 'translate(0, 0) rotate(0deg)', opacity: 1, offset: 1 }
+      ], { duration: 4200, easing: 'ease-in-out', iterations: Infinity });
+    });
+  }
+}
+
+const aboutCharacter = document.querySelector('.about-character');
+const contactCharacter = document.querySelector('.contact-character');
+
+if (aboutCharacter) {
+  aboutCharacter.addEventListener('load', () => animateEmbeddedArtwork(aboutCharacter, 'charts'));
+  animateEmbeddedArtwork(aboutCharacter, 'charts');
+}
+
+if (contactCharacter) {
+  contactCharacter.addEventListener('load', () => animateEmbeddedArtwork(contactCharacter, 'plane'));
+  animateEmbeddedArtwork(contactCharacter, 'plane');
+}
+
 const projectSlider = document.querySelector('#project-slider');
 const previousProjectButton = document.querySelector('[data-slider-direction="previous"]');
 const nextProjectButton = document.querySelector('[data-slider-direction="next"]');

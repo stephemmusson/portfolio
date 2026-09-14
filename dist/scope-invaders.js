@@ -42,12 +42,28 @@
     { title: 'Launch an AI chatbot', signal: 'No owner, content plan or defined user need.', type: 'weak' },
     { title: 'Copy the competitor', signal: 'Nobody checked whether their users are different.', type: 'weak' },
     { title: 'Mandatory registration', signal: 'People must sign up before seeing basic prices.', type: 'weak' },
+    { title: 'Auto-play the launch film', signal: 'It is 94 MB and nobody asked to watch it.', type: 'weak' },
+    { title: 'Hide delivery costs', signal: 'Reveal them only after the customer enters payment details.', type: 'weak' },
+    { title: 'Add three approval steps', signal: 'The process owner wants more control, not less delay.', type: 'weak' },
+    { title: 'Collect dates of birth', signal: 'The team might find a use for them later.', type: 'weak' },
+    { title: 'Replace labels with icons', signal: 'They look cleaner, even if nobody knows what they mean.', type: 'weak' },
+    { title: 'Open every link in a new tab', signal: 'Someone once lost their place in 2014.', type: 'weak' },
+    { title: 'Add an urgent red banner', signal: 'Nothing is urgent, but red gets attention.', type: 'weak' },
+    { title: 'Ask for feedback on arrival', signal: 'The visitor has not used anything yet.', type: 'weak' },
     { title: 'Save application progress', signal: 'Research shows the journey takes several sessions.', type: 'useful' },
     { title: 'Improve error recovery', signal: 'Support logs show repeated abandonment.', type: 'useful' },
     { title: 'Remove checkout fields', signal: 'Three requested details are never used.', type: 'useful' },
     { title: 'Add keyboard controls', signal: 'The current gallery has a known access barrier.', type: 'useful' },
     { title: 'Upgrade the old platform', signal: 'Security support ends this year.', type: 'useful' },
-    { title: 'Improve search synonyms', signal: 'Search logs show common zero-result terms.', type: 'useful' }
+    { title: 'Improve search synonyms', signal: 'Search logs show common zero-result terms.', type: 'useful' },
+    { title: 'Show delivery dates early', signal: 'Customers abandon when timing is unclear.', type: 'useful' },
+    { title: 'Restore visible focus', signal: 'Keyboard users cannot see where they are.', type: 'useful' },
+    { title: 'Explain failed payments', signal: 'Support calls show the current error is a dead end.', type: 'useful' },
+    { title: 'Remember form progress', signal: 'Mobile users are interrupted and return later.', type: 'useful' },
+    { title: 'Increase tap target size', signal: 'Usability sessions show repeated missed taps.', type: 'useful' },
+    { title: 'Offer plain-language help', signal: 'Research found the policy wording causes mistakes.', type: 'useful' },
+    { title: 'Confirm destructive actions', signal: 'Audit logs show accidental deletions are common.', type: 'useful' },
+    { title: 'Prioritise recent results', signal: 'Analytics show people need current guidance first.', type: 'useful' }
   ];
 
   const game = {
@@ -63,6 +79,11 @@
     const labels = { instructions: 'scope-screen-title', playing: 'scope-playing-title', result: 'scope-result-title' };
     screens.forEach((screen) => { screen.hidden = screen.dataset.scopeScreen !== name; });
     dialog.setAttribute('aria-labelledby', labels[name]);
+    requestAnimationFrame(() => {
+      dialog.scrollTop = 0;
+      dialog.querySelector('.arcade-screen')?.scrollTo(0, 0);
+      screens.find((screen) => !screen.hidden)?.scrollTo(0, 0);
+    });
   }
 
   function openGame(trigger) {
@@ -72,7 +93,9 @@
     document.body.classList.add('arcade-open');
     if (typeof dialog.showModal === 'function') dialog.showModal();
     else dialog.setAttribute('open', '');
-    window.requestAnimationFrame(() => startButton?.focus());
+    window.requestAnimationFrame(() => {
+      if (!window.matchMedia('(pointer: coarse)').matches) startButton?.focus({ preventScroll: true });
+    });
     framework.playSound('open');
   }
 
@@ -95,7 +118,9 @@
 
   function resetGame() {
     window.cancelAnimationFrame(game.frame);
+    window.clearTimeout(game.feedbackTimer);
     clearControls();
+    ship.classList.remove('is-facing-left');
     requestLayer.replaceChildren();
     projectileLayer.replaceChildren();
     Object.assign(game, {
@@ -109,6 +134,7 @@
     touchControls.inert = false;
     playfield.setAttribute('tabindex', '0');
     fieldMessage.textContent = 'Incoming requests';
+    fieldMessage.className = 'scope-field-message';
     timerPanel.classList.remove('is-low');
     updateHud(0);
   }
@@ -151,7 +177,7 @@
     }
 
     const progress = Math.min(1, elapsed / sessionDuration);
-    const spawnInterval = Math.max(900, 2200 - (progress * 1150));
+    const spawnInterval = Math.max(520, 2000 - (progress * 1480));
     game.spawnAccumulator += rawDelta * 1000;
     if (game.spawnAccumulator >= spawnInterval) {
       game.spawnAccumulator = 0;
@@ -191,7 +217,7 @@
     requestLayer.append(element);
     const item = {
       element, request, x, laneIndex: lane.index, y: -Math.max(80, element.offsetHeight), width,
-      height: Math.max(78, element.offsetHeight), speed: 48 + (Math.min(1, getElapsed() / sessionDuration) * 54)
+      height: Math.max(78, element.offsetHeight), speed: 50 + (Math.min(1, getElapsed() / sessionDuration) * 92)
     };
     game.requests.push(item);
     renderRequest(item);
@@ -224,7 +250,7 @@
     const productLine = fieldHeight - 68;
     for (const item of [...game.requests]) {
       if (game.status !== 'playing') break;
-      item.y += item.speed * (1 + (progress * 0.2)) * delta;
+      item.y += item.speed * (1 + (progress * 0.55)) * delta;
       renderRequest(item);
       if (item.y + item.height >= productLine) resolveArrival(item);
     }
@@ -253,18 +279,40 @@
   }
 
   function resolveShot(item) {
+    showImpact(item, item.request.type === 'weak');
     removeRequest(item);
     if (item.request.type === 'weak') {
       game.stopped += 1;
       game.score += 150;
-      fieldMessage.textContent = `Stopped: ${item.request.title}`;
+      showDecision(`GOOD SHOT · weak ticket stopped`, 'good');
       framework.playSound('good');
       announce(`Weak scope stopped. ${item.request.title}.`);
     } else {
       game.mistakes += 1;
       game.score = Math.max(0, game.score - 100);
+      showDecision(`BAD SHOT · useful ticket lost`, 'bad');
       damageProduct(`Useful idea shot: ${item.request.title}`);
     }
+  }
+
+  function showDecision(message, tone) {
+    fieldMessage.textContent = message;
+    fieldMessage.className = `scope-field-message is-${tone}`;
+    window.clearTimeout(game.feedbackTimer);
+    game.feedbackTimer = window.setTimeout(() => {
+      fieldMessage.className = 'scope-field-message';
+      fieldMessage.textContent = 'Incoming requests';
+    }, 1100);
+  }
+
+  function showImpact(item, good) {
+    const impact = document.createElement('span');
+    impact.className = `scope-ticket-impact is-${good ? 'good' : 'bad'}`;
+    impact.textContent = good ? '✓ +150' : '× -100';
+    impact.style.left = `${item.x + (item.width / 2)}px`;
+    impact.style.top = `${item.y + (item.height / 2)}px`;
+    projectileLayer.append(impact);
+    window.setTimeout(() => impact.remove(), 650);
   }
 
   function resolveArrival(item) {
@@ -313,6 +361,8 @@
   function updateShip(delta) {
     const direction = Number(controls.right) - Number(controls.left);
     if (direction) game.shipX += direction * shipSpeed * delta;
+    ship.classList.toggle('is-running', Boolean(direction));
+    if (direction) ship.classList.toggle('is-facing-left', direction < 0);
     clampShip();
     renderShip();
   }
@@ -383,6 +433,7 @@
   function clearControls() {
     controls.left = false;
     controls.right = false;
+    ship.classList.remove('is-running');
     game.activePointer = null;
   }
 
@@ -476,11 +527,11 @@
   dialog.querySelectorAll('[data-scope-exit]').forEach((button) => {
     button.addEventListener('click', framework.exitArcade);
   });
-  startButton?.addEventListener('click', startGame);
+  startButton?.addEventListener('click', () => framework.startCountdown(dialog, startGame));
   pauseButton?.addEventListener('click', pauseGame);
   resumeButton?.addEventListener('click', resumeGame);
   dialog.querySelector('[data-scope-play-again]')?.addEventListener('click', startGame);
-  dialog.querySelector('[data-scope-choose]')?.addEventListener('click', () => closeGame(true));
+  dialog.querySelector('[data-scope-choose]')?.addEventListener('click', framework.exitArcade);
   bindHoldControl(dialog.querySelector('[data-scope-control="left"]'), 'left');
   bindHoldControl(dialog.querySelector('[data-scope-control="right"]'), 'right');
   dialog.querySelector('[data-scope-control="fire"]')?.addEventListener('pointerdown', (event) => {

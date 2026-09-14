@@ -1,6 +1,15 @@
 <!doctype html>
 <html lang="en-GB">
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K583FZRJFB"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-K583FZRJFB');
+    </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Stephen Musson | Product, UX &amp; Creative Leadership</title>
@@ -8,19 +17,19 @@
     <meta name="theme-color" content="#f2ff3d">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Stephen Musson | Product, UX &amp; Creative Leadership">
-    <meta property="og:description" content="Product strategy, human-centred research, engaging interfaces and creative leadership, strengthened by AI-enabled delivery.">
+    <meta property="og:description" content="Product strategy, human-centred research, engaging interfaces and creative leadership, brought together through clear product direction.">
     <link rel="canonical" href="https://www.stephenmusson.com/">
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=49">
     <script>document.documentElement.classList.add('js');</script>
-    <script src="script.js" defer></script>
+    <script src="script.js?v=45" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to the good stuff</a>
 
     <div class="welcome-bar" aria-label="Introduction">
       <div class="shell welcome-inner">
-        <strong>Product · UX · Creative leadership</strong>
+        <strong>Product · UX · Creative · Leadership</strong>
         <span>Stephen Musson · Portfolio 2026</span>
       </div>
     </div>
@@ -64,14 +73,29 @@
           </div>
         </div>
 
-        <div class="shell">
-          <ul class="focus-list" aria-label="Areas of focus">
-            <li>Digital strategy</li>
-            <li>User research</li>
-            <li>UX, UI &amp; creative</li>
-            <li>Leadership</li>
-            <li>AI &amp; automation</li>
-          </ul>
+        <div class="focus-rail" aria-label="How I work">
+          <div class="focus-track">
+            <ul class="focus-list">
+              <li>Find the friction</li>
+              <li>Map the journey</li>
+              <li>Ask better questions</li>
+              <li>Prototype early</li>
+              <li>Test with real people</li>
+              <li>Make complexity clear</li>
+              <li>Build reusable systems</li>
+              <li>Automate the repetitive</li>
+            </ul>
+            <ul class="focus-list" aria-hidden="true">
+              <li>Find the friction</li>
+              <li>Map the journey</li>
+              <li>Ask better questions</li>
+              <li>Prototype early</li>
+              <li>Test with real people</li>
+              <li>Make complexity clear</li>
+              <li>Build reusable systems</li>
+              <li>Automate the repetitive</li>
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -79,7 +103,9 @@
         <div class="shell about-grid">
           <div class="about-art reveal">
             <span class="art-note">25 years. Still curious.</span>
-            <img src="assets/about-stephen.svg" width="197" height="150" alt="Illustration of Stephen holding a chart and spinning a pie chart on his finger" loading="lazy">
+            <object class="about-character" data="assets/about-stephen.svg" type="image/svg+xml" width="197" height="150" role="img" aria-label="Illustration of Stephen holding a chart and spinning a pie chart on his finger">
+              <img src="assets/about-stephen.svg" width="197" height="150" alt="Illustration of Stephen holding a chart and spinning a pie chart on his finger" loading="lazy">
+            </object>
           </div>
           <div class="about-copy reveal">
             <p class="eyebrow">Experience &amp; approach</p>
@@ -279,20 +305,45 @@
               </div>
             </article>
           </div>
+
+          <aside class="experience-strip reveal" aria-label="Selected organisations Stephen has worked with">
+            <div class="experience-intro">
+              <p class="eyebrow">Experience that keeps building</p>
+              <p>Projects change. The judgement earned from them carries forward.</p>
+            </div>
+            <div class="client-rail">
+              <div class="client-track">
+                <div class="client-list">
+                  <span>O<sup>2</sup></span><span>Jim Henson Company</span><span>Universal Music</span><span>Sir Robert McAlpine</span><span>Lloyds Bank</span><span>National Academy for Social Prescribing</span><span>Taylor Wimpey</span><span>Weston Homes</span><span>West Kent Housing Association</span><span>Pertemps Driver Training</span><span>Original Style Tiles</span><span>St Peter’s Hospice</span>
+                </div>
+                <div class="client-list" aria-hidden="true">
+                  <span>O<sup>2</sup></span><span>Jim Henson Company</span><span>Universal Music</span><span>Sir Robert McAlpine</span><span>Lloyds Bank</span><span>National Academy for Social Prescribing</span><span>Taylor Wimpey</span><span>Weston Homes</span><span>West Kent Housing Association</span><span>Pertemps Driver Training</span><span>Original Style Tiles</span><span>St Peter’s Hospice</span>
+                </div>
+              </div>
+            </div>
+          </aside>
         </div>
       </section>
 
       <section class="arcade-promo section-space" id="ux-arcade" aria-labelledby="arcade-promo-title">
         <div class="shell arcade-promo-card reveal">
           <div class="arcade-promo-art" aria-hidden="true">
-            <span>1UP</span>
-            <strong><b>UX</b><small>Arcade</small></strong>
-            <i></i><i></i><i></i><i></i>
+            <div class="arcade-mini-header"><span>UX</span> ARCADE <b>7 GAMES</b></div>
+            <div class="arcade-mini-title">UX<br>ARCADE</div>
+            <div class="arcade-mini-cards">
+              <img src="assets/arcade-are-you-human-card-v2.png" alt="">
+              <img src="assets/arcade-design-debt.png" alt="">
+              <img src="assets/arcade-pac-facts.png" alt="">
+              <img src="assets/arcade-popup-panic.png" alt="">
+              <img src="assets/arcade-scope-invaders.png" alt="">
+              <img src="assets/arcade-contrast-targets.png" alt="">
+              <img src="assets/arcade-mega-menu.png" alt="">
+            </div>
           </div>
           <div class="arcade-promo-copy">
-            <p class="eyebrow">A small diversion</p>
-            <h2 id="arcade-promo-title">Bad UX. Better games.</h2>
-            <p>Five playable challenges about pop-ups, contrast, navigation, scope and proving you are human.</p>
+            <p class="eyebrow">UX Arcade</p>
+            <h2 id="arcade-promo-title">Seven UX problems. One arcade.</h2>
+            <p>Play seven original challenges about evidence, consistency, pop-ups, contrast, navigation, scope and proving you are human.</p>
             <a class="button button-dark" href="/ux-arcade/">Enter UX Arcade <span aria-hidden="true">▶</span></a>
           </div>
         </div>
@@ -322,7 +373,9 @@
             </div>
           </div>
           <div class="contact-art reveal">
-            <img src="assets/contact-stephen.svg" width="265" height="150" alt="Illustration of Stephen throwing a paper aeroplane" loading="lazy">
+            <object class="contact-character" data="assets/contact-stephen.svg" type="image/svg+xml" width="265" height="150" role="img" aria-label="Illustration of Stephen throwing a paper aeroplane">
+              <img src="assets/contact-stephen.svg" width="265" height="150" alt="Illustration of Stephen throwing a paper aeroplane" loading="lazy">
+            </object>
           </div>
         </div>
       </section>
@@ -331,7 +384,15 @@
     <footer class="site-footer">
       <div class="shell footer-inner">
         <a class="footer-brand" href="#top">Stephen Musson <span aria-hidden="true">↑</span></a>
-        <p>Product · UX · Creative · AI-enabled delivery · Bristol, UK</p>
+        <p>Product · UX · Creative · Leadership · Bristol, UK</p>
+        <div class="footer-socials" aria-label="Social links">
+          <a href="https://www.linkedin.com/in/stephen-musson/" aria-label="Stephen Musson on LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.4 8.2H2.8V21h3.6V8.2ZM4.6 2.5a2.1 2.1 0 1 0 0 4.2 2.1 2.1 0 0 0 0-4.2ZM21.2 13.7c0-3.9-2.1-5.8-4.9-5.8-2.3 0-3.3 1.2-3.8 2.1V8.2H8.9V21h3.6v-6.3c0-1.7.3-3.3 2.4-3.3 2 0 2.1 1.9 2.1 3.4V21h3.6l.6-7.3Z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/work_in_progress_ux/" aria-label="Stephen Musson on Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle class="social-dot" cx="17.4" cy="6.8" r="1"/></svg>
+          </a>
+        </div>
         <p>© 2026 Stephen Musson</p>
       </div>
     </footer>
