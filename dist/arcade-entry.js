@@ -62,7 +62,6 @@
   if (selectionMusic) {
     selectionMusic.volume = 0.25;
     selectionMusic.loop = true;
-    selectionMusic.load();
   }
 
   const isOpeningVisible = () => !opening.hidden && document.body.classList.contains('arcade-intro-active');

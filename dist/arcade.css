@@ -200,6 +200,18 @@
   transition: background 140ms ease, color 140ms ease, transform 140ms ease;
 }
 
+[data-sound-toggle][aria-pressed="false"] {
+  border-color: var(--paper) !important;
+  background: var(--acid) !important;
+  box-shadow: 0.22rem 0.22rem 0 var(--coral) !important;
+  color: #07102f !important;
+}
+
+[data-sound-toggle][aria-pressed="false"] .sound-icon {
+  background: #07102f;
+  color: var(--acid);
+}
+
 .arcade-sound:hover,
 .arcade-sound:focus-visible,
 .arcade-icon-button:hover,

@@ -21,26 +21,20 @@
     <meta property="og:description" content="Good UX gets people where they need to go. Bad UX makes a surprisingly entertaining game.">
     <link rel="canonical" href="https://www.stephenmusson.com/ux-arcade/">
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="preload" href="assets/ux-arcade-home-bg.webp" as="image" type="image/webp" fetchpriority="high">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="arcade.css?v=60">
+    <link rel="stylesheet" href="arcade.css?v=61">
     <link rel="stylesheet" href="arcade-games.css?v=71">
-    <link rel="stylesheet" href="white-space-race.css?v=9">
-    <link rel="stylesheet" href="arcade-page.css?v=64">
+    <link rel="stylesheet" href="white-space-race.css?v=10">
+    <link rel="stylesheet" href="arcade-page.css?v=65">
     <script>document.documentElement.classList.add('js');</script>
     <script src="script.js" defer></script>
-    <link rel="preload" href="assets/arcade-select-loop.mp3" as="audio" type="audio/mpeg">
     <script src="arcade.js?v=60" defer></script>
-    <script src="design-debt.js?v=64" defer></script>
-    <script src="pac-facts.js?v=56" defer></script>
-    <script src="contrast-crash.js?v=55" defer></script>
-    <script src="mega-menu-mayhem.js?v=55" defer></script>
-    <script src="scope-invaders.js?v=55" defer></script>
-    <script src="captcha-boss.js?v=65" defer></script>
-    <script src="white-space-race.js?v=9" defer></script>
+    <script src="arcade-game-loader.js?v=1" defer></script>
     <script src="arcade-entry.js?v=58" defer></script>
   </head>
   <body class="arcade-page arcade-intro-active">
-    <audio data-arcade-selection-music src="assets/arcade-select-loop.mp3" preload="auto" loop hidden></audio>
+    <audio data-arcade-selection-music src="assets/arcade-select-loop.mp3" preload="none" loop hidden></audio>
     <a class="skip-link" data-arcade-skip href="#arcade-opening-selector">Skip to game selector</a>
 
     <section class="arcade-opening" data-arcade-opening aria-labelledby="arcade-opening-title">
