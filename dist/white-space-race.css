@@ -597,8 +597,8 @@
   right: 48%;
   top: 37%;
   height: 12%;
-  background: currentColor;
-  box-shadow: 0 .58rem 0 currentColor, 0 1.16rem 0 currentColor;
+  background: rgba(7, 16, 47, 0.28);
+  box-shadow: 0 .58rem 0 rgba(7, 16, 47, 0.28), 0 1.16rem 0 rgba(7, 16, 47, 0.28);
 }
 
 .space-object.is-token,
