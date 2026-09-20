@@ -358,7 +358,7 @@
   left: -5rem;
   width: 5rem;
   height: 5rem;
-  background: url("assets/stephen-arcade-sprite.png") 50% 0 / 300% 100% no-repeat;
+  background: url("assets/stephen-arcade-sprite.webp") 50% 0 / 300% 100% no-repeat;
   filter: drop-shadow(0.2rem 0.2rem 0 #060c24);
   image-rendering: pixelated;
   animation: pac-card-run 5.2s linear infinite, pac-card-legs 180ms steps(1, end) infinite alternate;

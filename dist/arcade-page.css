@@ -241,6 +241,7 @@
   width: clamp(2.5rem, 5vw, 4.3rem);
   aspect-ratio: 1;
   opacity: 0;
+  overflow: hidden;
   will-change: transform, opacity;
   pointer-events: none;
   animation: arcade-stephen-title-run 5.2s 2.4s linear infinite;
@@ -248,12 +249,13 @@
 
 .arcade-title-runner::before {
   position: absolute;
-  inset: 0;
-  background: url("assets/stephen-arcade-sprite.png") 50% 0 / 300% 100% no-repeat;
+  inset: 0 auto 0 0;
+  width: 300%;
+  background: url("assets/stephen-arcade-sprite.webp") 0 0 / 100% 100% no-repeat;
   filter: drop-shadow(0.18rem 0.18rem 0 #08143f);
   image-rendering: pixelated;
   content: "";
-  background-position: 50% 0;
+  animation: arcade-stephen-stride 420ms steps(2, end) infinite;
 }
 
 @keyframes arcade-stephen-title-run {
@@ -262,10 +264,15 @@
   30% { opacity: 1; transform: translate3d(22vw, 0, 0) rotate(0); }
   38% { opacity: 1; transform: translate3d(30vw, -3rem, 0) rotate(-7deg); }
   46% { opacity: 1; transform: translate3d(38vw, 0, 0) rotate(0); }
-  76% { opacity: 1; transform: translate3d(78vw, 0, 0) rotate(0); }
-  86% { opacity: 1; transform: translate3d(90vw, -3rem, 0) rotate(-12deg); }
-  95% { opacity: 1; transform: translate3d(102vw, 3rem, 0) rotate(18deg); }
-  96%, 100% { opacity: 0; transform: translate3d(102vw, 3rem, 0) rotate(18deg); }
+  74% { opacity: 1; transform: translate3d(74vw, 0, 0) rotate(0); }
+  84% { opacity: 1; transform: translate3d(84vw, -3.4rem, 0) rotate(-12deg); }
+  92% { opacity: 1; transform: translate3d(92vw, 1.8rem, 0) rotate(18deg); }
+  93%, 100% { opacity: 0; transform: translate3d(92vw, 1.8rem, 0) rotate(18deg); }
+}
+
+@keyframes arcade-stephen-stride {
+  from { transform: translateX(0); }
+  to { transform: translateX(-66.6667%); }
 }
 
 .arcade-opening-summary {
@@ -321,7 +328,7 @@
 
 .arcade-opening h1 .arcade-opening-ux {
   color: var(--acid);
-  animation: arcade-ux-flicker 3.8s 1.8s steps(1, end) infinite;
+  animation: none;
 }
 
 .arcade-beta-anchor {
@@ -993,7 +1000,7 @@ body.high-scores-open {
   }
 
   .arcade-title-runner::before {
-    background-position: 0 0;
+    transform: translateX(0);
     animation: none;
   }
 
