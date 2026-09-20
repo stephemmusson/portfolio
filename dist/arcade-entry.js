@@ -1,4 +1,38 @@
 (() => {
+  const gameOrder = [
+    'captcha-boss',
+    'white-space-race',
+    'pac-facts',
+    'popup-panic',
+    'design-debt',
+    'scope-invaders',
+    'contrast-crash',
+    'mega-menu-mayhem'
+  ];
+
+  const reorderGames = () => {
+    const openingTrack = document.querySelector('[data-opening-selector-track]');
+    const gameGrid = document.querySelector('.arcade-grid');
+    const progressPips = document.querySelector('.arcade-progress-pips');
+
+    gameOrder.forEach((gameId, index) => {
+      const number = String(index + 1).padStart(2, '0');
+      const openingButton = openingTrack?.querySelector(`[data-opening-game="${gameId}"]`);
+      const card = gameGrid?.querySelector(`[data-game-card="${gameId}"]`);
+      const pip = progressPips?.querySelector(`[data-progress-game="${gameId}"]`);
+      openingButton?.querySelector(':scope > span')?.replaceChildren(number);
+      card?.querySelector('.game-number')?.replaceChildren(number);
+      if (openingButton) openingTrack.append(openingButton);
+      if (card) gameGrid.append(card);
+      if (pip) progressPips.append(pip);
+    });
+
+    const highScores = openingTrack?.querySelector('[data-opening-high-scores]');
+    if (highScores) openingTrack.append(highScores);
+  };
+
+  reorderGames();
+
   const opening = document.querySelector('[data-arcade-opening]');
   const openingSoundButton = opening?.querySelector('[data-sound-toggle]');
   const openingItems = [...(opening?.querySelectorAll('[data-opening-game], [data-opening-high-scores]') || [])];

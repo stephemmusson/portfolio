@@ -21,11 +21,12 @@ const siteHeader = document.querySelector('.site-header');
 if (siteHeader) {
   let lastHeaderScrollY = window.scrollY;
   let headerFrameRequested = false;
+  let headerHeight = siteHeader.offsetHeight;
 
   const updateHeaderVisibility = () => {
     const currentScrollY = Math.max(window.scrollY, 0);
     const scrollDifference = currentScrollY - lastHeaderScrollY;
-    const isNearTop = currentScrollY <= siteHeader.offsetHeight;
+    const isNearTop = currentScrollY <= headerHeight;
 
     siteHeader.classList.toggle('is-scrolled', !isNearTop);
 
@@ -46,6 +47,10 @@ if (siteHeader) {
     window.requestAnimationFrame(updateHeaderVisibility);
   }, { passive: true });
 
+  window.addEventListener('resize', () => {
+    headerHeight = siteHeader.offsetHeight;
+  }, { passive: true });
+
   siteHeader.addEventListener('focusin', () => siteHeader.classList.remove('is-hidden'));
   updateHeaderVisibility();
 }
@@ -63,8 +68,12 @@ if (scrollFillItems.length) {
     const pageEnd = document.documentElement.scrollHeight - viewportHeight;
     const isAtPageEnd = window.scrollY >= pageEnd - 12;
 
-    scrollFillItems.forEach((item) => {
-      const itemBounds = item.getBoundingClientRect();
+    const itemMeasurements = scrollFillItems.map((item) => ({
+      item,
+      bounds: item.getBoundingClientRect()
+    }));
+
+    itemMeasurements.forEach(({ item, bounds: itemBounds }) => {
       const isVisibleAtPageEnd = isAtPageEnd && itemBounds.top < viewportHeight && itemBounds.bottom > 0;
       const calculatedProgress = Math.min(1, Math.max(0, (fillStart - itemBounds.top) / fillDistance));
       const progress = reducedMotion || isVisibleAtPageEnd ? 1 : calculatedProgress;

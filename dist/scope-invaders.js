@@ -97,9 +97,11 @@
       if (!window.matchMedia('(pointer: coarse)').matches) startButton?.focus({ preventScroll: true });
     });
     framework.playSound('open');
+    framework.trackGameOpen('scope-invaders');
   }
 
   function closeGame(focusCards = false) {
+    framework.trackGameExit('scope-invaders', game.score);
     resetGame();
     document.body.classList.remove('arcade-open');
     if (typeof dialog.close === 'function' && dialog.open) dialog.close();
@@ -144,6 +146,7 @@
     switchScreen('playing');
     game.status = 'playing';
     game.startedAt = performance.now();
+    framework.trackGameStart('scope-invaders');
     game.lastFrame = game.startedAt;
     setShipToCentre();
     spawnRequest();
@@ -472,6 +475,12 @@
     clearControls();
     game.status = 'ended';
     const savedProgress = framework.saveGameProgress('scope-invaders', game.score, completed);
+    framework.trackGameEnd('scope-invaders', {
+      result: completed ? 'completed' : 'failed',
+      score: game.score,
+      requests_stopped: game.stopped,
+      useful_ideas_allowed: game.allowed
+    });
     resultKicker.textContent = completed ? '45 seconds complete' : 'Product shield depleted';
     if (!completed) {
       resultTitle.textContent = 'The backlog won.';

@@ -226,9 +226,11 @@
       if (!window.matchMedia('(pointer: coarse)').matches) startButton?.focus({ preventScroll: true });
     });
     framework.playSound('open');
+    framework.trackGameOpen('mega-menu-mayhem');
   }
 
   function closeGame(focusCards = false) {
+    framework.trackGameExit('mega-menu-mayhem', game.score);
     resetGame();
     document.body.classList.remove('arcade-open');
     if (typeof dialog.close === 'function' && dialog.open) dialog.close();
@@ -279,6 +281,7 @@
     }
     switchScreen('playing');
     game.status = 'playing';
+    framework.trackGameStart('mega-menu-mayhem');
     game.taskOrder = shuffle(tasks.map((_, index) => index));
     game.taskCursor = 0;
     game.sessionStartedAt = performance.now();
@@ -518,6 +521,11 @@
     clearRuntime();
     game.status = 'ended';
     const savedProgress = framework.saveGameProgress('mega-menu-mayhem', game.score, true);
+    framework.trackGameEnd('mega-menu-mayhem', {
+      result: 'completed',
+      score: game.score,
+      destinations_found: game.found
+    });
     if (game.found >= 9) {
       resultTitle.textContent = 'You found the useful route.';
       resultCopy.textContent = 'You navigated the vague labels and crowded categories. Clear information architecture should be less exciting.';

@@ -277,13 +277,13 @@
   pointer-events: none;
 }
 
-.game-art-popup { background-image: url("assets/arcade-popup-panic.png"); }
-.game-art-contrast { background-image: url("assets/arcade-contrast-targets.png"); }
-.game-art-menu { background-image: url("assets/arcade-mega-menu.png"); }
-.game-art-scope { background-image: url("assets/arcade-scope-invaders.png"); }
-.game-art-captcha { background-image: url("assets/arcade-are-you-human-card-v2.png"); }
-.game-art-pac { background-image: url("assets/arcade-pac-facts.png"); }
-.game-art-debt { background-image: url("assets/arcade-design-debt.png"); }
+.game-art-popup { background-image: url("assets/arcade-popup-panic.webp"); }
+.game-art-contrast { background-image: url("assets/arcade-contrast-targets.webp"); }
+.game-art-menu { background-image: url("assets/arcade-mega-menu.webp"); }
+.game-art-scope { background-image: url("assets/arcade-scope-invaders.webp"); }
+.game-art-captcha { background-image: url("assets/arcade-are-you-human-card-v2.webp"); }
+.game-art-pac { background-image: url("assets/arcade-pac-facts.webp"); }
+.game-art-debt { background-image: url("assets/arcade-design-debt.webp"); }
 
 .debt-card-pair,
 .debt-card-clear {
@@ -337,7 +337,7 @@
   84%, 100% { opacity: 0; }
 }
 
-.debt-instruction-art { background-image: url("assets/arcade-design-debt.png"); }
+.debt-instruction-art { background-image: url("assets/arcade-design-debt.webp"); }
 
 .pac-card-runner {
   position: absolute;
@@ -688,7 +688,7 @@ body.arcade-open {
 .instruction-art {
   min-height: 100%;
   border-right: 3px solid var(--paper);
-  background-image: url("assets/arcade-popup-panic.png");
+  background-image: url("assets/arcade-popup-panic.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -696,7 +696,7 @@ body.arcade-open {
 }
 
 .pac-instruction-art {
-  background-image: url("assets/arcade-pac-facts.png");
+  background-image: url("assets/arcade-pac-facts.webp");
 }
 
 .instruction-copy {
@@ -1233,7 +1233,7 @@ body.arcade-open {
 }
 
 .contrast-instruction-art {
-  background-image: url("assets/arcade-contrast-targets.png");
+  background-image: url("assets/arcade-contrast-targets.webp");
 }
 
 .contrast-access-note {
@@ -1528,7 +1528,7 @@ body.arcade-open {
 }
 
 .scope-instruction-art {
-  background-image: url("assets/arcade-scope-invaders.png");
+  background-image: url("assets/arcade-scope-invaders.webp");
 }
 
 .scope-health progress {
@@ -2609,7 +2609,7 @@ body.arcade-open {
 }
 
 .menu-instruction-art {
-  background-image: url("assets/arcade-mega-menu.png");
+  background-image: url("assets/arcade-mega-menu.webp");
 }
 
 .menu-timer progress {
@@ -3342,11 +3342,18 @@ body.arcade-open {
 
   .game-controls {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.7rem;
+    padding-top: 1rem;
   }
 
+  .game-controls span,
   .game-controls span:last-child {
-    grid-column: 1 / -1;
+    grid-column: 1;
+    min-width: 0;
+    flex-wrap: wrap;
+    align-items: center;
+    line-height: 1.45;
   }
 
   .panic-playfield {

@@ -4,7 +4,17 @@
 
   if (!dialog || !playfield) return;
 
-  const gameIds = ['captcha-boss', 'design-debt', 'pac-facts', 'popup-panic', 'scope-invaders', 'contrast-crash', 'mega-menu-mayhem'];
+  const gameIds = ['captcha-boss', 'design-debt', 'pac-facts', 'popup-panic', 'scope-invaders', 'contrast-crash', 'mega-menu-mayhem', 'white-space-race'];
+  const gameNames = {
+    'captcha-boss': 'Are You Human?',
+    'white-space-race': 'White Spaceman',
+    'pac-facts': 'Fact-Man',
+    'popup-panic': 'Pop-up Panic',
+    'design-debt': 'Design Debt',
+    'scope-invaders': 'Scope Invaders',
+    'contrast-crash': 'Target Contrast',
+    'mega-menu-mayhem': 'Mega Menu Mayhem'
+  };
   const progressKey = 'stephen-musson-ux-arcade-v1';
   const soundKey = 'stephen-musson-ux-arcade-sound';
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -35,6 +45,54 @@
   let audioContext;
   let returnFocusTarget;
   let popupSequence = 0;
+  const analyticsSessions = new Map();
+
+  function sendAnalyticsEvent(eventName, parameters = {}) {
+    if (typeof window.gtag !== 'function') return;
+    window.gtag('event', eventName, parameters);
+  }
+
+  function analyticsBase(gameId) {
+    return {
+      game_id: gameId,
+      game_name: gameNames[gameId] || gameId
+    };
+  }
+
+  function trackGameOpen(gameId) {
+    sendAnalyticsEvent('game_open', analyticsBase(gameId));
+  }
+
+  function trackGameStart(gameId) {
+    analyticsSessions.set(gameId, { startedAt: performance.now() });
+    sendAnalyticsEvent('game_start', analyticsBase(gameId));
+  }
+
+  function trackGameEnd(gameId, { result, score = 0, ...details } = {}) {
+    const session = analyticsSessions.get(gameId);
+    const durationSeconds = session ? Math.max(0, Math.round((performance.now() - session.startedAt) / 1000)) : 0;
+    analyticsSessions.delete(gameId);
+    sendAnalyticsEvent('game_end', {
+      ...analyticsBase(gameId),
+      result: result || 'completed',
+      score: Math.max(0, Math.round(Number(score) || 0)),
+      duration_seconds: durationSeconds,
+      ...details
+    });
+  }
+
+  function trackGameExit(gameId, score = 0) {
+    if (!analyticsSessions.has(gameId)) return;
+    const session = analyticsSessions.get(gameId);
+    const durationSeconds = Math.max(0, Math.round((performance.now() - session.startedAt) / 1000));
+    analyticsSessions.delete(gameId);
+    sendAnalyticsEvent('game_exit', {
+      ...analyticsBase(gameId),
+      result: 'exited',
+      score: Math.max(0, Math.round(Number(score) || 0)),
+      duration_seconds: durationSeconds
+    });
+  }
 
   const gameGrid = document.querySelector('.arcade-grid');
   gameIds.forEach((gameId) => {
@@ -183,6 +241,10 @@
         select: { frequency: 420, duration: 0.06, volume: 0.035 },
         open: { frequency: 260, duration: 0.05, volume: 0.025 },
         good: { frequency: 690, duration: 0.09, volume: 0.04 },
+        coin: { frequency: 740, duration: 0.12, volume: 0.042 },
+        jump: { frequency: 240, duration: 0.12, volume: 0.04 },
+        warning: { frequency: 175, duration: 0.1, volume: 0.032 },
+        boost: { frequency: 210, duration: 0.18, volume: 0.04 },
         bad: { frequency: 145, duration: 0.13, volume: 0.045 },
         success: { frequency: 840, duration: 0.22, volume: 0.045 },
         fail: { frequency: 110, duration: 0.28, volume: 0.04 }
@@ -191,8 +253,12 @@
       const oscillator = audioContext.createOscillator();
       const gain = audioContext.createGain();
       const now = audioContext.currentTime;
-      oscillator.type = 'square';
+      oscillator.type = type === 'boost' ? 'sawtooth' : 'square';
       oscillator.frequency.setValueAtTime(selected.frequency, now);
+      if (type === 'coin') oscillator.frequency.exponentialRampToValueAtTime(1180, now + selected.duration);
+      if (type === 'jump') oscillator.frequency.exponentialRampToValueAtTime(510, now + selected.duration);
+      if (type === 'warning') oscillator.frequency.setValueAtTime(125, now + selected.duration * .52);
+      if (type === 'boost') oscillator.frequency.exponentialRampToValueAtTime(620, now + selected.duration);
       if (type === 'success') oscillator.frequency.exponentialRampToValueAtTime(1180, now + selected.duration);
       if (type === 'fail') oscillator.frequency.exponentialRampToValueAtTime(70, now + selected.duration);
       gain.gain.setValueAtTime(selected.volume, now);
@@ -258,6 +324,7 @@
   }
 
   function exitArcade() {
+    [...analyticsSessions.keys()].forEach((gameId) => trackGameExit(gameId));
     document.querySelectorAll('.arcade-dialog[open]').forEach((openDialog) => {
       if (typeof openDialog.close === 'function') openDialog.close();
       else {
@@ -338,6 +405,10 @@
     playSound,
     saveGameProgress,
     startCountdown,
+    trackGameEnd,
+    trackGameExit,
+    trackGameOpen,
+    trackGameStart,
     updateProgressDisplay
   };
 
@@ -365,9 +436,11 @@
       if (!window.matchMedia('(pointer: coarse)').matches) startButton?.focus({ preventScroll: true });
     });
     playSound('open');
+    trackGameOpen('popup-panic');
   }
 
   function closeArcade(focusCards = false) {
+    trackGameExit('popup-panic', game.closed);
     resetGame();
     document.body.classList.remove('arcade-open');
     if (typeof dialog.close === 'function' && dialog.open) dialog.close();
@@ -409,6 +482,7 @@
     switchScreen('playing');
     game.status = 'running';
     game.startedAt = performance.now();
+    trackGameStart('popup-panic');
     spawnPopup();
     scheduleSpawn();
     game.frame = window.requestAnimationFrame(runFrame);
@@ -549,6 +623,7 @@
     clearTimers();
     game.status = 'ended';
     const savedProgress = saveGameProgress('popup-panic', game.closed, true);
+    trackGameEnd('popup-panic', { result: 'completed', score: game.closed, popups_cleared: game.closed });
     resultKicker.textContent = '20 seconds complete';
     if (game.closed >= 24) {
       resultTitle.textContent = 'Nothing stayed open for long.';

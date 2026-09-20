@@ -1,0 +1,989 @@
+/* White Space Race: a responsive side-scrolling UX Arcade level. */
+
+.arcade-opening-game-space {
+  background:
+    linear-gradient(90deg, rgba(5,10,32,.64) 0 24%, rgba(5,10,32,.08) 62%, rgba(5,10,32,.22)),
+    url("assets/arcade-white-space-man.webp") center / cover no-repeat,
+    #08143f;
+}
+
+.arcade-opening-game-space::after {
+  content: none;
+}
+
+.arcade-opening-game .space-opening-scene {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.arcade-opening-game-space .space-opening-scene { display: none; }
+
+.space-opening-scene::before,
+.space-opening-scene::after {
+  position: absolute;
+  z-index: 0;
+  left: -5%;
+  width: 110%;
+  height: 30%;
+  border: 2px solid rgba(247,247,243,0.8);
+  background:
+    repeating-linear-gradient(90deg, rgba(7,16,47,0.42) 0 1.8rem, transparent 1.8rem 2.2rem),
+    #59cdf2;
+  content: "";
+}
+
+.space-opening-scene::before { top: -10%; transform: rotate(-5deg); }
+.space-opening-scene::after { bottom: -11%; background-color: #9d72f7; transform: rotate(5deg); }
+
+.space-opening-ship {
+  position: absolute;
+  z-index: 2;
+  top: 37%;
+  left: 33%;
+  width: 34%;
+  height: 29%;
+  background: url("assets/astronaut-stephen.png") center / contain no-repeat;
+  filter: drop-shadow(.18rem .18rem 0 #07102f) drop-shadow(0 0 .4rem #59cdf2);
+  image-rendering: pixelated;
+}
+
+.space-opening-ship::before { display: none; }
+
+.space-opening-clutter {
+  position: absolute;
+  z-index: 2;
+  top: 22%;
+  right: 7%;
+  padding: 0.5rem 0.42rem;
+  border: 2px solid var(--paper);
+  background: var(--coral);
+  box-shadow: 0.2rem 0.2rem 0 #07102f;
+  color: #07102f;
+  font: 1000 0.52rem/1 ui-monospace, monospace;
+  transform: rotate(3deg);
+}
+
+.space-opening-token {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  right: 20%;
+  display: grid;
+  place-items: center;
+  width: 1.8rem;
+  aspect-ratio: 1;
+  border: 2px solid var(--paper);
+  background: var(--acid);
+  box-shadow: 0 0 0.65rem var(--acid);
+  color: #07102f;
+  font: 1000 0.7rem/1 ui-monospace, monospace;
+  transform: rotate(45deg);
+}
+
+.game-art-space {
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(5,9,28,.02) 45%, rgba(5,9,28,.6) 100%),
+    url("assets/arcade-white-space-man.webp") center / cover no-repeat,
+    #05091c;
+  isolation: isolate;
+}
+
+.game-art-space::before {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent 0 4px, rgba(255,255,255,.045) 4px 6px);
+  opacity: .7;
+  content: "";
+}
+
+.game-art-space::after {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(5,9,28,.5), transparent 45%);
+  content: "";
+  opacity: .52;
+}
+
+.game-art-space .space-card-stars,
+.game-art-space .space-card-hud,
+.game-art-space .space-card-ship,
+.game-art-space .space-card-clutter,
+.game-art-space .space-card-obstacle,
+.game-art-space .space-card-power,
+.game-art-space .space-card-speed { display: none; }
+
+.space-card-stars {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background:
+    radial-gradient(circle, #f7f7f3 0 1px, transparent 2px) 1rem 1.2rem / 5.4rem 3.7rem,
+    radial-gradient(circle, #59cdf2 0 1px, transparent 2px) 3.2rem 2.6rem / 6.8rem 4.9rem;
+  opacity: .82;
+  animation: space-card-stars 2.8s steps(6, end) infinite;
+}
+
+.space-card-hud {
+  position: absolute;
+  z-index: 7;
+  top: .72rem;
+  left: 4.2rem;
+  padding: .28rem .42rem;
+  border: 2px solid rgba(247,247,243,.72);
+  background: rgba(5,9,28,.82);
+  color: var(--acid);
+  font: 1000 .48rem/1 ui-monospace, monospace;
+  letter-spacing: .05em;
+}
+
+.space-card-ship {
+  position: absolute;
+  z-index: 4;
+  left: 15%;
+  top: 46%;
+  width: 7.8rem;
+  height: 5.5rem;
+  background: url("assets/astronaut-stephen.png") center / contain no-repeat;
+  filter: drop-shadow(.32rem .32rem 0 #07102f) drop-shadow(0 0 .8rem rgba(89,205,242,.6));
+  image-rendering: pixelated;
+  animation: space-card-flight 2.4s steps(8, end) infinite alternate;
+}
+
+.space-card-ship::before,
+.space-card-ship::after,
+.space-card-pilot,
+.space-card-ship b { display: none; }
+
+.space-card-clutter {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  width: 47%;
+  height: 28%;
+  border: 0.2rem solid #f7f7f3;
+  background:
+    repeating-linear-gradient(90deg, rgba(5,10,32,.32) 0 .16rem, transparent .16rem 1.35rem),
+    repeating-linear-gradient(90deg, #5d67f6 0 2.6rem, #ff716a 2.6rem 5.2rem);
+  box-shadow: 0 0 0 0.3rem #07102f, 0 0 .8rem rgba(157,114,247,.44);
+}
+
+.space-card-clutter-top { top: -4%; transform: skewY(-8deg); }
+.space-card-clutter-bottom { bottom: -4%; transform: skewY(8deg); }
+
+.space-card-power {
+  position: absolute;
+  z-index: 5;
+  right: 21%;
+  top: 46%;
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  aspect-ratio: 1;
+  border: 0.18rem solid #f7f7f3;
+  background: #f2ff3d;
+  box-shadow: 0 0 1rem #f2ff3d;
+  color: #07102f;
+  font: 900 1.15rem/1 ui-monospace, monospace;
+  animation: space-power-pulse 900ms steps(2, end) infinite;
+}
+
+.space-card-obstacle {
+  position: absolute;
+  z-index: 3;
+  right: 8%;
+  top: 37%;
+  padding: 0.48rem 0.55rem;
+  border: 0.16rem solid #f7f7f3;
+  background: #ff716a;
+  box-shadow: 0.22rem 0.22rem 0 #07102f, 0 0 .75rem rgba(255,113,106,.5);
+  color: #07102f;
+  font: 1000 0.58rem/1 ui-monospace, monospace;
+}
+
+.space-card-speed {
+  position: absolute;
+  z-index: 3;
+  inset: 30% -20% 25% 6%;
+  background: repeating-linear-gradient(90deg, transparent 0 2.2rem, rgba(247,247,243,.58) 2.2rem 2.34rem, transparent 2.34rem 5.6rem);
+  opacity: .44;
+  transform: skewX(-24deg);
+  animation: space-card-speed 700ms steps(4, end) infinite;
+}
+
+@keyframes space-card-flight {
+  from { translate: 0 -0.65rem; }
+  to { translate: 2.4rem 0.65rem; }
+}
+
+@keyframes space-card-squeeze {
+  0%, 100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+  55% { clip-path: polygon(0 8%, 100% 23%, 100% 77%, 0 92%); }
+}
+
+@keyframes space-card-stars {
+  to { translate: -1.8rem 0; }
+}
+
+@keyframes space-card-speed {
+  to { translate: -3.4rem 0; }
+}
+
+@keyframes space-power-pulse {
+  50% { scale: 1.12; filter: brightness(1.35); }
+}
+
+.space-screen {
+  background:
+    radial-gradient(circle at 52% 38%, rgba(89, 205, 242, 0.15), transparent 48%),
+    #070d24;
+}
+
+.space-instructions {
+  grid-template-columns: minmax(0, 1fr);
+  align-content: center;
+  background:
+    linear-gradient(90deg, rgba(89,205,242,0.08) 1px, transparent 1px) 0 0 / 2.5rem 2.5rem,
+    linear-gradient(rgba(89,205,242,0.08) 1px, transparent 1px) 0 0 / 2.5rem 2.5rem;
+}
+
+.space-instructions .instruction-copy {
+  width: min(100%, 58rem);
+  margin-inline: auto;
+}
+
+.space-instruction-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-block: 1.4rem;
+  padding: 0;
+  list-style: none;
+}
+
+.space-instruction-list li {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 0.45rem;
+  min-height: 8.3rem;
+  padding: 1rem;
+  border: 3px solid var(--paper);
+  background: #111936;
+  box-shadow: 0.3rem 0.3rem 0 var(--blue);
+}
+
+.space-instruction-list li::before {
+  position: static;
+  width: 1.5rem;
+  height: 0.35rem;
+  background: var(--acid);
+  content: "";
+}
+
+.space-instruction-list strong {
+  color: var(--paper);
+  font-family: ui-monospace, monospace;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+}
+
+.space-instruction-list span {
+  color: rgba(247,247,243,0.8);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.space-instruction-controls {
+  grid-template-columns: 1fr;
+  min-height: 0;
+}
+
+.space-instruction-controls > span {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.space-touch-copy { display: none; }
+
+.space-hud {
+  grid-template-columns: repeat(3, minmax(5.2rem, auto)) minmax(15rem, 1fr) auto;
+}
+
+.space-progress-panel progress::-webkit-progress-value,
+.space-power-status progress::-webkit-progress-value {
+  background: linear-gradient(90deg, #59cdf2, #f2ff3d);
+}
+
+.space-progress-panel progress::-moz-progress-bar,
+.space-power-status progress::-moz-progress-bar {
+  background: #59cdf2;
+}
+
+.space-playfield {
+  position: relative;
+  flex: 1;
+  min-height: 34rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 3px solid var(--paper);
+  background: #050a20;
+  touch-action: none;
+}
+
+.space-status-line {
+  position: relative;
+  z-index: 20;
+  min-height: 3.4rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.55rem 0.8rem;
+  border-bottom: 3px solid var(--paper);
+  background: #111936;
+  font-family: ui-monospace, monospace;
+  text-transform: uppercase;
+}
+
+.space-status-line > span {
+  padding: 0.25rem 0.4rem;
+  background: var(--blue);
+  color: var(--paper);
+  font-size: 0.66rem;
+  font-weight: 900;
+}
+
+.space-status-line > strong {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--acid);
+  font-size: 0.78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.space-power-status {
+  position: absolute;
+  z-index: 24;
+  top: 0.6rem;
+  right: 0.6rem;
+  min-width: 11rem;
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.45rem 0.55rem;
+  border: 2px solid var(--paper);
+  background: rgba(7,16,47,0.92);
+  box-shadow: 0.2rem 0.2rem 0 var(--blue);
+  color: var(--paper);
+  font-size: 0.58rem;
+  font-weight: 900;
+}
+
+.space-power-status[hidden] { display: none; }
+
+.space-impact-message {
+  position: absolute;
+  z-index: 32;
+  top: 0.65rem;
+  left: 50%;
+  width: max-content;
+  max-width: calc(100% - 2rem);
+  padding: 0.5rem 0.7rem;
+  border: 3px solid var(--paper);
+  background: var(--coral);
+  box-shadow: 0.25rem 0.25rem 0 #07102f;
+  color: #07102f;
+  font: 1000 clamp(0.6rem, 1.4vw, 0.78rem)/1.2 ui-monospace, monospace;
+  text-align: center;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+  animation: space-impact-arrive 180ms steps(3, end);
+}
+
+.space-impact-message[hidden] { display: none; }
+
+.space-power-status progress {
+  width: 100%;
+  height: 0.42rem;
+  accent-color: var(--acid);
+}
+
+.space-viewport {
+  --space-scroll: 0px;
+  position: relative;
+  min-height: 0;
+  flex: 1;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 4px, rgba(0, 0, 0, 0.16) 4px 6px),
+    radial-gradient(circle at 67% 48%, rgba(93,103,246,.28), transparent 28%),
+    linear-gradient(#05091d 0%, #102b63 58%, #070d29 100%);
+  image-rendering: pixelated;
+  cursor: crosshair;
+  isolation: isolate;
+}
+
+.space-viewport::before {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background: repeating-linear-gradient(90deg, transparent 0 8rem, rgba(89,205,242,.12) 8rem 8.15rem, transparent 8.15rem 13rem);
+  clip-path: polygon(0 42%, 100% 31%, 100% 70%, 0 58%);
+  content: "";
+  opacity: .65;
+  pointer-events: none;
+  transform: translateX(calc(var(--space-scroll) * -.22));
+}
+
+.space-sky {
+  position: absolute;
+  z-index: 0;
+  inset: 0 -40%;
+  pointer-events: none;
+}
+
+.space-sky-far {
+  background:
+    radial-gradient(circle, rgba(247,247,243,0.9) 0 1px, transparent 2px) 0 0 / 7rem 5rem,
+    radial-gradient(circle, rgba(89,205,242,0.8) 0 1px, transparent 2px) 2rem 1.8rem / 8.5rem 6.5rem;
+  opacity: 0.72;
+  transform: translateX(calc(var(--space-scroll) * -0.07));
+}
+
+.space-sky-near {
+  background:
+    linear-gradient(90deg, transparent 0 8%, rgba(93,103,246,0.22) 8% 10%, transparent 10% 21%, rgba(255,113,106,0.16) 21% 23%, transparent 23%) 0 82% / 24rem 28% repeat-x;
+  transform: translateX(calc(var(--space-scroll) * -0.15));
+}
+
+.space-world {
+  position: absolute;
+  z-index: 3;
+  inset: 0 auto 0 0;
+  width: 600%;
+  transform: translate3d(calc(var(--space-scroll) * -1), 0, 0);
+  will-change: transform;
+}
+
+.space-terrain {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  color: #59cdf2;
+  filter: drop-shadow(0 0 0.45rem rgba(89,205,242,0.32));
+}
+
+.space-terrain-shape {
+  fill: url(#space-interface-grid);
+  stroke: #f7f7f3;
+  stroke-width: 1.1;
+  vector-effect: non-scaling-stroke;
+  transition: transform 280ms steps(4, end), opacity 180ms linear;
+}
+
+.space-terrain-bottom { color: #9d72f7; }
+
+.space-object-layer {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+}
+
+.space-object {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  border: 0.16rem solid var(--paper);
+  box-shadow: 0.28rem 0.28rem 0 #050a20, inset 0 0 0 2px rgba(5,10,32,0.16);
+  color: #07102f;
+  font-family: ui-monospace, monospace;
+  font-size: clamp(0.48rem, 1vw, 0.68rem);
+  font-weight: 1000;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  transition: opacity 160ms linear, transform 260ms steps(4, end);
+}
+
+.space-object.is-obstacle {
+  grid-template-rows: 0.7rem 1fr;
+  overflow: hidden;
+  background: var(--coral);
+}
+
+.space-object.is-obstacle.is-warning {
+  animation: space-obstacle-warning 420ms steps(2, end) 2;
+}
+
+.space-object.is-obstacle.is-telegraph {
+  opacity: .18;
+  filter: saturate(.2);
+}
+
+.space-object.is-obstacle.is-telegraph.is-warning {
+  opacity: 1;
+  filter: none;
+}
+
+.space-object.is-obstacle.is-live {
+  opacity: 1;
+  filter: none;
+}
+.space-object.is-header { background: #5d67f6; color: var(--paper); }
+.space-object.is-banner { background: #f5ef50; }
+.space-object.is-modal { background: #f7f7f3; }
+.space-object.is-tooltip { background: #60d49d; }
+.space-object.is-carousel { background: #9d72f7; color: var(--paper); }
+
+.space-object.is-obstacle > span {
+  align-self: center;
+  padding: 0.3rem;
+}
+
+.space-object-chrome {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.18rem;
+  padding-inline: 0.28rem;
+  border-bottom: 2px solid currentColor;
+  background: rgba(5,10,32,0.14);
+}
+
+.space-object-chrome b {
+  width: 0.22rem;
+  aspect-ratio: 1;
+  background: currentColor;
+}
+
+.space-object-symbol {
+  position: absolute;
+  right: 0.2rem;
+  bottom: 0.12rem;
+  color: currentColor;
+  font-style: normal;
+  font-size: clamp(0.7rem, 1.3vw, 1rem);
+  opacity: 0.38;
+}
+
+.space-object.is-obstacle::before,
+.space-object.is-obstacle::after {
+  position: absolute;
+  content: "";
+}
+
+.space-object.is-modal::before {
+  top: 16%;
+  left: 12%;
+  right: 12%;
+  height: 14%;
+  background: var(--blue);
+  box-shadow: 0 0.72rem 0 rgba(7,16,47,0.18), 0 1.16rem 0 rgba(7,16,47,0.18);
+}
+
+.space-object.is-header::before {
+  left: 8%;
+  right: 48%;
+  top: 37%;
+  height: 12%;
+  background: currentColor;
+  box-shadow: 0 .58rem 0 currentColor, 0 1.16rem 0 currentColor;
+}
+
+.space-object.is-token,
+.space-object.is-power {
+  z-index: 8;
+  aspect-ratio: 1;
+  border-color: var(--paper);
+  border-radius: 0;
+  background: #07102f;
+  box-shadow: 0 0 0 0.22rem var(--acid), 0 0 1rem rgba(242,255,61,0.78), 0.28rem 0.28rem 0 #050a20;
+  color: #07102f;
+}
+
+.space-object.is-token {
+  border: .2rem solid #fff9a0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 36% 30%, #fff9a0 0 10%, #f2ff3d 11% 38%, #c6a900 39% 53%, #f2ff3d 54% 68%, #7d6900 69% 100%);
+  box-shadow: inset 0 0 0 .18rem #f2ff3d, inset 0 0 0 .34rem #7d6900, 0 0 1.15rem rgba(242,255,61,.9), .25rem .25rem 0 #050a20;
+  animation: space-token-spin 850ms steps(6, end) infinite;
+}
+
+.space-object.is-token span {
+  display: grid;
+  place-items: center;
+  width: 58%;
+  aspect-ratio: 1;
+  border: 2px solid rgba(5,10,32,.7);
+  border-radius: 50%;
+  background: rgba(255,249,160,.72);
+  color: #07102f;
+  font-size: 0.72rem;
+}
+
+.space-object.is-power {
+  overflow: visible;
+  background: #59cdf2;
+  box-shadow: 0 0 0 0.22rem var(--paper), 0 0 1.35rem #59cdf2, 0.3rem 0.3rem 0 #050a20;
+  color: #07102f;
+  font-size: 1.1rem;
+  animation: space-power-pulse 760ms steps(2, end) infinite;
+}
+
+.space-object.is-power strong {
+  display: grid;
+  place-items: center;
+  width: 78%;
+  height: 78%;
+  border: 2px solid #07102f;
+  background: var(--paper);
+}
+
+.space-object.is-power span {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 0.45rem);
+  width: max-content;
+  padding: 0.22rem 0.35rem;
+  border: 2px solid var(--paper);
+  background: #07102f;
+  color: var(--paper);
+  font-size: 0.48rem;
+  transform: translateX(-50%);
+}
+
+.space-object.is-collected,
+.space-object.is-passed,
+.space-object.is-hit,
+.space-object.is-cleared {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.space-viewport.is-breathing .space-terrain-top { transform: translateY(-10%); opacity: 0.66; }
+.space-viewport.is-breathing .space-terrain-bottom { transform: translateY(10%); opacity: 0.66; }
+.space-viewport.is-breathing .space-object.is-small { opacity: 0.08; transform: scale(0.7); }
+.space-viewport.is-breathing { filter: saturate(0.72) brightness(1.18); }
+
+.space-ship {
+  position: absolute;
+  z-index: 12;
+  left: 18%;
+  top: 48%;
+  width: clamp(4.5rem, 7.5vw, 6.4rem);
+  aspect-ratio: 1.35 / 1;
+  background: url("assets/astronaut-stephen.png") center / contain no-repeat;
+  filter: drop-shadow(.3rem .3rem 0 rgba(5,10,32,.9)) drop-shadow(0 0 .65rem rgba(89,205,242,.55));
+  image-rendering: pixelated;
+  transform: translate(-50%, -50%);
+  transform-origin: 50% 50%;
+  will-change: left, top, transform;
+}
+
+.space-ship::before,
+.space-ship::after {
+  position: absolute;
+  z-index: -1;
+  left: 11%;
+  top: 61%;
+  width: .34rem;
+  aspect-ratio: 1;
+  background: #f2ff3d;
+  box-shadow:
+    -.55rem .2rem 0 #59cdf2,
+    -1rem .52rem 0 #f7f7f3,
+    -1.45rem .82rem 0 #59cdf2,
+    -1.9rem 1.15rem 0 rgba(157,114,247,.82);
+  content: "";
+  opacity: 0;
+  image-rendering: pixelated;
+  transform: rotate(-18deg);
+  transform-origin: 100% 0;
+  pointer-events: none;
+}
+
+.space-ship::after {
+  left: 17%;
+  top: 67%;
+  filter: brightness(1.2);
+  transform: rotate(-10deg) scale(.72);
+}
+
+.space-ship.is-boosting::before,
+.space-ship.is-boosting::after {
+  opacity: 1;
+  animation: space-jetpack-trail 360ms steps(3, end) infinite;
+}
+
+.space-ship.is-boosting::after { animation-delay: -180ms; }
+
+.space-touch-controls {
+  display: none;
+  grid-template-columns: repeat(3, minmax(3.5rem, 1fr));
+  grid-template-rows: repeat(2, 3.25rem);
+  gap: 0.35rem;
+  padding: 0.45rem;
+  border-top: 3px solid var(--paper);
+  background: #111936;
+}
+
+.space-touch-controls button {
+  min-width: 0;
+  border: 3px solid var(--paper);
+  background: #59cdf2;
+  box-shadow: 0.2rem 0.2rem 0 var(--blue);
+  color: #07102f;
+  font: 1000 1.35rem/1 ui-monospace, monospace;
+  touch-action: none;
+}
+
+.space-touch-controls button:active,
+.space-touch-controls button.is-active {
+  background: var(--acid);
+  box-shadow: 0.06rem 0.06rem 0 var(--blue);
+  transform: translate(0.12rem, 0.12rem);
+}
+
+.space-touch-controls button[data-space-control="up"] { grid-column: 2; grid-row: 1; }
+.space-touch-controls button[data-space-control="left"] { grid-column: 1; grid-row: 2; }
+.space-touch-controls button[data-space-control="down"] { grid-column: 2; grid-row: 2; }
+.space-touch-controls button[data-space-control="right"] { grid-column: 3; grid-row: 2; }
+
+.space-ship.is-rising { transform: translate(-50%, -50%) rotate(-6deg); }
+.space-ship.is-falling { transform: translate(-50%, -50%) rotate(6deg); }
+.space-viewport.is-recovering .space-ship { animation: space-ship-recover 180ms steps(2, end) infinite; }
+.space-viewport.is-breathing .space-ship { filter: drop-shadow(0 0 0.9rem #f2ff3d) brightness(1.12); }
+
+.space-finish {
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  right: auto;
+  width: max(56rem, 12%);
+  height: 100%;
+  border-left: .32rem solid #fff;
+  background: linear-gradient(90deg, rgba(247,247,243,.15), #f7f7f3 12%, #fff 100%);
+  box-shadow: -1rem 0 2.8rem rgba(247,247,243,.9);
+}
+
+.space-finish span { display: none; }
+
+.space-finish-message {
+  position: absolute;
+  z-index: 45;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: .8rem;
+  padding: 2rem;
+  color: #07102f;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(.8rem);
+}
+
+.space-finish-message strong {
+  font: 1000 clamp(1.7rem, 5vw, 3.8rem)/.95 ui-monospace, monospace;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
+.space-finish-message span {
+  max-width: 30rem;
+  font: 800 clamp(.78rem, 1.7vw, 1.05rem)/1.4 ui-monospace, monospace;
+}
+
+.space-viewport.is-finishing .space-finish-message {
+  animation: space-finish-copy 2400ms ease-out forwards;
+}
+
+.space-viewport.is-finishing::after {
+  position: absolute;
+  z-index: 40;
+  inset: 0;
+  background: #fff;
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  animation: space-whiteout 1900ms ease-out forwards;
+}
+
+.space-viewport.is-finishing .space-ship {
+  transition: left 1650ms ease-in-out, transform 1650ms ease-in-out, opacity 1650ms linear;
+  left: 110% !important;
+  transform: translate(-50%, -50%) scale(.72);
+  opacity: 0;
+}
+
+.space-hit-flash {
+  position: absolute;
+  z-index: 30;
+  inset: 0;
+  background: rgba(255,113,106,0.34);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.space-viewport.is-hit .space-hit-flash { animation: space-hit-flash 320ms steps(2, end); }
+
+.space-results { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+@keyframes space-token-spin {
+  0%, 100% { transform: scaleX(1); filter: brightness(1); }
+  45% { transform: scaleX(.36); filter: brightness(1.45); }
+}
+
+@keyframes space-obstacle-warning {
+  0%, 100% { filter: none; }
+  50% { border-color: #fff; background: #ff3028; box-shadow: 0 0 1.4rem #ff3028, .28rem .28rem 0 #050a20; }
+}
+
+@keyframes space-whiteout {
+  0%, 18% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes space-finish-copy {
+  0%, 42% { opacity: 0; transform: translateY(.8rem); }
+  68%, 100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes space-jetpack-trail {
+  0% { translate: .18rem -.08rem; filter: brightness(1.3); }
+  50% { translate: -.16rem .12rem; filter: brightness(.92); }
+  100% { translate: -.34rem .22rem; filter: brightness(1.18); }
+}
+
+@keyframes space-engine {
+  to { width: 42%; filter: brightness(1.35); }
+}
+
+@keyframes space-ship-recover {
+  50% { opacity: 0.34; }
+}
+
+@keyframes space-hit-flash {
+  0%, 100% { opacity: 0; }
+  25%, 62% { opacity: 1; }
+}
+
+@keyframes space-impact-arrive {
+  from { opacity: 0; transform: translate(-50%, -0.7rem); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@media (max-width: 860px) {
+  .space-instruction-controls .space-desktop-copy { display: none !important; }
+  .space-instruction-controls .space-touch-copy { display: flex !important; }
+  .space-instruction-list {
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+  }
+  .space-instruction-list li {
+    min-height: 0;
+    grid-template-columns: 1.2rem minmax(0, 1fr);
+    gap: 0.3rem 0.65rem;
+    padding: 0.75rem;
+  }
+  .space-instruction-list li::before { grid-row: 1 / 3; width: 0.35rem; height: 100%; }
+  .space-instruction-list strong,
+  .space-instruction-list span { grid-column: 2; }
+  .space-hud {
+    grid-template-columns: repeat(3, 1fr) auto;
+  }
+  .space-progress-panel {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+  .space-playfield { min-height: 31rem; }
+  .space-power-status { min-width: 9rem; }
+  .space-ship { width: clamp(3.9rem, 15vw, 5.2rem); }
+  .space-touch-controls { display: grid; }
+  .space-results { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 560px) {
+  .space-dialog { padding: 0; }
+  .space-dialog .arcade-cabinet { min-height: 100dvh; border-width: 2px; }
+  .space-playing { min-height: 0; }
+  .space-hud { gap: 0.22rem; margin-bottom: 0.25rem; padding: 0.2rem; }
+  .space-hud .hud-stat,
+  .space-hud .hud-overload { min-width: 0; min-height: 2.3rem; padding: 0.24rem 0.3rem; }
+  .space-hud .hud-stat span { font-size: 0.5rem; }
+  .space-hud .hud-stat strong { font-size: 0.84rem; }
+  .space-hud .arcade-action-small { min-height: 100%; padding: 0.25rem; font-size: 0; }
+  .space-instructions { align-content: start; }
+  .space-instructions .instruction-copy { padding-top: 0.5rem; }
+  .space-instruction-list { margin-block: 1rem; }
+  .space-instruction-list strong { font-size: 0.72rem; }
+  .space-instruction-list span { font-size: 0.78rem; }
+  .space-playfield { min-height: 0; flex: 1; border-width: 2px; }
+  .space-viewport { min-height: 14rem; }
+  .space-power-status { top: 0.35rem; right: 0.35rem; min-width: 8rem; padding: 0.3rem; font-size: 0.5rem; }
+  .space-impact-message { top: 0.35rem; padding: 0.38rem 0.5rem; border-width: 2px; }
+  .space-object { border-width: 2px; font-size: 0.5rem; }
+  .space-object.is-obstacle {
+    grid-template-rows: .52rem minmax(0, 1fr);
+    min-width: 2.75rem;
+  }
+  .space-object.is-obstacle > span {
+    width: 100%;
+    min-width: 0;
+    padding: .14rem;
+    overflow: hidden;
+    font-size: clamp(.46rem, 2vw, .56rem);
+    line-height: 1.02;
+    overflow-wrap: anywhere;
+  }
+  .space-object-chrome { gap: .1rem; padding-inline: .16rem; border-bottom-width: 1px; }
+  .space-object-chrome b { width: .16rem; }
+  .space-object-symbol { right: .1rem; bottom: .08rem; font-size: .58rem; }
+  .space-object.is-obstacle::before,
+  .space-object.is-obstacle::after { display: none; }
+  .space-touch-controls {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-rows: 3rem;
+    padding: 0.35rem;
+    border-top-width: 2px;
+  }
+  .space-touch-controls button { min-height: 3rem; border-width: 2px; }
+  .space-touch-controls button[data-space-control="left"] { grid-column: 1; grid-row: 1; }
+  .space-touch-controls button[data-space-control="up"] { grid-column: 2; grid-row: 1; }
+  .space-touch-controls button[data-space-control="down"] { grid-column: 3; grid-row: 1; }
+  .space-touch-controls button[data-space-control="right"] { grid-column: 4; grid-row: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .game-art-space::before,
+  .space-card-ship,
+  .space-card-power,
+  .space-card-stars,
+  .space-card-speed,
+  .space-object.is-token,
+  .space-object.is-power,
+  .space-ship.is-boosting::before,
+  .space-ship.is-boosting::after,
+  .space-viewport.is-recovering .space-ship {
+    animation: none !important;
+  }
+  .space-object.is-obstacle.is-warning { animation: none !important; outline: 3px solid #ff3028; }
+  .space-viewport.is-finishing::after,
+  .space-viewport.is-finishing .space-finish-message { animation-duration: 1ms; }
+  .space-sky,
+  .space-viewport::before { transform: none !important; }
+  .space-terrain-shape,
+  .space-object { transition: none; }
+}

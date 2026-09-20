@@ -205,9 +205,11 @@
       if (!window.matchMedia('(pointer: coarse)').matches) startButton?.focus({ preventScroll: true });
     });
     framework.playSound('open');
+    framework.trackGameOpen('captcha-boss');
   }
 
   function closeGame(focusCards = false) {
+    framework.trackGameExit('captcha-boss', game.score);
     resetGame();
     document.body.classList.remove('arcade-open');
     if (typeof dialog.close === 'function' && dialog.open) dialog.close();
@@ -274,6 +276,7 @@
     buildWorld();
     game.status = 'playing';
     game.startedAt = performance.now();
+    framework.trackGameStart('captcha-boss');
     game.lastFrame = game.startedAt;
     updateHud(0);
     updateCamera();
@@ -376,7 +379,7 @@
       game.velocityY = JUMP_SPEED;
       game.grounded = false;
       controls.jumpUntil = 0;
-      framework.playSound('select');
+      framework.playSound('jump');
     }
     if (controls.jumpUntil < now) controls.jumpUntil = 0;
     game.velocityY -= GRAVITY * delta;
@@ -1513,6 +1516,11 @@
       game.score += timeBonus + (game.patience * 100);
     }
     const savedProgress = framework.saveGameProgress('captcha-boss', game.score, completed);
+    framework.trackGameEnd('captcha-boss', {
+      result: completed ? 'completed' : 'failed',
+      score: game.score,
+      checks_completed: game.checks
+    });
     if (completed) {
       resultKicker.textContent = 'Humanity provisionally confirmed';
       resultTitle.textContent = 'Apparently, yes.';

@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href="../">
     <title>UX Arcade | Stephen Musson</title>
-    <meta name="description" content="Seven playable UX challenges about evidence, consistency, pop-ups, contrast, navigation, scope and CAPTCHA friction. Enter Stephen Musson’s UX Arcade.">
+    <meta name="description" content="Eight playable UX challenges about evidence, consistency, white space, pop-ups, contrast, navigation, scope and CAPTCHA friction. Enter Stephen Musson’s UX Arcade.">
     <meta name="theme-color" content="#191c22">
     <meta property="og:type" content="website">
     <meta property="og:title" content="UX Arcade | Stephen Musson">
@@ -22,20 +22,22 @@
     <link rel="canonical" href="https://www.stephenmusson.com/ux-arcade/">
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="arcade.css?v=58">
-    <link rel="stylesheet" href="arcade-games.css?v=65">
-    <link rel="stylesheet" href="arcade-page.css?v=62">
+    <link rel="stylesheet" href="arcade.css?v=60">
+    <link rel="stylesheet" href="arcade-games.css?v=71">
+    <link rel="stylesheet" href="white-space-race.css?v=9">
+    <link rel="stylesheet" href="arcade-page.css?v=64">
     <script>document.documentElement.classList.add('js');</script>
     <script src="script.js" defer></script>
     <link rel="preload" href="assets/arcade-select-loop.mp3" as="audio" type="audio/mpeg">
-    <script src="arcade.js?v=58" defer></script>
-    <script src="design-debt.js?v=60" defer></script>
-    <script src="pac-facts.js?v=54" defer></script>
-    <script src="contrast-crash.js?v=54" defer></script>
-    <script src="mega-menu-mayhem.js?v=54" defer></script>
-    <script src="scope-invaders.js?v=54" defer></script>
-    <script src="captcha-boss.js?v=63" defer></script>
-    <script src="arcade-entry.js?v=56" defer></script>
+    <script src="arcade.js?v=60" defer></script>
+    <script src="design-debt.js?v=64" defer></script>
+    <script src="pac-facts.js?v=56" defer></script>
+    <script src="contrast-crash.js?v=55" defer></script>
+    <script src="mega-menu-mayhem.js?v=55" defer></script>
+    <script src="scope-invaders.js?v=55" defer></script>
+    <script src="captcha-boss.js?v=65" defer></script>
+    <script src="white-space-race.js?v=9" defer></script>
+    <script src="arcade-entry.js?v=58" defer></script>
   </head>
   <body class="arcade-page arcade-intro-active">
     <audio data-arcade-selection-music src="assets/arcade-select-loop.mp3" preload="auto" loop hidden></audio>
@@ -55,7 +57,7 @@
         <div class="arcade-opening-title-wrap">
           <span class="arcade-pixel-burst" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
           <h1 id="arcade-opening-title"><span class="arcade-opening-ux">UX</span> Arcad<span class="arcade-beta-anchor">e<small class="arcade-beta-tag">Beta</small></span><i class="arcade-title-runner" aria-hidden="true"></i></h1>
-          <p class="arcade-opening-summary">Seven avoidable problems. One useful way through.</p>
+          <p class="arcade-opening-summary">Eight avoidable problems. One useful way through.</p>
         </div>
         <p class="arcade-opening-prompt">Insert better decisions</p>
         <div class="arcade-opening-selector" id="arcade-opening-selector" aria-label="Choose a UX Arcade game or view the high scores">
@@ -71,7 +73,7 @@
               <span>01</span><strong>Are You Human?</strong><small>Play game →</small>
             </button>
             <button class="arcade-opening-game arcade-opening-game-debt" type="button" data-opening-game="design-debt">
-              <span>02</span><strong>Design Debt</strong><small>Play game →</small>
+              <span>05</span><strong>Design Debt</strong><small>Play game →</small>
             </button>
             <button class="arcade-opening-game arcade-opening-game-pac" type="button" data-opening-game="pac-facts">
               <span>03</span><strong>Fact-Man</strong><small>Play game →</small>
@@ -80,13 +82,17 @@
               <span>04</span><strong>Pop-up Panic</strong><small>Play game →</small>
             </button>
             <button class="arcade-opening-game arcade-opening-game-scope" type="button" data-opening-game="scope-invaders">
-              <span>05</span><strong>Scope Invaders</strong><small>Play game →</small>
+              <span>06</span><strong>Scope Invaders</strong><small>Play game →</small>
             </button>
             <button class="arcade-opening-game arcade-opening-game-contrast" type="button" data-opening-game="contrast-crash">
-              <span>06</span><strong>Target Contrast</strong><small>Play game →</small>
+              <span>07</span><strong>Target Contrast</strong><small>Play game →</small>
             </button>
             <button class="arcade-opening-game arcade-opening-game-menu" type="button" data-opening-game="mega-menu-mayhem">
-              <span>07</span><strong>Mega Menu Mayhem</strong><small>Play game →</small>
+              <span>08</span><strong>Mega Menu Mayhem</strong><small>Play game →</small>
+            </button>
+            <button class="arcade-opening-game arcade-opening-game-space" type="button" data-opening-game="white-space-race">
+              <i class="space-opening-scene" aria-hidden="true"><b class="space-opening-ship"></b><b class="space-opening-clutter">POP-UP</b><em class="space-opening-token">↔</em></i>
+              <span>02</span><strong>White Spaceman</strong><small>Play game →</small>
             </button>
             <button class="arcade-opening-game arcade-opening-game-scores" type="button" data-opening-high-scores aria-haspopup="dialog" aria-controls="high-scores-dialog">
               <span>HI</span><strong>High Scores</strong><small>View legends →</small>
@@ -109,7 +115,7 @@
           </nav>
           <div class="arcade-marquee reveal" aria-hidden="true">
             <span>UX ARCADE</span>
-            <span>SEVEN WAYS TO MAKE THINGS DIFFICULT</span>
+            <span>EIGHT WAYS TO MAKE THINGS DIFFICULT</span>
             <span>ONE SENSIBLE WAY OUT</span>
           </div>
 
@@ -126,7 +132,7 @@
 
           <div class="arcade-toolbar reveal">
             <div class="arcade-progress" role="status" aria-live="polite">
-              <span class="arcade-progress-label" id="arcade-progress-text">0 of 7 games played</span>
+              <span class="arcade-progress-label" id="arcade-progress-text">0 of 8 games played</span>
               <span class="arcade-progress-pips" aria-hidden="true">
                 <i data-progress-game="captcha-boss"></i>
                 <i data-progress-game="design-debt"></i>
@@ -135,6 +141,7 @@
                 <i data-progress-game="scope-invaders"></i>
                 <i data-progress-game="contrast-crash"></i>
                 <i data-progress-game="mega-menu-mayhem"></i>
+                <i data-progress-game="white-space-race"></i>
               </span>
             </div>
             <button class="arcade-sound" type="button" data-sound-toggle aria-pressed="false" aria-label="Sound is off. Turn sound on.">
@@ -146,7 +153,7 @@
           <div class="arcade-grid">
             <article class="game-card game-card-playable reveal" data-game-card="design-debt" aria-labelledby="design-debt-title">
               <div class="game-art game-art-debt" role="img" aria-label="Pixel-art website components falling into a grid as matching groups disappear">
-                <span class="game-number" aria-hidden="true">02</span>
+                <span class="game-number" aria-hidden="true">05</span>
                 <span class="debt-card-pair" aria-hidden="true"><i>▰</i><i>▤</i></span>
                 <span class="debt-card-clear" aria-hidden="true"><i>▦</i><i>▦</i><i>▦</i><i>▦</i></span>
               </div>
@@ -186,7 +193,7 @@
 
             <article class="game-card game-card-playable reveal" data-game-card="contrast-crash" aria-labelledby="contrast-crash-title">
               <div class="game-art game-art-contrast" role="img" aria-label="Pixel-art shooting range with targets fading into the background">
-                <span class="game-number" aria-hidden="true">06</span>
+                <span class="game-number" aria-hidden="true">07</span>
               </div>
               <div class="game-card-content">
                 <div class="game-card-status">
@@ -206,7 +213,7 @@
 
             <article class="game-card game-card-playable reveal" data-game-card="mega-menu-mayhem" aria-labelledby="mega-menu-title">
               <div class="game-art game-art-menu" role="img" aria-label="Pixel-art maze made from a chaotic website mega menu">
-                <span class="game-number" aria-hidden="true">07</span>
+                <span class="game-number" aria-hidden="true">08</span>
               </div>
               <div class="game-card-content">
                 <div class="game-card-status">
@@ -226,7 +233,7 @@
 
             <article class="game-card game-card-playable reveal" data-game-card="scope-invaders" aria-labelledby="scope-invaders-title">
               <div class="game-art game-art-scope" role="img" aria-label="Pixel-art product shield defending against descending feature requests">
-                <span class="game-number" aria-hidden="true">05</span>
+                <span class="game-number" aria-hidden="true">06</span>
               </div>
               <div class="game-card-content">
                 <div class="game-card-status">
@@ -279,6 +286,34 @@
                 <div class="game-card-footer">
                   <p class="game-best" data-game-best hidden>Personal best <strong data-game-best-score>0</strong></p>
                   <button class="arcade-action arcade-action-primary" type="button" data-open-game="pac-facts">
+                    Play game <span aria-hidden="true">→</span>
+                  </button>
+                </div>
+              </div>
+            </article>
+
+            <article class="game-card game-card-playable reveal" data-game-card="white-space-race" aria-labelledby="white-space-race-title">
+              <div class="game-art game-art-space" role="img" aria-label="Pixel-art astronaut Stephen boosting through a narrowing landscape of interface clutter">
+                <span class="game-number" aria-hidden="true">02</span>
+                <span class="space-card-stars" aria-hidden="true"></span>
+                <span class="space-card-hud" aria-hidden="true">INTEGRITY 03&nbsp;&nbsp; DIST 72%</span>
+                <span class="space-card-ship" aria-hidden="true"><i class="space-card-pilot"></i><b>WS</b></span>
+                <span class="space-card-clutter space-card-clutter-top" aria-hidden="true"></span>
+                <span class="space-card-clutter space-card-clutter-bottom" aria-hidden="true"></span>
+                <span class="space-card-obstacle" aria-hidden="true">POP-UP</span>
+                <span class="space-card-power" aria-hidden="true">↔</span>
+                <span class="space-card-speed" aria-hidden="true"></span>
+              </div>
+              <div class="game-card-content">
+                <div class="game-card-status">
+                  <span class="game-availability">Playable now</span>
+                  <span class="game-complete-badge" data-completed-badge hidden>Completed</span>
+                </div>
+                <h3 id="white-space-race-title">White Spaceman</h3>
+                <p>Escape the clutter and find room to breathe.</p>
+                <div class="game-card-footer">
+                  <p class="game-best" data-game-best hidden>Personal best <strong data-game-best-score>0</strong></p>
+                  <button class="arcade-action arcade-action-primary" type="button" data-open-game="white-space-race">
                     Play game <span aria-hidden="true">→</span>
                   </button>
                 </div>
@@ -355,7 +390,7 @@
           <section class="arcade-game-view arcade-instructions" data-debt-screen="instructions">
             <div class="instruction-art debt-instruction-art" role="img" aria-label="Pixel-art interface components falling into matching patterns"></div>
             <div class="instruction-copy">
-              <p class="arcade-kicker">Game 02 · Consistency under pressure</p>
+              <p class="arcade-kicker">Game 05 · Consistency under pressure</p>
               <h2 id="debt-screen-title">Control the design debt</h2>
               <p class="instruction-lead">Move and rotate falling component tiles. Connect four or more matching colours and icons to clear them from the product.</p>
               <ul class="instruction-list">
@@ -586,7 +621,7 @@
           <section class="arcade-game-view arcade-instructions" data-contrast-screen="instructions">
             <div class="instruction-art contrast-instruction-art" role="img" aria-label="Pixel-art shooting range with high and low contrast targets"></div>
             <div class="instruction-copy">
-              <p class="arcade-kicker">Game 06 · Accessibility under pressure</p>
+              <p class="arcade-kicker">Game 07 · Accessibility under pressure</p>
               <h2 id="contrast-screen-title">Target Contrast</h2>
               <p class="instruction-lead">Shoot as many targets as you can in 30 seconds.</p>
               <ul class="instruction-list">
@@ -708,7 +743,7 @@
           <section class="arcade-game-view arcade-instructions" data-menu-screen="instructions">
             <div class="instruction-art menu-instruction-art" role="img" aria-label="Pixel-art maze made from a chaotic website mega menu"></div>
             <div class="instruction-copy">
-              <p class="arcade-kicker">Game 07 · Navigation under pressure</p>
+              <p class="arcade-kicker">Game 08 · Navigation under pressure</p>
               <h2 id="menu-screen-title">Mega Menu Mayhem</h2>
               <p class="instruction-lead">Find as many destinations as you can in 30 seconds.</p>
               <ul class="instruction-list">
@@ -819,7 +854,7 @@
           <section class="arcade-game-view arcade-instructions" data-scope-screen="instructions">
             <div class="instruction-art scope-instruction-art" role="img" aria-label="Pixel-art product shield defending against descending feature requests"></div>
             <div class="instruction-copy">
-              <p class="arcade-kicker">Game 05 · Product judgement under fire</p>
+              <p class="arcade-kicker">Game 06 · Product judgement under fire</p>
               <h2 id="scope-screen-title">Scope Invaders</h2>
               <p class="instruction-lead">Defend the product for 45 seconds. Shoot weak scope and let useful ideas through.</p>
               <ul class="instruction-list">
@@ -1147,6 +1182,136 @@
               <button class="arcade-action arcade-action-primary" type="button" data-pac-play-again>Play again <span aria-hidden="true">↻</span></button>
               <button class="arcade-action" type="button" data-pac-choose>Choose another game</button>
               <button class="arcade-action arcade-action-quiet" type="button" data-pac-exit>Exit game</button>
+            </div>
+          </section>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="arcade-dialog space-dialog" id="space-dialog" aria-labelledby="space-screen-title">
+      <div class="arcade-cabinet">
+        <header class="arcade-game-header">
+          <div class="arcade-game-brand" aria-label="UX Arcade, White Spaceman">
+            <span>UX Arcade</span>
+            <strong>White Spaceman</strong>
+          </div>
+          <div class="arcade-game-header-actions">
+            <button class="arcade-icon-button" type="button" data-sound-toggle aria-pressed="false" aria-label="Sound is off. Turn sound on.">
+              <span aria-hidden="true">♪</span>
+              <span data-sound-label>Sound: off</span>
+            </button>
+            <button class="arcade-icon-button" type="button" data-space-exit>
+              Exit game <span aria-hidden="true">×</span>
+            </button>
+          </div>
+        </header>
+
+        <div class="arcade-screen space-screen">
+          <section class="arcade-game-view arcade-instructions space-instructions" data-space-screen="instructions">
+            <div class="instruction-copy">
+              <p class="arcade-kicker">Game 02 · Clutter Canyon</p>
+              <h2 id="space-screen-title">Find room to breathe</h2>
+              <p class="instruction-lead">Pilot Stephen through Clutter Canyon and reach the open white space.</p>
+              <ul class="instruction-list space-instruction-list">
+                <li><strong>Avoid clutter</strong><span>Pop-ups, banners and modals cost one Integrity point.</span></li>
+                <li><strong>Collect spacing</strong><span>Pick up yellow spacing tokens to increase your score.</span></li>
+                <li><strong>Create breathing room</strong><span>Grab the blue power-up to widen the route for five seconds.</span></li>
+              </ul>
+              <div class="game-controls space-instruction-controls" aria-label="Game controls">
+                <span class="space-desktop-copy"><strong>Desktop</strong> Arrow keys or WASD · <kbd>P</kbd> to pause</span>
+                <span class="space-touch-copy"><strong>Mobile</strong> Use the direction buttons · Pause is always available</span>
+              </div>
+              <div class="instruction-actions">
+                <button class="arcade-action arcade-action-primary" type="button" data-space-start>Start game <span aria-hidden="true">▶</span></button>
+                <button class="arcade-action arcade-action-quiet" type="button" data-space-exit>Exit game</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="arcade-game-view arcade-playing space-playing" data-space-screen="playing" aria-labelledby="space-playing-title" hidden>
+            <h2 class="visually-hidden" id="space-playing-title">White Spaceman in progress</h2>
+            <div class="game-hud space-hud">
+              <div class="hud-stat"><span>Score</span><strong id="space-score">0000</strong></div>
+              <div class="hud-stat"><span>Spacing</span><strong id="space-tokens">0</strong></div>
+              <div class="hud-stat"><span>Integrity</span><strong id="space-integrity">3/3</strong></div>
+              <div class="hud-overload space-progress-panel">
+                <div><span>Clutter Canyon</span><strong id="space-progress-text">0%</strong></div>
+                <progress id="space-progress" max="100" value="0">0% complete</progress>
+              </div>
+              <button class="arcade-action arcade-action-small" type="button" data-space-pause>Pause <span aria-hidden="true">Ⅱ</span></button>
+            </div>
+
+            <div class="space-playfield" id="space-playfield" tabindex="0" aria-describedby="space-play-help">
+              <p class="visually-hidden" id="space-play-help">Use the arrow keys, W, A, S and D, or the on-screen direction buttons to guide Stephen. Avoid interface clutter, collect spacing tokens and reach the white space. Press P to pause.</p>
+              <span class="visually-hidden" id="space-section">Room to move</span>
+              <strong class="visually-hidden" id="space-message" role="status" aria-live="polite">Find the clearest route</strong>
+              <div class="space-viewport" id="space-viewport" aria-hidden="true">
+                <div class="space-power-status" id="space-power-status" hidden>
+                  <span>Breathing room</span>
+                  <progress id="space-power-progress" max="5000" value="0">Breathing Room active</progress>
+                </div>
+                <div class="space-impact-message" id="space-impact-message" hidden>Integrity lost</div>
+                <div class="space-sky space-sky-far"></div>
+                <div class="space-sky space-sky-near"></div>
+                <div class="space-world" id="space-world">
+                  <svg class="space-terrain" id="space-terrain" viewBox="0 0 8200 100" preserveAspectRatio="none" aria-hidden="true">
+                    <defs>
+                      <pattern id="space-interface-grid" width="90" height="12" patternUnits="userSpaceOnUse">
+                        <rect width="82" height="9" x="4" y="1" rx="1" fill="currentColor" opacity=".2"></rect>
+                        <path d="M10 4h28M10 7h18" stroke="currentColor" stroke-width="1" opacity=".55"></path>
+                      </pattern>
+                    </defs>
+                    <polygon class="space-terrain-shape space-terrain-top" id="space-terrain-top"></polygon>
+                    <polygon class="space-terrain-shape space-terrain-bottom" id="space-terrain-bottom"></polygon>
+                  </svg>
+                  <div class="space-object-layer" id="space-object-layer"></div>
+                  <div class="space-finish" id="space-finish" aria-hidden="true"><span>Open space</span></div>
+                </div>
+                <div class="space-finish-message" id="space-finish-message" aria-hidden="true">
+                  <strong>Room to breathe</strong>
+                  <span>Less clutter. Clearer choices. Better journeys.</span>
+                </div>
+                <div class="space-ship" id="space-ship"><span class="visually-hidden">Stephen in a spacesuit</span></div>
+                <div class="space-hit-flash" aria-hidden="true"></div>
+              </div>
+
+              <div class="space-touch-controls" data-space-touch-controls aria-label="Stephen direction controls">
+                <button type="button" data-space-control="up" aria-label="Move up">↑</button>
+                <button type="button" data-space-control="left" aria-label="Move left">←</button>
+                <button type="button" data-space-control="down" aria-label="Move down">↓</button>
+                <button type="button" data-space-control="right" aria-label="Move right">→</button>
+              </div>
+
+              <div class="pause-panel" data-space-pause-panel hidden>
+                <div>
+                  <p class="arcade-kicker">Game paused</p>
+                  <h3>The clutter can wait.</h3>
+                  <div class="pause-actions">
+                    <button class="arcade-action arcade-action-primary" type="button" data-space-resume>Resume <span aria-hidden="true">▶</span></button>
+                    <button class="arcade-action arcade-action-quiet" type="button" data-space-exit>Exit game</button>
+                  </div>
+                </div>
+              </div>
+              <div class="visually-hidden" id="space-live-status" aria-live="polite"></div>
+            </div>
+          </section>
+
+          <section class="arcade-game-view arcade-result space-result" data-space-screen="result" aria-live="polite" hidden>
+            <p class="arcade-kicker" id="space-result-kicker">Level complete</p>
+            <h2 id="space-result-title">Room to breathe</h2>
+            <p class="result-copy" id="space-result-copy">You made it through the clutter and found the white space.</p>
+            <div class="result-scoreboard space-results">
+              <div><span>Final score</span><strong id="space-final-score">0000</strong></div>
+              <div><span>Personal best</span><strong id="space-best-score">0000</strong></div>
+              <div><span>Spacing collected</span><strong id="space-final-tokens">0</strong></div>
+              <div><span>Obstacles avoided</span><strong id="space-final-avoided">0</strong></div>
+              <div><span>Integrity remaining</span><strong id="space-final-integrity">0/3</strong></div>
+              <div><span>Completion time</span><strong id="space-final-time">0s</strong></div>
+            </div>
+            <div class="result-actions">
+              <button class="arcade-action arcade-action-primary" type="button" data-space-play-again>Play again <span aria-hidden="true">↻</span></button>
+              <button class="arcade-action" type="button" data-space-choose>Choose another game</button>
+              <button class="arcade-action arcade-action-quiet" type="button" data-space-exit>Exit game</button>
             </div>
           </section>
         </div>

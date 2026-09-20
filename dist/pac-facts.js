@@ -108,9 +108,11 @@
       if (!window.matchMedia('(pointer: coarse)').matches) startButton?.focus({ preventScroll: true });
     });
     framework.playSound('open');
+    framework.trackGameOpen('pac-facts');
   }
 
   function closeGame(focusCards = false) {
+    framework.trackGameExit('pac-facts', game.score);
     resetGame();
     document.body.classList.remove('arcade-open');
     if (typeof dialog.close === 'function' && dialog.open) dialog.close();
@@ -152,6 +154,7 @@
     switchScreen('playing');
     buildMaze();
     game.status = 'playing';
+    framework.trackGameStart('pac-facts');
     startLoop();
     updateHud();
     announce('Collect every data point. Avoid the four UX threats until Evidence Mode is active.');
@@ -311,7 +314,7 @@
       game.dataNodes.delete(key);
       const label = specialLabels.get(key);
       game.score += label ? 40 : 10;
-      framework.playSound('select');
+      framework.playSound('coin');
       if (label) showFloatingLabel(label);
       if (game.data.size === 0) finishGame(true);
     }
@@ -454,6 +457,11 @@
     game.status = 'ended';
     const collected = game.totalData - game.data.size;
     const saved = framework.saveGameProgress('pac-facts', game.score, completed);
+    framework.trackGameEnd('pac-facts', {
+      result: completed ? 'completed' : 'failed',
+      score: game.score,
+      data_collected: collected
+    });
     resultKicker.textContent = completed ? 'Maze cleared' : 'Journey blocked';
     resultTitle.textContent = completed ? 'The journey has evidence.' : 'Opinion won this round.';
     resultCopy.textContent = completed

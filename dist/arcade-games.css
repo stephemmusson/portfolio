@@ -208,6 +208,24 @@
   display: block;
 }
 
+.debt-tile-icon.has-svg::before,
+.debt-tile-icon.has-svg::after {
+  display: none;
+}
+
+.debt-glyph {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+  fill: none;
+  stroke: #07102f;
+  stroke-width: 1.8;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  vector-effect: non-scaling-stroke;
+}
+
 .debt-pixel-icon {
   position: relative;
   width: 2rem;
@@ -381,7 +399,18 @@
   letter-spacing: -0.04em;
 }
 
-.debt-tile.is-active { outline: 0.14rem solid var(--acid); filter: brightness(1.12); }
+.debt-tile.is-active {
+  z-index: 3;
+  transform: none;
+  outline: 0;
+  box-shadow: inset 0 0 0 2px rgba(7,16,47,.78), inset -0.28rem -0.28rem 0 rgba(5, 10, 32, 0.24), 0.12rem 0.12rem 0 #050a20;
+  filter: saturate(1.12) brightness(1.04);
+}
+
+.debt-tile.is-active .debt-tile-icon {
+  width: 78%;
+  transform: none;
+}
 
 .debt-tile.is-problem {
   border-color: var(--coral);
@@ -551,22 +580,38 @@
   .debt-meter progress { height: 0.65rem; }
 
   .debt-playfield { min-height: 0; height: calc(100dvh - 11.7rem); }
-  .debt-stage { min-height: 0; grid-template-columns: minmax(0, 1fr) 5.6rem; gap: 0.45rem; padding: 0.35rem; }
+  .debt-stage { min-height: 0; grid-template-columns: minmax(0, 1fr) 4.9rem; gap: 0.35rem; padding: 0.35rem; }
   .debt-brief-panel { display: none; }
   .debt-product-panel { height: 100%; align-content: center; }
   .debt-feedback { min-height: 1.7rem; padding: 0.18rem; font-size: 0.61rem; }
-  .debt-board { width: auto; height: calc(100% - 1.7rem); max-width: 100%; gap: 0.14rem; padding: 0.2rem; }
-  .debt-tile { border-width: 2px; box-shadow: inset -0.2rem -0.2rem 0 rgba(5, 10, 32, 0.24), 0.08rem 0.08rem 0 #050a20; }
-  .debt-tile::after { inset: 9%; border-width: 1px; }
-  .debt-tile-icon { width: 68%; }
+  .debt-board {
+    width: auto;
+    height: calc(100% - 1.7rem);
+    max-width: 100%;
+    gap: 0.1rem;
+    padding: 0.18rem;
+    border-top-width: 3px;
+    background-color: #020716;
+    box-shadow: inset 0 0 1.8rem rgba(89,205,242,.13);
+  }
+  .debt-tile {
+    z-index: 1;
+    border-width: 2px;
+    box-shadow: inset -0.18rem -0.18rem 0 rgba(5,10,32,.3), 0 0 .32rem color-mix(in srgb, var(--tile-colour) 62%, transparent);
+    transform: none;
+  }
+  .debt-tile::after { inset: 5%; border-width: 2px; }
+  .debt-tile-icon { width: 82%; transform: none; }
+  .debt-tile.is-active { z-index: 3; transform: none; box-shadow: inset 0 0 0 2px rgba(7,16,47,.78), inset -0.18rem -0.18rem 0 rgba(5,10,32,.3), 0 0 .24rem color-mix(in srgb, var(--tile-colour) 68%, transparent); }
+  .debt-tile.is-active .debt-tile-icon { width: 82%; transform: none; }
   .debt-tile-code { display: none; }
   .debt-side-panel { min-height: 0; align-self: stretch; grid-template-rows: auto auto minmax(0, 1fr); padding: 0.35rem 0.2rem; gap: 0.3rem; border-width: 2px; box-shadow: none; }
   .debt-side-panel > span { padding: 0.26rem 0.12rem; font-size: 0.66rem; }
-  .debt-next { grid-template-columns: 2.65rem; }
-  .debt-next .debt-tile { width: 2.65rem; height: 2.65rem; }
+  .debt-next { grid-template-columns: 3.25rem; }
+  .debt-next .debt-tile { width: 3.25rem; height: 3.25rem; }
   .debt-side-panel small { display: none; }
   .debt-stephen-scene { display: block; min-height: 0; height: 100%; margin-top: 0.1rem; border-top-width: 2px; }
-  .debt-stephen { bottom: 1.2rem; width: 5.25rem; }
+  .debt-stephen { bottom: 1.2rem; width: 4.6rem; opacity: .72; }
   .debt-stephen-platform { padding: 0.22rem 0.06rem; border-top-width: 2px; font-size: 0.38rem; letter-spacing: -0.03em; }
   .debt-touch-controls { padding: 0.35rem; gap: 0.3rem; }
   .debt-touch-controls button { min-height: 3.7rem; font-size: 1.35rem; }
@@ -574,9 +619,9 @@
 }
 
 @media (max-width: 390px) {
-  .debt-stage { grid-template-columns: minmax(0, 1fr) 5rem; }
-  .debt-next .debt-tile { width: 2.3rem; height: 2.3rem; }
-  .debt-stephen { width: 4.7rem; }
+  .debt-stage { grid-template-columns: minmax(0, 1fr) 4.5rem; }
+  .debt-next .debt-tile { width: 2.85rem; height: 2.85rem; }
+  .debt-stephen { width: 4.1rem; }
   .debt-touch-controls button { min-height: 3.3rem; }
 }
 
@@ -1220,7 +1265,7 @@
   min-height: 25rem;
   background:
     linear-gradient(180deg, rgba(4, 12, 46, 0.48), rgba(4, 9, 29, 0.78)),
-    url("assets/arcade-scope-invaders.png") center / cover no-repeat,
+    url("assets/arcade-scope-invaders.webp") center / cover no-repeat,
     #071440;
   image-rendering: pixelated;
   touch-action: pan-y;
@@ -2059,7 +2104,7 @@
 
 .game-art-contrast,
 .contrast-instruction-art {
-  background-image: url("assets/arcade-contrast-targets.png");
+  background-image: url("assets/arcade-contrast-targets.webp");
 }
 
 .contrast-shooter {
@@ -2146,7 +2191,7 @@
   overflow: hidden;
   background:
     linear-gradient(180deg, rgba(3, 9, 32, 0.62), rgba(3, 9, 32, 0.78)),
-    url("assets/arcade-contrast-targets.png") center / cover no-repeat,
+    url("assets/arcade-contrast-targets.webp") center / cover no-repeat,
     #10183d;
   image-rendering: pixelated;
   cursor: crosshair;

@@ -28,6 +28,18 @@
     [{ x: 0, y: 0 }, { x: 0, y: 1 }],
     [{ x: 0, y: 0 }, { x: -1, y: 0 }]
   ];
+  const familyGlyphs = {
+    button: '<rect x="3" y="7" width="18" height="10"/><line x1="7" y1="12" x2="17" y2="12"/>',
+    field: '<rect x="3" y="5" width="18" height="14"/><line x1="7" y1="9" x2="7" y2="15"/><line x1="11" y1="12" x2="17" y2="12"/>',
+    card: '<rect x="5" y="3" width="14" height="18"/><rect x="8" y="6" width="8" height="5"/><line x1="8" y1="15" x2="16" y2="15"/><line x1="8" y1="18" x2="14" y2="18"/>',
+    nav: '<line x1="8" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="20" y2="12"/><line x1="8" y1="18" x2="20" y2="18"/><rect x="3" y="4" width="2" height="2"/><rect x="3" y="10" width="2" height="2"/><rect x="3" y="16" width="2" height="2"/>',
+    modal: '<rect x="3" y="4" width="18" height="16"/><line x1="3" y1="8" x2="21" y2="8"/><line x1="16" y1="5" x2="19" y2="7"/><line x1="19" y1="5" x2="16" y2="7"/>',
+    alert: '<path d="M12 3L21 20H3Z"/><line x1="12" y1="8" x2="12" y2="14"/><line x1="12" y1="17" x2="12" y2="18"/>',
+    accordion: '<rect x="3" y="4" width="18" height="5"/><rect x="3" y="15" width="18" height="5"/><polyline points="16,6 18,8 20,6"/><polyline points="16,18 18,16 20,18"/>',
+    search: '<rect x="4" y="4" width="12" height="12"/><line x1="15" y1="15" x2="21" y2="21"/>',
+    icon: '<path d="M12 3L15 9L21 10L17 15L18 21L12 18L6 21L7 15L3 10L9 9Z"/>',
+    image: '<rect x="3" y="4" width="18" height="16"/><polyline points="5,17 10,12 13,15 16,11 20,17"/><rect x="7" y="7" width="2" height="2"/>'
+  };
 
   const screens = [...dialog.querySelectorAll('[data-debt-screen]')];
   const startButton = dialog.querySelector('[data-debt-start]');
@@ -93,9 +105,11 @@
       if (!window.matchMedia('(pointer: coarse)').matches) startButton?.focus({ preventScroll: true });
     });
     framework.playSound('open');
+    framework.trackGameOpen('design-debt');
   }
 
   function closeGame(focusCards = false) {
+    framework.trackGameExit('design-debt', game.score);
     resetGame();
     document.body.classList.remove('arcade-open');
     if (typeof dialog.close === 'function' && dialog.open) dialog.close();
@@ -370,7 +384,7 @@
 
   function fallDelay() {
     const elapsedBoost = Math.floor((performance.now() - game.startedAt) / 20000) * 45;
-    return Math.max(140, 800 - ((game.level - 1) * 75) - elapsedBoost);
+    return Math.max(140, 680 - ((game.level - 1) * 75) - elapsedBoost);
   }
 
   function runFrame(now) {
@@ -398,6 +412,7 @@
     switchScreen('playing');
     game.status = 'playing';
     game.startedAt = performance.now();
+    framework.trackGameStart('design-debt');
     game.lastClearAt = game.startedAt;
     game.nextPair = createPair();
     spawnPiece();
@@ -440,6 +455,12 @@
     window.clearInterval(controlTimer);
     const completed = game.patterns >= 6;
     const saved = framework.saveGameProgress('design-debt', game.score, completed);
+    framework.trackGameEnd('design-debt', {
+      result: completed ? 'completed' : 'failed',
+      score: game.score,
+      patterns_created: game.patterns,
+      level: game.level
+    });
     resultTitle.textContent = game.debt >= 100 ? 'The product became unmanageable.' : 'The component grid reached the top.';
     finalScore.textContent = framework.formatScore(game.score);
     bestScore.textContent = framework.formatScore(saved.best);
@@ -463,9 +484,9 @@
     element.dataset.family = tile.family;
     const icon = document.createElement('span');
     const code = document.createElement('span');
-    icon.className = 'debt-tile-icon';
+    icon.className = 'debt-tile-icon has-svg';
     code.className = 'debt-tile-code';
-    icon.textContent = tile.icon;
+    icon.innerHTML = `<svg class="debt-glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false" shape-rendering="crispEdges">${familyGlyphs[tile.family] || familyGlyphs.icon}</svg>`;
     code.textContent = tile.code;
     element.append(icon, code);
     element.title = tile.problem ? `${tile.problemName}; match with ${tile.name}` : tile.name;

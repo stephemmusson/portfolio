@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Lexend Deca";
-  src: url("assets/lexend-400.ttf") format("truetype");
+  src: url("assets/lexend-400.woff") format("woff");
   font-style: normal;
   font-weight: 400;
   font-display: swap;
@@ -8,7 +8,7 @@
 
 @font-face {
   font-family: "Lexend Deca";
-  src: url("assets/lexend-600.ttf") format("truetype");
+  src: url("assets/lexend-600.woff") format("woff");
   font-style: normal;
   font-weight: 600;
   font-display: swap;
@@ -16,7 +16,7 @@
 
 @font-face {
   font-family: "Lexend Deca";
-  src: url("assets/lexend-700.ttf") format("truetype");
+  src: url("assets/lexend-700.woff") format("woff");
   font-style: normal;
   font-weight: 700;
   font-display: swap;
@@ -24,7 +24,7 @@
 
 @font-face {
   font-family: "Lexend Deca";
-  src: url("assets/lexend-800.ttf") format("truetype");
+  src: url("assets/lexend-800.woff") format("woff");
   font-style: normal;
   font-weight: 800;
   font-display: swap;
@@ -852,7 +852,7 @@ ol {
   cursor: pointer;
   font: inherit;
   line-height: 1;
-  transition: background 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+  transition: background 160ms ease, color 160ms ease, transform 160ms ease;
 }
 
 .slider-button svg {
@@ -1062,7 +1062,7 @@ ol {
   padding: clamp(1.25rem, 3vw, 2.5rem);
   background:
     linear-gradient(rgba(5, 14, 52, 0.3), rgba(5, 14, 52, 0.68)),
-    url("assets/ux-arcade-home-bg.png") center / cover no-repeat,
+    url("assets/ux-arcade-home-bg.webp") center / cover no-repeat,
     #071345;
   color: var(--paper);
   image-rendering: pixelated;
@@ -1117,6 +1117,21 @@ ol {
   object-fit: cover;
   opacity: 0.9;
   box-shadow: 0.16rem 0.16rem 0 var(--blue);
+}
+
+.arcade-mini-space {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--paper);
+  background:
+    linear-gradient(155deg, #59cdf2 0 22%, transparent 22.5%),
+    linear-gradient(25deg, transparent 0 72%, #9d72f7 72.5%),
+    #08143f;
+  box-shadow: 0.16rem 0.16rem 0 var(--blue);
+  color: var(--acid);
+  font: 900 clamp(1rem, 2.2vw, 1.6rem)/1 ui-monospace, monospace;
 }
 
 @keyframes arcade-title-blink {

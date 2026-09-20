@@ -83,9 +83,11 @@
       if (!window.matchMedia('(pointer: coarse)').matches) startButton?.focus({ preventScroll: true });
     });
     framework.playSound('open');
+    framework.trackGameOpen('contrast-crash');
   }
 
   function closeGame(focusCards = false) {
+    framework.trackGameExit('contrast-crash', game.score);
     resetGame();
     document.body.classList.remove('arcade-open');
     if (typeof dialog.close === 'function' && dialog.open) dialog.close();
@@ -129,6 +131,7 @@
     switchScreen('playing');
     game.status = 'playing';
     game.startedAt = performance.now();
+    framework.trackGameStart('contrast-crash');
     game.lastFrame = game.startedAt;
     setAimToCentre();
     spawnTarget(0);
@@ -399,6 +402,11 @@
     clearControls();
     game.status = 'ended';
     const savedProgress = framework.saveGameProgress('contrast-crash', game.score, true);
+    framework.trackGameEnd('contrast-crash', {
+      result: 'completed',
+      score: game.score,
+      targets_hit: game.hits
+    });
     if (game.hits >= 28) {
       resultTitle.textContent = 'You found what the interface tried to hide.';
       resultCopy.textContent = 'High scores reward the hardest targets. Real products should reward clarity instead.';

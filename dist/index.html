@@ -1,14 +1,23 @@
 <!doctype html>
 <html lang="en-GB">
   <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K583FZRJFB"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-K583FZRJFB');
+      function loadAnalytics(){
+        if (window.analyticsLoaded) return;
+        window.analyticsLoaded = true;
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-K583FZRJFB';
+        document.head.appendChild(script);
+        gtag('js', new Date());
+        gtag('config', 'G-K583FZRJFB');
+      }
+      ['pointerdown', 'keydown', 'touchstart'].forEach((eventName) => {
+        window.addEventListener(eventName, loadAnalytics, { once: true, passive: true });
+      });
+      window.addEventListener('load', () => window.setTimeout(loadAnalytics, 5000), { once: true });
     </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,9 +29,11 @@
     <meta property="og:description" content="Product strategy, human-centred research, engaging interfaces and creative leadership, brought together through clear product direction.">
     <link rel="canonical" href="https://www.stephenmusson.com/">
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="styles.css?v=49">
+    <link rel="preload" href="assets/lexend-400.woff" as="font" type="font/woff" crossorigin>
+    <link rel="preload" href="assets/lexend-800.woff" as="font" type="font/woff" crossorigin>
+    <link rel="stylesheet" href="styles.css?v=50">
     <script>document.documentElement.classList.add('js');</script>
-    <script src="script.js?v=45" defer></script>
+    <script src="script.js?v=46" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to the good stuff</a>
@@ -52,7 +63,7 @@
     <main id="main">
       <section class="hero" aria-labelledby="hero-title">
         <div class="shell hero-grid">
-          <div class="hero-copy reveal">
+          <div class="hero-copy">
             <p class="eyebrow">Creative &amp; UX Lead at Moriyama · Bristol, UK</p>
             <h1 id="hero-title"><span class="hero-better">Better</span> <span>digital</span> products. <span class="hero-better">Better</span> ways of working.</h1>
             <p class="hero-intro">I’m Stephen Musson, a product and design leader with 25 years’ experience helping recognised organisations turn complex challenges into clear product strategies and engaging, human-centred digital experiences.</p>
@@ -62,7 +73,7 @@
             </div>
           </div>
 
-          <div class="hero-visual reveal" aria-label="Stephen’s current role">
+          <div class="hero-visual" aria-label="Stephen’s current role">
             <div class="hero-shape">
               <object class="hero-character" data="assets/hero-stephen.svg" type="image/svg+xml" width="583" height="366" role="img" aria-label="Illustration of Stephen stretching his arms beneath five stars">
                 <img src="assets/hero-stephen.svg" width="239" height="150" alt="Illustration of Stephen stretching his arms beneath five stars">
@@ -328,22 +339,23 @@
       <section class="arcade-promo section-space" id="ux-arcade" aria-labelledby="arcade-promo-title">
         <div class="shell arcade-promo-card reveal">
           <div class="arcade-promo-art" aria-hidden="true">
-            <div class="arcade-mini-header"><span>UX</span> ARCADE <b>7 GAMES</b></div>
+            <div class="arcade-mini-header"><span>UX</span> ARCADE <b>8 GAMES</b></div>
             <div class="arcade-mini-title">UX<br>ARCADE</div>
             <div class="arcade-mini-cards">
-              <img src="assets/arcade-are-you-human-card-v2.png" alt="">
-              <img src="assets/arcade-design-debt.png" alt="">
-              <img src="assets/arcade-pac-facts.png" alt="">
-              <img src="assets/arcade-popup-panic.png" alt="">
-              <img src="assets/arcade-scope-invaders.png" alt="">
-              <img src="assets/arcade-contrast-targets.png" alt="">
-              <img src="assets/arcade-mega-menu.png" alt="">
+              <img src="assets/arcade-are-you-human-card-v2-thumb.webp" width="240" height="150" alt="" loading="lazy" decoding="async">
+              <img src="assets/arcade-white-space-man-thumb.webp" width="240" height="150" alt="" loading="lazy" decoding="async">
+              <img src="assets/arcade-pac-facts-thumb.webp" width="240" height="150" alt="" loading="lazy" decoding="async">
+              <img src="assets/arcade-popup-panic-thumb.webp" width="240" height="150" alt="" loading="lazy" decoding="async">
+              <img src="assets/arcade-design-debt-thumb.webp" width="240" height="150" alt="" loading="lazy" decoding="async">
+              <img src="assets/arcade-scope-invaders-thumb.webp" width="240" height="150" alt="" loading="lazy" decoding="async">
+              <img src="assets/arcade-contrast-targets-thumb.webp" width="240" height="150" alt="" loading="lazy" decoding="async">
+              <img src="assets/arcade-mega-menu-thumb.webp" width="240" height="150" alt="" loading="lazy" decoding="async">
             </div>
           </div>
           <div class="arcade-promo-copy">
             <p class="eyebrow">UX Arcade</p>
-            <h2 id="arcade-promo-title">Seven UX problems. One arcade.</h2>
-            <p>Play seven original challenges about evidence, consistency, pop-ups, contrast, navigation, scope and proving you are human.</p>
+            <h2 id="arcade-promo-title">Eight UX problems. One arcade.</h2>
+            <p>Play eight original challenges about evidence, consistency, white space, pop-ups, contrast, navigation, scope and proving you are human.</p>
             <a class="button button-dark" href="/ux-arcade/">Enter UX Arcade <span aria-hidden="true">▶</span></a>
           </div>
         </div>
