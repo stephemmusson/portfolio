@@ -233,6 +233,10 @@
   filter: drop-shadow(0 0 1.25rem rgba(5, 8, 23, 0.95));
 }
 
+.arcade-opening-heading {
+  position: relative;
+}
+
 .arcade-title-runner {
   position: absolute;
   z-index: 6;
