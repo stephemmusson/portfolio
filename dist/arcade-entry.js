@@ -55,7 +55,6 @@
   let introStarted = opening.dataset.introHeard === 'true';
   let introFinished = introStarted;
   let musicFadeFrame = null;
-  let motionReadyTimer = null;
 
   if (selectionMusic) {
     selectionMusic.volume = 0.25;
@@ -108,6 +107,7 @@
   };
 
   const unlockIntendedAudio = () => {
+    document.body.classList.add('arcade-motion-ready');
     framework.unlockAudio?.();
     if (!introStarted) beginIntroSequence();
     else if (introFinished) playMusic();
@@ -120,16 +120,6 @@
   const revealStart = () => {
     openingItems.forEach((button) => { button.disabled = false; });
   };
-
-  const enableOpeningMotion = () => {
-    if (reducedMotion || motionReadyTimer) return;
-    motionReadyTimer = window.setTimeout(() => {
-      document.body.classList.add('arcade-motion-ready');
-    }, 1800);
-  };
-
-  if (document.readyState === 'complete') enableOpeningMotion();
-  else window.addEventListener('load', enableOpeningMotion, { once: true });
 
   window.setTimeout(revealStart, reducedMotion ? 0 : 1650);
 
