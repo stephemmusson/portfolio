@@ -276,6 +276,12 @@
 }
 
 .arcade-title-runner {
+  --runner-first-step: 22vw;
+  --runner-first-jump: 30vw;
+  --runner-landing: 38vw;
+  --runner-edge: 52vw;
+  --runner-jump: 58vw;
+  --runner-exit: 64vw;
   position: absolute;
   z-index: 6;
   left: 1%;
@@ -284,7 +290,7 @@
   aspect-ratio: 1;
   opacity: 1;
   overflow: hidden;
-  transform: translate3d(-12vw, 0, 0);
+  transform: translate3d(0, 0, 0);
   pointer-events: none;
   animation: none;
 }
@@ -310,14 +316,14 @@
 }
 
 @keyframes arcade-stephen-title-run {
-  0%, 8% { transform: translate3d(-12vw, 0, 0) rotate(0); }
-  10% { transform: translate3d(0, 0, 0) rotate(0); }
-  30% { opacity: 1; transform: translate3d(22vw, 0, 0) rotate(0); }
-  38% { opacity: 1; transform: translate3d(30vw, -3rem, 0) rotate(-7deg); }
-  46% { opacity: 1; transform: translate3d(38vw, 0, 0) rotate(0); }
-  74% { opacity: 1; transform: translate3d(74vw, 0, 0) rotate(0); }
-  84% { opacity: 1; transform: translate3d(84vw, -3.4rem, 0) rotate(-12deg); }
-  92%, 100% { transform: translate3d(105vw, 1.8rem, 0) rotate(18deg); }
+  0%, 8% { opacity: 1; transform: translate3d(0, 0, 0) rotate(0); }
+  28% { opacity: 1; transform: translate3d(var(--runner-first-step), 0, 0) rotate(0); }
+  36% { opacity: 1; transform: translate3d(var(--runner-first-jump), -3rem, 0) rotate(-7deg); }
+  44% { opacity: 1; transform: translate3d(var(--runner-landing), 0, 0) rotate(0); }
+  68% { opacity: 1; transform: translate3d(var(--runner-edge), 0, 0) rotate(0); }
+  77% { opacity: 1; transform: translate3d(var(--runner-jump), -3.4rem, 0) rotate(-12deg); }
+  82% { opacity: 1; transform: translate3d(var(--runner-exit), 1.8rem, 0) rotate(18deg); }
+  83%, 100% { opacity: 0; transform: translate3d(var(--runner-exit), 1.8rem, 0) rotate(18deg); }
 }
 
 @keyframes arcade-stephen-stride {
@@ -989,6 +995,15 @@ body.high-scores-open {
     margin-inline: auto;
   }
 
+  .arcade-title-runner {
+    --runner-first-step: 26vw;
+    --runner-first-jump: 36vw;
+    --runner-landing: 46vw;
+    --runner-edge: 66vw;
+    --runner-jump: 74vw;
+    --runner-exit: 84vw;
+  }
+
   .arcade-opening-game {
     flex-basis: min(84vw, 19rem);
     min-height: 12rem;
@@ -1068,9 +1083,10 @@ body.high-scores-open {
   }
 
   .arcade-title-runner {
-    left: 86%;
+    left: 1%;
     bottom: 92%;
     opacity: 1;
+    transform: none;
     animation: none;
   }
 
