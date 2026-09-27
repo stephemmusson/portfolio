@@ -51,6 +51,6 @@ jobs:
           set ssl:verify-certificate true
           open --port 21 "ftp://$SITE5_SERVER"
           user "$SITE5_USERNAME" "$SITE5_PASSWORD"
-          mirror --reverse --verbose --only-newer .publish/ "$SITE5_REMOTE_DIR"
+          mirror --reverse --verbose .publish/ "$SITE5_REMOTE_DIR"
           bye
           LFTP
