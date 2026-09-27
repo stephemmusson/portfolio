@@ -74,6 +74,10 @@
   overflow: hidden;
 }
 
+.arcade-page.arcade-intro-active .ux-arcade {
+  display: none;
+}
+
 .arcade-opening {
   position: relative;
   z-index: 5000;
@@ -892,7 +896,7 @@ body.high-scores-open {
 @keyframes arcade-pixel-explode {
   0% { opacity: 1; transform: translate(-50%, -50%) scale(0.3); }
   85% { opacity: 1; transform: translate(calc(-50% + var(--burst-x)), calc(-50% + var(--burst-y))) scale(1); }
-  100% { opacity: 0; transform: translate(calc(-50% + var(--burst-x)), calc(-50% + var(--burst-y))) scale(0); }
+  100% { opacity: 0.01; transform: translate(calc(-50% + var(--burst-x)), calc(-50% + var(--burst-y))) scale(0); }
 }
 
 @keyframes arcade-start-arrive {
