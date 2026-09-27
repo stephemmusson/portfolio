@@ -272,7 +272,7 @@
   bottom: 92%;
   width: clamp(2.5rem, 5vw, 4.3rem);
   aspect-ratio: 1;
-  opacity: 0;
+  opacity: 0.01;
   overflow: hidden;
   will-change: transform, opacity;
   pointer-events: none;
@@ -291,7 +291,7 @@
 }
 
 @keyframes arcade-stephen-title-run {
-  0%, 8% { opacity: 0; transform: translate3d(0, 0, 0) rotate(0); }
+  0%, 8% { opacity: 0.01; transform: translate3d(0, 0, 0) rotate(0); }
   10% { opacity: 1; }
   30% { opacity: 1; transform: translate3d(22vw, 0, 0) rotate(0); }
   38% { opacity: 1; transform: translate3d(30vw, -3rem, 0) rotate(-7deg); }
@@ -299,7 +299,7 @@
   74% { opacity: 1; transform: translate3d(74vw, 0, 0) rotate(0); }
   84% { opacity: 1; transform: translate3d(84vw, -3.4rem, 0) rotate(-12deg); }
   92% { opacity: 1; transform: translate3d(92vw, 1.8rem, 0) rotate(18deg); }
-  93%, 100% { opacity: 0; transform: translate3d(92vw, 1.8rem, 0) rotate(18deg); }
+  93%, 100% { opacity: 0.01; transform: translate3d(92vw, 1.8rem, 0) rotate(18deg); }
 }
 
 @keyframes arcade-stephen-stride {
@@ -318,7 +318,7 @@
   line-height: 1.35;
   text-shadow: 0.16rem 0.16rem 0 #202b61;
   text-transform: uppercase;
-  opacity: 0;
+  opacity: 0.01;
   animation: arcade-copy-arrive 300ms 1.28s steps(4, end) forwards;
 }
 
@@ -335,7 +335,7 @@
   line-height: 1.15;
   text-transform: uppercase;
   text-align: center;
-  opacity: 0;
+  opacity: 0.01;
   text-shadow: 0 0 0.7rem rgba(242, 255, 61, 0.72);
   animation: arcade-insert-flash 900ms 1.3s steps(1, end) infinite;
 }
@@ -388,7 +388,7 @@
 }
 
 .arcade-opening .arcade-beta-tag {
-  opacity: 0;
+  opacity: 0.01;
   animation: arcade-beta-stamp 260ms 6.15s steps(3, end) forwards;
 }
 
@@ -401,7 +401,7 @@
 
 @keyframes arcade-beta-stamp {
   0% {
-    opacity: 0;
+    opacity: 0.01;
     transform: translateY(-0.9em) scale(1.7) rotate(-8deg);
   }
   45% {
@@ -430,7 +430,7 @@
   aspect-ratio: 1;
   background: var(--acid);
   box-shadow: 1em 0 var(--coral), 0 1em var(--blue);
-  opacity: 0;
+  opacity: 0.01;
   animation: arcade-pixel-explode 540ms 1s steps(6, end) forwards;
 }
 
@@ -447,7 +447,7 @@
   position: relative;
   z-index: 2;
   width: min(92rem, 96vw);
-  opacity: 0;
+  opacity: 0.01;
   transform: translateY(1rem);
   animation: arcade-start-arrive 320ms 1.65s steps(4, end) forwards;
 }
@@ -868,7 +868,7 @@ body.high-scores-open {
 }
 
 @keyframes arcade-copy-arrive {
-  from { opacity: 0; }
+  from { opacity: 0.01; }
   to { opacity: 1; }
 }
 
@@ -896,7 +896,7 @@ body.high-scores-open {
 }
 
 @keyframes arcade-start-arrive {
-  from { opacity: 0; transform: translateY(1rem); }
+  from { opacity: 0.01; transform: translateY(1rem); }
   to { opacity: 1; transform: translateY(0); }
 }
 
