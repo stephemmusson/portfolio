@@ -3,7 +3,7 @@
 .arcade-opening-game-space {
   background:
     linear-gradient(90deg, rgba(5,10,32,.64) 0 24%, rgba(5,10,32,.08) 62%, rgba(5,10,32,.22)),
-    url("assets/arcade-white-space-man.webp") center / cover no-repeat,
+    image-set(url("assets/arcade-white-space-man.avif?v=1") type("image/avif"), url("assets/arcade-white-space-man.webp?v=2") type("image/webp")) center / cover no-repeat,
     #08143f;
 }
 
@@ -88,7 +88,7 @@
   overflow: hidden;
   background:
     linear-gradient(180deg, rgba(5,9,28,.02) 45%, rgba(5,9,28,.6) 100%),
-    url("assets/arcade-white-space-man.webp") center / cover no-repeat,
+    image-set(url("assets/arcade-white-space-man.avif?v=1") type("image/avif"), url("assets/arcade-white-space-man.webp?v=2") type("image/webp")) center / cover no-repeat,
     #05091c;
   isolation: isolate;
 }

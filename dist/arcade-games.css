@@ -490,7 +490,7 @@
   width: 8.6rem;
   aspect-ratio: 1;
   transform: translateX(-50%) scaleX(-1);
-  background: url("assets/stephen-arcade-sprite.webp") 50% 0 / 300% 100% no-repeat;
+  background: url("assets/stephen-arcade-sprite.webp?v=2") 50% 0 / 300% 100% no-repeat;
   image-rendering: pixelated;
   animation: debt-stephen-ready 850ms steps(1, end) infinite;
 }
@@ -853,7 +853,7 @@
   position: absolute;
   inset: -22%;
   display: block;
-  background: url("assets/stephen-arcade-sprite.webp") 0 0 / 300% 100% no-repeat;
+  background: url("assets/stephen-arcade-sprite.webp?v=2") 0 0 / 300% 100% no-repeat;
   filter: drop-shadow(0.14rem 0.14rem 0 #020411);
   image-rendering: pixelated;
 }
@@ -1265,7 +1265,7 @@
   min-height: 25rem;
   background:
     linear-gradient(180deg, rgba(4, 12, 46, 0.48), rgba(4, 9, 29, 0.78)),
-    url("assets/arcade-scope-invaders.webp") center / cover no-repeat,
+    image-set(url("assets/arcade-scope-invaders.avif?v=1") type("image/avif"), url("assets/arcade-scope-invaders.webp?v=2") type("image/webp")) center / cover no-repeat,
     #071440;
   image-rendering: pixelated;
   touch-action: pan-y;
@@ -1345,7 +1345,7 @@
   width: 5.6rem;
   height: 5.6rem;
   border: 0;
-  background: url("assets/stephen-arcade-sprite.webp") 0 0 / 300% 100% no-repeat;
+  background: url("assets/stephen-arcade-sprite.webp?v=2") 0 0 / 300% 100% no-repeat;
   box-shadow: none;
   filter: drop-shadow(0.18rem 0.18rem 0 #060c24);
   image-rendering: pixelated;
@@ -2104,7 +2104,7 @@
 
 .game-art-contrast,
 .contrast-instruction-art {
-  background-image: url("assets/arcade-contrast-targets.webp");
+  background-image: image-set(url("assets/arcade-contrast-targets.avif?v=1") type("image/avif"), url("assets/arcade-contrast-targets.webp?v=2") type("image/webp"));
 }
 
 .contrast-shooter {
@@ -2191,7 +2191,7 @@
   overflow: hidden;
   background:
     linear-gradient(180deg, rgba(3, 9, 32, 0.62), rgba(3, 9, 32, 0.78)),
-    url("assets/arcade-contrast-targets.webp") center / cover no-repeat,
+    image-set(url("assets/arcade-contrast-targets.avif?v=1") type("image/avif"), url("assets/arcade-contrast-targets.webp?v=2") type("image/webp")) center / cover no-repeat,
     #10183d;
   image-rendering: pixelated;
   cursor: crosshair;
@@ -2680,7 +2680,7 @@
   left: -1.45rem;
   width: 5.7rem;
   height: 5.7rem;
-  background-image: url("assets/stephen-arcade-sprite.webp");
+  background-image: url("assets/stephen-arcade-sprite.webp?v=2");
   background-position: 0 0;
   background-size: 300% 100%;
   background-repeat: no-repeat;
@@ -3077,7 +3077,7 @@
 .human-portrait-face i {
   position: absolute;
   inset: -0.65rem -0.5rem -0.2rem;
-  background-image: url("assets/stephen-arcade-sprite.webp");
+  background-image: url("assets/stephen-arcade-sprite.webp?v=2");
   background-position: 0 0;
   background-size: 300% 100%;
   background-repeat: no-repeat;
@@ -3588,7 +3588,7 @@
   bottom: calc((var(--bike-row) * 14.2857%) + 0.08rem);
   width: 2.5rem;
   height: 2.65rem;
-  background-image: url("assets/stephen-arcade-sprite.webp");
+  background-image: url("assets/stephen-arcade-sprite.webp?v=2");
   background-position: 0 0;
   background-repeat: no-repeat;
   background-size: 300% 100%;

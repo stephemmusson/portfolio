@@ -1,6 +1,6 @@
 (() => {
   const gameScripts = {
-    'captcha-boss': 'captcha-boss.js?v=65',
+    'captcha-boss': 'captcha-boss.js?v=66',
     'white-space-race': 'white-space-race.js?v=10',
     'pac-facts': 'pac-facts.js?v=56',
     'design-debt': 'design-debt.js?v=64',
@@ -9,10 +9,28 @@
     'mega-menu-mayhem': 'mega-menu-mayhem.js?v=55'
   };
   const loading = new Map();
+  const preloaded = new Set();
+
+  const ensureGameMarkup = (gameId) => {
+    const template = document.querySelector(`template[data-game-template="${gameId}"]`);
+    if (!template) return;
+    template.replaceWith(template.content.cloneNode(true));
+  };
+
+  const preloadGame = (gameId) => {
+    if (!gameScripts[gameId] || preloaded.has(gameId)) return;
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'script';
+    link.href = gameScripts[gameId];
+    document.head.append(link);
+    preloaded.add(gameId);
+  };
 
   const loadGame = (gameId) => {
     if (!gameScripts[gameId]) return Promise.resolve();
     if (loading.has(gameId)) return loading.get(gameId);
+    ensureGameMarkup(gameId);
     const promise = new Promise((resolve, reject) => {
       const script = document.createElement('script');
       script.src = gameScripts[gameId];
@@ -28,7 +46,7 @@
   const warmGame = (event) => {
     const trigger = event.target.closest('[data-opening-game], [data-open-game]');
     const gameId = trigger?.dataset.openingGame || trigger?.dataset.openGame;
-    if (gameId) loadGame(gameId).catch(() => {});
+    if (gameId) preloadGame(gameId);
   };
 
   document.addEventListener('pointerover', warmGame, { passive: true });

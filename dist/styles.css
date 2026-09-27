@@ -1062,7 +1062,7 @@ ol {
   padding: clamp(1.25rem, 3vw, 2.5rem);
   background:
     linear-gradient(rgba(5, 14, 52, 0.3), rgba(5, 14, 52, 0.68)),
-    url("assets/ux-arcade-home-bg.webp") center / cover no-repeat,
+    image-set(url("assets/ux-arcade-home-bg.avif?v=1") type("image/avif"), url("assets/ux-arcade-home-bg.webp?v=2") type("image/webp")) center / cover no-repeat,
     #071345;
   color: var(--paper);
   image-rendering: pixelated;

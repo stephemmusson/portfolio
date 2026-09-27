@@ -75,9 +75,11 @@
 }
 
 .arcade-opening {
-  position: absolute;
+  position: relative;
   z-index: 5000;
-  inset: 0;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
   display: grid;
   grid-template-rows: auto 1fr;
   overflow: hidden;
@@ -98,6 +100,13 @@
   object-fit: cover;
   object-position: center;
   image-rendering: pixelated;
+  pointer-events: none;
+}
+
+.arcade-opening > picture {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
   pointer-events: none;
 }
 
@@ -274,7 +283,7 @@
   position: absolute;
   inset: 0 auto 0 0;
   width: 300%;
-  background: url("assets/stephen-arcade-sprite.webp") 0 0 / 100% 100% no-repeat;
+  background: url("assets/stephen-arcade-sprite.webp?v=2") 0 0 / 100% 100% no-repeat;
   filter: drop-shadow(0.18rem 0.18rem 0 #08143f);
   image-rendering: pixelated;
   content: "";
@@ -560,13 +569,13 @@
   cursor: wait;
 }
 
-.arcade-opening-game-popup { background-image: url("assets/arcade-popup-panic.webp"); }
-.arcade-opening-game-contrast { background-image: url("assets/arcade-contrast-targets.webp"); }
-.arcade-opening-game-menu { background-image: url("assets/arcade-mega-menu.webp"); }
-.arcade-opening-game-scope { background-image: url("assets/arcade-scope-invaders.webp"); }
-.arcade-opening-game-human { background-image: url("assets/arcade-are-you-human-card-v2.webp"); }
-.arcade-opening-game-pac { background-image: url("assets/arcade-pac-facts.webp"); }
-.arcade-opening-game-debt { background-image: url("assets/arcade-design-debt.webp"); }
+.arcade-opening-game-popup { background-image: image-set(url("assets/arcade-popup-panic.avif?v=1") type("image/avif"), url("assets/arcade-popup-panic.webp?v=2") type("image/webp")); }
+.arcade-opening-game-contrast { background-image: image-set(url("assets/arcade-contrast-targets.avif?v=1") type("image/avif"), url("assets/arcade-contrast-targets.webp?v=2") type("image/webp")); }
+.arcade-opening-game-menu { background-image: image-set(url("assets/arcade-mega-menu.avif?v=1") type("image/avif"), url("assets/arcade-mega-menu.webp?v=2") type("image/webp")); }
+.arcade-opening-game-scope { background-image: image-set(url("assets/arcade-scope-invaders.avif?v=1") type("image/avif"), url("assets/arcade-scope-invaders.webp?v=2") type("image/webp")); }
+.arcade-opening-game-human { background-image: image-set(url("assets/arcade-are-you-human-card-v2.avif?v=1") type("image/avif"), url("assets/arcade-are-you-human-card-v2.webp?v=2") type("image/webp")); }
+.arcade-opening-game-pac { background-image: image-set(url("assets/arcade-pac-facts.avif?v=1") type("image/avif"), url("assets/arcade-pac-facts.webp?v=2") type("image/webp")); }
+.arcade-opening-game-debt { background-image: image-set(url("assets/arcade-design-debt.avif?v=1") type("image/avif"), url("assets/arcade-design-debt.webp?v=2") type("image/webp")); }
 
 .arcade-opening-game-scores {
   background-color: #07123a;

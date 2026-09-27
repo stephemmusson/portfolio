@@ -257,6 +257,7 @@
 }
 
 .game-art {
+  container-type: inline-size;
   position: relative;
   min-height: 20rem;
   overflow: hidden;
@@ -289,13 +290,13 @@
   pointer-events: none;
 }
 
-.game-art-popup { background-image: url("assets/arcade-popup-panic.webp"); }
-.game-art-contrast { background-image: url("assets/arcade-contrast-targets.webp"); }
-.game-art-menu { background-image: url("assets/arcade-mega-menu.webp"); }
-.game-art-scope { background-image: url("assets/arcade-scope-invaders.webp"); }
-.game-art-captcha { background-image: url("assets/arcade-are-you-human-card-v2.webp"); }
-.game-art-pac { background-image: url("assets/arcade-pac-facts.webp"); }
-.game-art-debt { background-image: url("assets/arcade-design-debt.webp"); }
+.game-art-popup { background-image: image-set(url("assets/arcade-popup-panic.avif?v=1") type("image/avif"), url("assets/arcade-popup-panic.webp?v=2") type("image/webp")); }
+.game-art-contrast { background-image: image-set(url("assets/arcade-contrast-targets.avif?v=1") type("image/avif"), url("assets/arcade-contrast-targets.webp?v=2") type("image/webp")); }
+.game-art-menu { background-image: image-set(url("assets/arcade-mega-menu.avif?v=1") type("image/avif"), url("assets/arcade-mega-menu.webp?v=2") type("image/webp")); }
+.game-art-scope { background-image: image-set(url("assets/arcade-scope-invaders.avif?v=1") type("image/avif"), url("assets/arcade-scope-invaders.webp?v=2") type("image/webp")); }
+.game-art-captcha { background-image: image-set(url("assets/arcade-are-you-human-card-v2.avif?v=1") type("image/avif"), url("assets/arcade-are-you-human-card-v2.webp?v=2") type("image/webp")); }
+.game-art-pac { background-image: image-set(url("assets/arcade-pac-facts.avif?v=1") type("image/avif"), url("assets/arcade-pac-facts.webp?v=2") type("image/webp")); }
+.game-art-debt { background-image: image-set(url("assets/arcade-design-debt.avif?v=1") type("image/avif"), url("assets/arcade-design-debt.webp?v=2") type("image/webp")); }
 
 .debt-card-pair,
 .debt-card-clear {
@@ -311,6 +312,7 @@
   top: -4rem;
   left: 26%;
   flex-direction: column;
+  will-change: transform;
   animation: debt-card-fall 3.8s steps(12, end) infinite;
 }
 
@@ -338,9 +340,9 @@
 .debt-card-clear i { background: #60d49d; }
 
 @keyframes debt-card-fall {
-  0% { top: -4rem; transform: rotate(0); }
-  68% { top: 49%; transform: rotate(0); }
-  76%, 100% { top: 49%; transform: rotate(90deg); }
+  0% { transform: translate3d(0, 0, 0) rotate(0); }
+  68% { transform: translate3d(0, 18rem, 0) rotate(0); }
+  76%, 100% { transform: translate3d(0, 18rem, 0) rotate(90deg); }
 }
 
 @keyframes debt-card-match {
@@ -349,7 +351,7 @@
   84%, 100% { opacity: 0; }
 }
 
-.debt-instruction-art { background-image: url("assets/arcade-design-debt.webp"); }
+.debt-instruction-art { background-image: image-set(url("assets/arcade-design-debt.avif?v=1") type("image/avif"), url("assets/arcade-design-debt.webp?v=2") type("image/webp")); }
 
 .pac-card-runner {
   position: absolute;
@@ -358,23 +360,34 @@
   left: -5rem;
   width: 5rem;
   height: 5rem;
-  background: url("assets/stephen-arcade-sprite.webp") 50% 0 / 300% 100% no-repeat;
+  overflow: hidden;
   filter: drop-shadow(0.2rem 0.2rem 0 #060c24);
   image-rendering: pixelated;
-  animation: pac-card-run 5.2s linear infinite, pac-card-legs 180ms steps(1, end) infinite alternate;
+  will-change: transform;
+  animation: pac-card-run 5.2s linear infinite;
+}
+
+.pac-card-runner::before {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 300%;
+  background: url("assets/stephen-arcade-sprite.webp?v=2") 0 0 / 100% 100% no-repeat;
+  content: "";
+  will-change: transform;
+  animation: pac-card-legs 180ms steps(1, end) infinite alternate;
 }
 
 @keyframes pac-card-run {
-  0% { left: -5rem; bottom: 8%; }
-  46% { left: 48%; bottom: 8%; }
-  54% { left: 58%; bottom: 26%; }
-  92% { left: calc(100% - 2rem); bottom: 26%; }
-  100% { left: calc(100% + 5rem); bottom: 26%; }
+  0% { transform: translate3d(0, 0, 0); }
+  46% { transform: translate3d(53cqw, 0, 0); }
+  54% { transform: translate3d(63cqw, -4rem, 0); }
+  92% { transform: translate3d(calc(100cqw + 3rem), -4rem, 0); }
+  100% { transform: translate3d(calc(100cqw + 10rem), -4rem, 0); }
 }
 
 @keyframes pac-card-legs {
-  from { background-position: 0 0; }
-  to { background-position: 50% 0; }
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-33.3333%, 0, 0); }
 }
 
 .game-number {
@@ -700,7 +713,7 @@ body.arcade-open {
 .instruction-art {
   min-height: 100%;
   border-right: 3px solid var(--paper);
-  background-image: url("assets/arcade-popup-panic.webp");
+  background-image: image-set(url("assets/arcade-popup-panic.avif?v=1") type("image/avif"), url("assets/arcade-popup-panic.webp?v=2") type("image/webp"));
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -708,7 +721,7 @@ body.arcade-open {
 }
 
 .pac-instruction-art {
-  background-image: url("assets/arcade-pac-facts.webp");
+  background-image: image-set(url("assets/arcade-pac-facts.avif?v=1") type("image/avif"), url("assets/arcade-pac-facts.webp?v=2") type("image/webp"));
 }
 
 .instruction-copy {
@@ -1245,7 +1258,7 @@ body.arcade-open {
 }
 
 .contrast-instruction-art {
-  background-image: url("assets/arcade-contrast-targets.webp");
+  background-image: image-set(url("assets/arcade-contrast-targets.avif?v=1") type("image/avif"), url("assets/arcade-contrast-targets.webp?v=2") type("image/webp"));
 }
 
 .contrast-access-note {
@@ -1540,7 +1553,7 @@ body.arcade-open {
 }
 
 .scope-instruction-art {
-  background-image: url("assets/arcade-scope-invaders.webp");
+  background-image: image-set(url("assets/arcade-scope-invaders.avif?v=1") type("image/avif"), url("assets/arcade-scope-invaders.webp?v=2") type("image/webp"));
 }
 
 .scope-health progress {
@@ -2621,7 +2634,7 @@ body.arcade-open {
 }
 
 .menu-instruction-art {
-  background-image: url("assets/arcade-mega-menu.webp");
+  background-image: image-set(url("assets/arcade-mega-menu.avif?v=1") type("image/avif"), url("assets/arcade-mega-menu.webp?v=2") type("image/webp"));
 }
 
 .menu-timer progress {

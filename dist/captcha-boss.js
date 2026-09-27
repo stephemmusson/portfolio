@@ -178,7 +178,7 @@
     grounded: true, facing: 1, cameraX: 0, checkpointX: 24,
     checks: 0, obstaclesCleared: 0, patience: 3, score: 0, errors: 0,
     elapsed: 0, startedAt: 0, lastFrame: 0, frame: null, hitUntil: 0,
-    platforms: [], obstacles: [], gates: [], selectedTiles: new Set(), collapseTimers: [], checkpointTimerId: null, checkpointDeadline: 0, checkpointRemaining: CHECKPOINT_DURATION, checkpointReadTimerId: null, checkpointReadDeadline: 0, checkpointReadRemaining: CHECKPOINT_READING_TIME, checkpointDuration: CHECKPOINT_DURATION, checkpointReading: false, checkpointWarmup: false
+    platforms: [], obstacles: [], gates: [], selectedTiles: new Set(), collapseTimers: [], checkpointTimerId: null, checkpointDeadline: 0, checkpointRemaining: CHECKPOINT_DURATION, checkpointReadTimerId: null, checkpointReadDeadline: 0, checkpointReadRemaining: CHECKPOINT_READING_TIME, checkpointDuration: CHECKPOINT_DURATION, checkpointReading: false, checkpointWarmup: false, sessionClockPaused: false
   };
   const controls = { left: false, right: false, jumpUntil: 0 };
   let returnFocusTarget;
@@ -245,7 +245,7 @@
       grounded: true, facing: 1, cameraX: 0, checkpointX: 24,
       checks: 0, obstaclesCleared: 0, patience: 3, score: 0, errors: 0,
       elapsed: 0, startedAt: 0, lastFrame: 0, frame: null, hitUntil: 0,
-      platforms: [], obstacles: [], gates: [], selectedTiles: new Set(), collapseTimers: [], checkpointTimerId: null, checkpointDeadline: 0, checkpointRemaining: CHECKPOINT_DURATION, checkpointReadTimerId: null, checkpointReadDeadline: 0, checkpointReadRemaining: CHECKPOINT_READING_TIME, checkpointDuration: CHECKPOINT_DURATION, checkpointReading: false, checkpointWarmup: false
+      platforms: [], obstacles: [], gates: [], selectedTiles: new Set(), collapseTimers: [], checkpointTimerId: null, checkpointDeadline: 0, checkpointRemaining: CHECKPOINT_DURATION, checkpointReadTimerId: null, checkpointReadDeadline: 0, checkpointReadRemaining: CHECKPOINT_READING_TIME, checkpointDuration: CHECKPOINT_DURATION, checkpointReading: false, checkpointWarmup: false, sessionClockPaused: false
     });
     platformLayer.replaceChildren();
     obstacleLayer.replaceChildren();
@@ -542,6 +542,7 @@
     game.checkpointWarmup = false;
     game.checkpointReadRemaining = CHECKPOINT_READING_TIME;
     game.checkpointReadDeadline = 0;
+    if (index === checkpointBlueprint.length - 1) pauseSessionClock();
     checkpointBody.inert = true;
     checkpointTimer.textContent = 'Read first';
     checkpointTimer.classList.remove('is-mid', 'is-low');
@@ -555,7 +556,7 @@
     gate.innerHTML = `<span>Checkpoint ${index + 1} · Read first</span><h4 id="human-read-first-title">${checkpointBlueprint[index].title}</h4><p>${checkpointBlueprint[index].principle}</p>`;
     const ready = document.createElement('button');
     ready.type = 'button';
-    ready.textContent = "I'm ready";
+    ready.textContent = index === checkpointBlueprint.length - 1 ? 'Begin 30-second challenge' : "I'm ready";
     gate.append(ready);
     checkpointWindow?.append(gate);
     ready.addEventListener('click', () => {
@@ -612,6 +613,7 @@
     game.checkpointReading = false;
     game.checkpointWarmup = false;
     game.checkpointDuration = duration;
+    if (index === checkpointBlueprint.length - 1) resumeSessionClock();
     checkpointBody.inert = false;
     checkpointTimer.classList.remove('is-reading');
     game.checkpointRemaining = duration;
@@ -1430,9 +1432,23 @@
   }
 
   function getElapsed(now = performance.now()) {
+    if (game.sessionClockPaused) return game.elapsed;
     return game.status === 'playing' || game.status === 'challenge'
       ? game.elapsed + (now - game.startedAt)
       : game.elapsed;
+  }
+
+  function pauseSessionClock() {
+    if (game.sessionClockPaused) return;
+    game.elapsed = getElapsed();
+    game.sessionClockPaused = true;
+  }
+
+  function resumeSessionClock() {
+    if (!game.sessionClockPaused) return;
+    game.startedAt = performance.now();
+    game.lastFrame = game.startedAt;
+    game.sessionClockPaused = false;
   }
 
   function updateHud(elapsed) {
