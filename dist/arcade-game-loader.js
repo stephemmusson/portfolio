@@ -1,7 +1,7 @@
 (() => {
   const gameScripts = {
     'captcha-boss': 'captcha-boss.js?v=66',
-    'white-space-race': 'white-space-race.js?v=10',
+    'white-space-race': 'white-space-race.js?v=11',
     'pac-facts': 'pac-facts.js?v=56',
     'design-debt': 'design-debt.js?v=64',
     'scope-invaders': 'scope-invaders.js?v=55',

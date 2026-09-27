@@ -190,7 +190,10 @@
 
   function createItem(blueprint, kind) {
     const element = document.createElement('div');
-    element.className = `space-object is-${kind}${blueprint.type ? ` is-${blueprint.type}` : ''}${blueprint.small ? ' is-small is-telegraph' : ''}`;
+    const classes = ['space-object', `is-${kind}`];
+    if (blueprint.type) classes.push(`is-${blueprint.type}`);
+    if (blueprint.small) classes.push('is-small', 'is-telegraph');
+    element.className = classes.join(' ');
     const symbols = { banner: '!', tooltip: '?', header: '☰', modal: '×', carousel: '›' };
     element.innerHTML = kind === 'token'
       ? '<span aria-hidden="true">↔</span>'
