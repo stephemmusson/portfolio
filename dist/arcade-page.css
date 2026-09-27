@@ -276,8 +276,9 @@
   bottom: 92%;
   width: clamp(2.5rem, 5vw, 4.3rem);
   aspect-ratio: 1;
-  opacity: 0.01;
+  opacity: 1;
   overflow: hidden;
+  transform: translate3d(-12vw, 0, 0);
   will-change: transform, opacity;
   pointer-events: none;
   animation: arcade-stephen-title-run 5.2s 2.4s linear infinite;
@@ -295,15 +296,14 @@
 }
 
 @keyframes arcade-stephen-title-run {
-  0%, 8% { opacity: 0.01; transform: translate3d(0, 0, 0) rotate(0); }
-  10% { opacity: 1; }
+  0%, 8% { transform: translate3d(-12vw, 0, 0) rotate(0); }
+  10% { transform: translate3d(0, 0, 0) rotate(0); }
   30% { opacity: 1; transform: translate3d(22vw, 0, 0) rotate(0); }
   38% { opacity: 1; transform: translate3d(30vw, -3rem, 0) rotate(-7deg); }
   46% { opacity: 1; transform: translate3d(38vw, 0, 0) rotate(0); }
   74% { opacity: 1; transform: translate3d(74vw, 0, 0) rotate(0); }
   84% { opacity: 1; transform: translate3d(84vw, -3.4rem, 0) rotate(-12deg); }
-  92% { opacity: 1; transform: translate3d(92vw, 1.8rem, 0) rotate(18deg); }
-  93%, 100% { opacity: 0.01; transform: translate3d(92vw, 1.8rem, 0) rotate(18deg); }
+  92%, 100% { transform: translate3d(105vw, 1.8rem, 0) rotate(18deg); }
 }
 
 @keyframes arcade-stephen-stride {
@@ -322,7 +322,8 @@
   line-height: 1.35;
   text-shadow: 0.16rem 0.16rem 0 #202b61;
   text-transform: uppercase;
-  opacity: 0.01;
+  opacity: 1;
+  transform: translateY(0.6rem);
   animation: arcade-copy-arrive 300ms 1.28s steps(4, end) forwards;
 }
 
@@ -339,7 +340,7 @@
   line-height: 1.15;
   text-transform: uppercase;
   text-align: center;
-  opacity: 0.01;
+  opacity: 1;
   text-shadow: 0 0 0.7rem rgba(242, 255, 61, 0.72);
   animation: arcade-insert-flash 900ms 1.3s steps(1, end) infinite;
 }
@@ -392,8 +393,8 @@
 }
 
 .arcade-opening .arcade-beta-tag {
-  opacity: 0.01;
-  animation: arcade-beta-stamp 260ms 6.15s steps(3, end) forwards;
+  opacity: 1;
+  animation: none;
 }
 
 .arcade-intro .arcade-beta-tag {
@@ -405,15 +406,12 @@
 
 @keyframes arcade-beta-stamp {
   0% {
-    opacity: 0.01;
-    transform: translateY(-0.9em) scale(1.7) rotate(-8deg);
+    transform: translateY(-0.35em) scale(0.88) rotate(-5deg);
   }
   45% {
-    opacity: 1;
     transform: translateY(0.2em) scale(1.18) rotate(4deg);
   }
   100% {
-    opacity: 1;
     transform: translateY(0.3em) scale(1) rotate(2deg);
   }
 }
@@ -434,8 +432,8 @@
   aspect-ratio: 1;
   background: var(--acid);
   box-shadow: 1em 0 var(--coral), 0 1em var(--blue);
-  opacity: 0.01;
-  animation: arcade-pixel-explode 540ms 1s steps(6, end) forwards;
+  opacity: 1;
+  animation: arcade-pixel-explode 540ms 1s steps(6, end) both;
 }
 
 .arcade-pixel-burst i:nth-child(1) { --burst-x: 18rem; --burst-y: 0rem; }
@@ -451,7 +449,7 @@
   position: relative;
   z-index: 2;
   width: min(92rem, 96vw);
-  opacity: 0.01;
+  opacity: 1;
   transform: translateY(1rem);
   animation: arcade-start-arrive 320ms 1.65s steps(4, end) forwards;
 }
@@ -872,8 +870,8 @@ body.high-scores-open {
 }
 
 @keyframes arcade-copy-arrive {
-  from { opacity: 0.01; }
-  to { opacity: 1; }
+  from { transform: translateY(0.6rem); }
+  to { transform: translateY(0); }
 }
 
 @keyframes arcade-insert-flash {
@@ -894,14 +892,14 @@ body.high-scores-open {
 }
 
 @keyframes arcade-pixel-explode {
-  0% { opacity: 1; transform: translate(-50%, -50%) scale(0.3); }
-  85% { opacity: 1; transform: translate(calc(-50% + var(--burst-x)), calc(-50% + var(--burst-y))) scale(1); }
-  100% { opacity: 0.01; transform: translate(calc(-50% + var(--burst-x)), calc(-50% + var(--burst-y))) scale(0); }
+  0% { transform: translate(-50%, -50%) scale(0.3); }
+  85% { transform: translate(calc(-50% + var(--burst-x)), calc(-50% + var(--burst-y))) scale(1); }
+  100% { transform: translate(calc(-50% + var(--burst-x)), calc(-50% + var(--burst-y))) scale(0.001); }
 }
 
 @keyframes arcade-start-arrive {
-  from { opacity: 0.01; transform: translateY(1rem); }
-  to { opacity: 1; transform: translateY(0); }
+  from { transform: translateY(1rem); }
+  to { transform: translateY(0); }
 }
 
 @media (max-width: 760px) {
