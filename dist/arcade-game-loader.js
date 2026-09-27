@@ -9,22 +9,11 @@
     'mega-menu-mayhem': 'mega-menu-mayhem.js?v=55'
   };
   const loading = new Map();
-  const preloaded = new Set();
 
   const ensureGameMarkup = (gameId) => {
     const template = document.querySelector(`template[data-game-template="${gameId}"]`);
     if (!template) return;
     template.replaceWith(template.content.cloneNode(true));
-  };
-
-  const preloadGame = (gameId) => {
-    if (!gameScripts[gameId] || preloaded.has(gameId)) return;
-    const link = document.createElement('link');
-    link.rel = 'preload';
-    link.as = 'script';
-    link.href = gameScripts[gameId];
-    document.head.append(link);
-    preloaded.add(gameId);
   };
 
   const loadGame = (gameId) => {
@@ -43,15 +32,6 @@
     return promise;
   };
 
-  const warmGame = (event) => {
-    const trigger = event.target.closest('[data-opening-game], [data-open-game]');
-    const gameId = trigger?.dataset.openingGame || trigger?.dataset.openGame;
-    if (gameId) preloadGame(gameId);
-  };
-
-  document.addEventListener('pointerover', warmGame, { passive: true });
-  document.addEventListener('focusin', warmGame);
-  document.addEventListener('touchstart', warmGame, { passive: true });
   document.addEventListener('click', (event) => {
     const trigger = event.target.closest('[data-open-game]');
     const gameId = trigger?.dataset.openGame;

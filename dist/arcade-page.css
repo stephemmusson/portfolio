@@ -231,6 +231,13 @@
   backdrop-filter: none !important;
 }
 
+.arcade-page .arcade-game-header [data-sound-toggle][aria-pressed="false"] {
+  border-color: #f7f7f3 !important;
+  background-color: #f2ff3d !important;
+  box-shadow: 0.22rem 0.22rem 0 #ff716a !important;
+  color: #07102f !important;
+}
+
 .arcade-page .arcade-game-header .arcade-icon-button:hover,
 .arcade-page .arcade-game-header .arcade-icon-button:focus-visible,
 .arcade-page .arcade-page-nav a:hover,
@@ -531,7 +538,7 @@
 
 .arcade-opening-game::before {
   position: absolute;
-  z-index: 0;
+  z-index: 1;
   inset: 0;
   background: linear-gradient(180deg, rgba(9, 12, 18, 0.04) 5%, rgba(9, 12, 18, 0.92) 78%);
   content: "";
@@ -539,7 +546,25 @@
 
 .arcade-opening-game > * {
   position: relative;
-  z-index: 1;
+  z-index: 2;
+}
+
+.arcade-opening-game > .arcade-opening-game-art {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.arcade-opening-game-art img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  image-rendering: pixelated;
 }
 
 .arcade-opening-game span {
@@ -575,7 +600,7 @@
 .arcade-opening-game-contrast { background-image: image-set(url("assets/arcade-contrast-targets.avif?v=1") type("image/avif"), url("assets/arcade-contrast-targets.webp?v=2") type("image/webp")); }
 .arcade-opening-game-menu { background-image: image-set(url("assets/arcade-mega-menu.avif?v=1") type("image/avif"), url("assets/arcade-mega-menu.webp?v=2") type("image/webp")); }
 .arcade-opening-game-scope { background-image: image-set(url("assets/arcade-scope-invaders.avif?v=1") type("image/avif"), url("assets/arcade-scope-invaders.webp?v=2") type("image/webp")); }
-.arcade-opening-game-human { background-image: image-set(url("assets/arcade-are-you-human-card-v2.avif?v=1") type("image/avif"), url("assets/arcade-are-you-human-card-v2.webp?v=2") type("image/webp")); }
+.arcade-opening-game-human { background-image: none; }
 .arcade-opening-game-pac { background-image: image-set(url("assets/arcade-pac-facts.avif?v=1") type("image/avif"), url("assets/arcade-pac-facts.webp?v=2") type("image/webp")); }
 .arcade-opening-game-debt { background-image: image-set(url("assets/arcade-design-debt.avif?v=1") type("image/avif"), url("assets/arcade-design-debt.webp?v=2") type("image/webp")); }
 
