@@ -52,12 +52,10 @@
   if (!opening || !openingItems.length || !selector || !framework) return;
 
   const reducedMotion = framework.isReducedMotion;
-  const animatedItems = [...opening.querySelectorAll(
-    '.arcade-opening-summary, .arcade-opening-prompt, .arcade-opening h1, .arcade-pixel-burst i, .arcade-opening-selector'
-  )];
   let introStarted = opening.dataset.introHeard === 'true';
   let introFinished = introStarted;
   let musicFadeFrame = null;
+  let motionReadyTimer = null;
 
   if (selectionMusic) {
     selectionMusic.volume = 0.25;
@@ -123,13 +121,23 @@
     openingItems.forEach((button) => { button.disabled = false; });
   };
 
+  const enableOpeningMotion = () => {
+    if (reducedMotion || motionReadyTimer) return;
+    motionReadyTimer = window.setTimeout(() => {
+      document.body.classList.add('arcade-motion-ready');
+    }, 1800);
+  };
+
+  if (document.readyState === 'complete') enableOpeningMotion();
+  else window.addEventListener('load', enableOpeningMotion, { once: true });
+
   window.setTimeout(revealStart, reducedMotion ? 0 : 1650);
 
   const replayOpening = () => {
     if (reducedMotion) return;
-    animatedItems.forEach((item) => { item.style.animation = 'none'; });
+    document.body.classList.remove('arcade-motion-ready');
     void opening.offsetWidth;
-    animatedItems.forEach((item) => { item.style.animation = ''; });
+    document.body.classList.add('arcade-motion-ready');
     openingItems.forEach((button) => { button.disabled = true; });
     window.setTimeout(revealStart, 1650);
   };
