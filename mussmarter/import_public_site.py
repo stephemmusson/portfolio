@@ -68,7 +68,7 @@ api_ok=False
 try:
     page=1
     while True:
-        payload=get(endpoint).json() if page==1 else get(endpoint+"?number=100&page="+str(page)).json()
+        payload=get(endpoint+"?number=100&page="+str(page)).json()
         batch=payload.get("posts",[])
         if not batch:break
         api_ok=True
