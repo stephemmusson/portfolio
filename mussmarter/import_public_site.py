@@ -83,17 +83,37 @@ try:
 except Exception as exc:
     failures.append({"api":endpoint,"error":str(exc)})
 if not posts:
-    # Alternate RSS feed when public API is unavailable.
-    from bs4 import XMLParsedAsHTMLWarning
-    import warnings
-    warnings.simplefilter("ignore",XMLParsedAsHTMLWarning)
-    try:
-        import feedparser
-        feed=feedparser.parse(get(ROOT+"feed/").content)
-        for entry in feed.entries:
-            posts.append({"title":entry.get("title",""),"date":entry.get("published",""),"url":entry.get("link",""),
-                "body":entry.get("content",[{"value":entry.get("summary","")}])[0]["value"],"categories":[t.term for t in entry.get("tags",[])]})
-    except Exception as exc:failures.append({"rss":ROOT+"feed/","error":str(exc)})
+    # Fallback: crawl public paginated index and retrieve each SINGLE post in full.
+    # This is deliberately not limited to the 10 articles on the first page.
+    from collections import deque
+    queue=deque([ROOT])
+    visited=set()
+    links=set()
+    while queue:
+        address=queue.popleft()
+        if address in visited:continue
+        visited.add(address)
+        try:
+            doc=BeautifulSoup(get(address).text,"html.parser")
+            for a in doc.select("a[href]"):
+                target=urljoin(address,a["href"]).split("#")[0].split("?")[0]
+                if urlparse(target).netloc!=urlparse(ROOT).netloc:continue
+                if re.search(r"/(?:19|20)\\d{2}/\\d{2}/\\d{2}/[^/]+/?$",urlparse(target).path):links.add(target)
+                if re.search(r"/page/\\d+/?$",urlparse(target).path) and target not in visited:queue.append(target)
+        except Exception as exc:failures.append({"archive_page":address,"error":str(exc)})
+    for address in sorted(links):
+        try:
+            doc=BeautifulSoup(get(address).text,"html.parser")
+            article=doc.select_one("article")
+            body=article.select_one(".entry-content") if article else None
+            title=article.select_one("h1.entry-title,h1") if article else None
+            if not body or not title:
+                failures.append({"post":address,"error":"Missing complete post markup"})
+                continue
+            timestamp=article.select_one("time[datetime]")
+            categories=[a.get_text(" ",strip=True) for a in article.select("a[rel='category tag']")]
+            posts.append({"title":title.get_text(" ",strip=True),"date":timestamp.get("datetime","") if timestamp else "", "url":address, "body":str(body), "categories":categories})
+        except Exception as exc:failures.append({"post":address,"error":str(exc)})
 # Use site-specific posts, preserving their title, full HTML and inline order.
 if not posts:raise SystemExit("Could not retrieve original posts. No substitute content generated.")
 CSS="""*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f2e6c8;color:#253c38;font:18px/1.75 Georgia,serif}a{color:inherit}nav{display:flex;justify-content:space-between;gap:16px;padding:19px 5vw;background:#24433d;color:#f5e7c6;font:900 15px Arial,sans-serif;text-transform:uppercase}nav a{text-decoration:none}.hero{background:#efbb67;padding:6vw 5vw;border-bottom:7px solid #253c38}.kicker,.meta{font:900 12px Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase}h1{font:1000 clamp(55px,10vw,132px)/.85 Arial,sans-serif;letter-spacing:-.09em;text-transform:uppercase;margin:22px 0}h1 em{color:#c74730;font-style:normal}h2{font:900 clamp(24px,3vw,40px)/1 Arial,sans-serif;text-transform:uppercase;letter-spacing:-.055em}.intro{font:700 19px Arial,sans-serif}.grid{max-width:1400px;padding:5vw;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:27px}.card{background:#f8ebcf;text-decoration:none;border:3px solid #253c38;box-shadow:5px 5px 0 #253c38;transition:transform .25s}.card:hover{transform:translateY(-6px)}.card img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}.card section{padding:18px}.card h2{margin:8px 0}.story{max-width:840px;margin:auto;padding:6vw 25px 90px}.story h1{font-size:clamp(42px,7vw,89px)}.story-content img{max-width:100%;height:auto;display:block;margin:25px auto}.story-content figure{margin:30px 0}.story-content figcaption{font:14px Arial,sans-serif;color:#53615b;text-align:center}footer{background:#24433d;color:#fff0d4;text-align:center;padding:25px;font:900 12px Arial,sans-serif;letter-spacing:.1em}button{cursor:pointer}.back{font:800 12px Arial,sans-serif;text-decoration:none} @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}"""
