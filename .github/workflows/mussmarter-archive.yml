@@ -18,23 +18,228 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install requests beautifulsoup4
-      - name: Collect stories and images from original site
+      - name: Collect full stories and original images
         run: python mussmarter/import_public_site.py
-      - name: Validate archive
+      - name: Validate archive and split into smaller downloads
         run: |
           python - <<'PY'
-          import json
+          import json, shutil, zipfile
           from pathlib import Path
-          p=Path("mussmarter/site/migration-report.json")
-          report=json.loads(p.read_text())
+          p=Path("mussmarter/site")
+          report=json.loads((p/"migration-report.json").read_text())
           print("Stories:",report["post_count"],"Photos:",report["downloaded_images"],"Failures:",len(report["failures"]))
-          if report["post_count"]<1:raise SystemExit("Nothing archived")
-          if report["downloaded_images"]<1:raise SystemExit("No images archived")
+          if report["post_count"]<1 or report["downloaded_images"]<1:
+              raise SystemExit("Incomplete import: no posts or images")
+          chunks=Path("mussmarter/split-downloads")
+          chunks.mkdir(exist_ok=True)
+          # Text-only ZIP includes ALL full story pages, report, CSS and homepage.
+          with zipfile.ZipFile(chunks/"mussmarter-stories-and-website.zip","w",zipfile.ZIP_DEFLATED) as z:
+              for f in p.rglob("*"):
+                  if f.is_file() and "assets" not in f.relative_to(p).parts:
+                      z.write(f, f.relative_to(p))
+          images=sorted(f for f in (p/"assets").rglob("*") if f.is_file())
+          limit=20*1024*1024
+          part=0
+          current_size=0
+          z=None
+          for f in images:
+              if z is None or (current_size+f.stat().st_size>limit and current_size>0):
+                  if z is not None:z.close()
+                  part+=1
+                  z=zipfile.ZipFile(chunks/f"mussmarter-photos-{part:02d}.zip","w",zipfile.ZIP_STORED)
+                  current_size=0
+              z.write(f, f.relative_to(p))
+              current_size+=f.stat().st_size
+          if z is not None:z.close()
+          print("Photo packages:",part,"(about 20 MB maximum each)")
+          if part>30:
+              raise SystemExit("More than 30 photo packages; update workflow to upload remaining parts")
           PY
       - uses: actions/upload-artifact@v4
-        if: always()
         with:
-          name: mussmarter-site-preview
-          path: mussmarter/site/
-          if-no-files-found: warn
+          name: mussmarter-stories-and-website
+          path: mussmarter/split-downloads/mussmarter-stories-and-website.zip
+          if-no-files-found: error
           retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-01
+          path: mussmarter/split-downloads/mussmarter-photos-01.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-02
+          path: mussmarter/split-downloads/mussmarter-photos-02.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-03
+          path: mussmarter/split-downloads/mussmarter-photos-03.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-04
+          path: mussmarter/split-downloads/mussmarter-photos-04.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-05
+          path: mussmarter/split-downloads/mussmarter-photos-05.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-06
+          path: mussmarter/split-downloads/mussmarter-photos-06.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-07
+          path: mussmarter/split-downloads/mussmarter-photos-07.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-08
+          path: mussmarter/split-downloads/mussmarter-photos-08.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-09
+          path: mussmarter/split-downloads/mussmarter-photos-09.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-10
+          path: mussmarter/split-downloads/mussmarter-photos-10.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-11
+          path: mussmarter/split-downloads/mussmarter-photos-11.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-12
+          path: mussmarter/split-downloads/mussmarter-photos-12.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-13
+          path: mussmarter/split-downloads/mussmarter-photos-13.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-14
+          path: mussmarter/split-downloads/mussmarter-photos-14.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-15
+          path: mussmarter/split-downloads/mussmarter-photos-15.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-16
+          path: mussmarter/split-downloads/mussmarter-photos-16.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-17
+          path: mussmarter/split-downloads/mussmarter-photos-17.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-18
+          path: mussmarter/split-downloads/mussmarter-photos-18.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-19
+          path: mussmarter/split-downloads/mussmarter-photos-19.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-20
+          path: mussmarter/split-downloads/mussmarter-photos-20.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-21
+          path: mussmarter/split-downloads/mussmarter-photos-21.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-22
+          path: mussmarter/split-downloads/mussmarter-photos-22.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-23
+          path: mussmarter/split-downloads/mussmarter-photos-23.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-24
+          path: mussmarter/split-downloads/mussmarter-photos-24.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-25
+          path: mussmarter/split-downloads/mussmarter-photos-25.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-26
+          path: mussmarter/split-downloads/mussmarter-photos-26.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-27
+          path: mussmarter/split-downloads/mussmarter-photos-27.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-28
+          path: mussmarter/split-downloads/mussmarter-photos-28.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-29
+          path: mussmarter/split-downloads/mussmarter-photos-29.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mussmarter-photos-30
+          path: mussmarter/split-downloads/mussmarter-photos-30.zip
+          if-no-files-found: ignore
+          retention-days: 30
+      - name: Print download summary
+        run: ls -lh mussmarter/split-downloads/
