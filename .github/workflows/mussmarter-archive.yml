@@ -27,7 +27,7 @@ jobs:
           from pathlib import Path
           p=Path("mussmarter/site/migration-report.json")
           report=json.loads(p.read_text())
-          print("Stories:",report["story_count"],"Photos:",report["image_count"],"Failures:",len(report["failures"]))
+          print("Stories:",report["post_count"],"Photos:",report["downloaded_images"],"Failures:",len(report["failures"]))
           if report["story_count"]<1:raise SystemExit("Nothing archived")
           PY
       - uses: actions/upload-artifact@v4
