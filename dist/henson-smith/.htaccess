@@ -1,3 +1,17 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+# Let certificate validation reach the origin without redirecting.
+RewriteRule ^\.well-known/ - [L]
+# The portfolio URL is an alias, not the indexed artist address.
+RewriteCond %{HTTP_HOST} ^(?:www\.)?stephenmusson\.com$ [NC]
+RewriteRule ^(.*)$ https://hensonsmith.com/$1 [R=301,L,NE]
+# One public artist hostname: HTTPS without www.
+RewriteCond %{HTTP_HOST} ^www\.hensonsmith\.com$ [NC,OR]
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP_HOST} ^(?:www\.)?hensonsmith\.com$ [NC]
+RewriteRule ^(.*)$ https://hensonsmith.com/$1 [R=301,L,NE]
+</IfModule>
+
 Options -Indexes
 DirectoryIndex index.html
 <IfModule mod_headers.c>
