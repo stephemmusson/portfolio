@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /henson-smith/_social/
+Sitemap: https://stephenmusson.com/henson-smith/sitemap.xml

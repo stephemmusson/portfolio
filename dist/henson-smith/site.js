@@ -1,0 +1,56 @@
+const menu=document.getElementById('menu'),nav=document.getElementById('nav');function setMenu(open){nav.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'Close navigation':'Open navigation');document.body.classList.toggle('menu-open',open);if(open)nav.querySelector('a:not([hidden])')?.focus();}menu.addEventListener('click',()=>setMenu(!nav.classList.contains('open')));document.querySelectorAll('#nav a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nav.classList.contains('open')){setMenu(false);menu.focus();}});const modal=document.getElementById('video-modal');function closeVideo(){modal.hidden=true;modal.querySelector('.modal-frame').innerHTML='';document.body.style.overflow=''}document.querySelectorAll('[data-video]').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.video;if(!/^[a-zA-Z0-9_-]{11}$/.test(id))return;modal.querySelector('.modal-frame').innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="Henson Smith music video"></iframe>`;modal.hidden=false;document.body.style.overflow='hidden'}));modal.querySelector('.modal-close').addEventListener('click',closeVideo);modal.addEventListener('click',e=>{if(e.target===modal)closeVideo()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.hidden)closeVideo()});
+// Preview is a separate document; production contains no Manifesto section.
+if(document.body.dataset.preview==='true'){
+ const marker=document.createElement('div');marker.className='development-ribbon';marker.textContent='V9 PREVIEW · MANIFESTO EXCLUDED FROM LIVE SITE';document.body.appendChild(marker);
+}
+// Keep keyboard navigation within the full-screen menu.
+document.addEventListener('keydown',e=>{
+ if(e.key!=='Tab'||!nav.classList.contains('open'))return;
+ const items=[menu,...nav.querySelectorAll('a:not([hidden])')];
+ const first=items[0],last=items[items.length-1];
+ if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+ else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+});
+const motionPreference=matchMedia('(prefers-reduced-motion: reduce)');
+function syncMotion(){document.querySelectorAll('video').forEach(v=>{if(motionPreference.matches)v.pause();else v.play().catch(()=>{});});}
+motionPreference.addEventListener('change',syncMotion);syncMotion();
+
+// V9 music catalogue: one audio source, with explicit preview / full-song choices.
+const audio=document.getElementById('audio-player');
+let catalogue=[],activeTrack=0,currentFilter='all';
+const list=document.getElementById('song-list');
+function platformLinks(links){const box=document.createElement('div');box.className='platform-links';for(const [label,url] of Object.entries(links)){const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';const icons={'Spotify':'spotify','Apple Music':'applemusic','YouTube Music':'youtubemusic','Amazon Music':'amazonmusic'};const logo=document.createElement('img');logo.className='platform-logo';logo.src='assets/'+icons[label]+'.svg';logo.alt='';logo.setAttribute('aria-hidden','true');const name=document.createElement('span');name.className='platform-name';name.textContent=label;const arrow=document.createElement('span');arrow.className='link-arrow';arrow.textContent='↗';a.append(logo,name,arrow);box.append(a);}return box;}
+function drawSongs(){const query=document.getElementById('track-search').value.toLowerCase().trim();list.replaceChildren();let count=0;catalogue.forEach((t,i)=>{if(query&&!t.title.toLowerCase().includes(query))return;if(currentFilter==='Mindfield'&&t.album!=='Mindfield')return;if(currentFilter==='single'&&t.album==='Mindfield')return;count++;const b=document.createElement('button');b.className='song-row';b.dataset.track=i;b.setAttribute('aria-pressed',String(activeTrack===i));const n=document.createElement('span');n.textContent=String(i+1).padStart(2,'0');const title=document.createElement('strong');title.textContent=t.title;const album=document.createElement('small');album.textContent=t.album==='Mindfield'?'MINDFIELD':'MANIFESTO / SINGLE';const play=document.createElement('b');play.textContent=activeTrack===i&&!audio.paused?'Ⅱ':'▶';b.append(n,title,album,play);list.append(b);});document.getElementById('no-tracks').hidden=count>0;}
+function selectTrack(i,play=true){const t=catalogue[i];if(!t)return;if(play){const embed=document.getElementById('album-embed');embed.replaceChildren();embed.hidden=true;const toggle=document.getElementById('embed-toggle');toggle.textContent='OPEN ALBUM PLAYER +';toggle.setAttribute('aria-expanded','false');}activeTrack=i;document.getElementById('deck-title').textContent=t.title.toUpperCase();document.getElementById('deck-album').textContent=t.album.toUpperCase();document.getElementById('deck-links').replaceChildren(platformLinks(t.links));const artwork={'Outta My Mind':'outta-my-mind.jpg','Round Two':'round-two.jpg','By Design':'by-design.jpg','Blast For Me':'blast-for-me-cover.png','False Prophets, Real Profits':'false-prophets-cover.jpg'};document.getElementById('deck-art').src='assets/'+(artwork[t.title]||'mindfield.jpg');document.getElementById('deck-art').alt=t.title+' artwork';audio.pause();audio.src=t.preview||'';document.getElementById('player-status').textContent=t.preview?'Song preview · Listen in full using the links below.':'Preview unavailable. Open the full song on your favourite service.';if(play&&t.preview){closeVideo();audio.play().catch(()=>{document.getElementById('player-status').textContent='Press play in the audio controls to start the preview.';});}drawSongs();}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-track]');if(!b)return;selectTrack(Number(b.dataset.track));if(b.classList.contains('song-row'))list.querySelector('[data-track="'+b.dataset.track+'"]')?.focus();if(!b.classList.contains('song-row'))document.getElementById('listen').scrollIntoView({behavior:motionPreference.matches?'instant':'smooth'});});
+document.getElementById('track-search').addEventListener('input',drawSongs);
+document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{currentFilter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));drawSongs();}));
+audio.addEventListener('play',drawSongs);audio.addEventListener('pause',drawSongs);audio.addEventListener('error',()=>{document.getElementById('player-status').textContent='This preview could not load. You can still listen through the service links below.';});
+audio.addEventListener('ended',()=>selectTrack((activeTrack+1)%catalogue.length));
+document.querySelectorAll('[data-video]').forEach(b=>b.addEventListener('click',()=>audio.pause()));
+fetch('catalog.json').then(r=>{if(!r.ok)throw Error('Catalogue unavailable');return r.json();}).then(data=>{catalogue=data;selectTrack(0,false);}).catch(()=>{document.getElementById('player-status').textContent='The track list could not load. Please use the music service links above.';});
+document.querySelectorAll('[data-rail]').forEach(b=>b.addEventListener('click',()=>{const rail=document.querySelector('.release-rail');rail.scrollBy({left:Number(b.dataset.rail)*rail.clientWidth*.8,behavior:motionPreference.matches?'instant':'smooth'});}));
+document.getElementById('embed-toggle').addEventListener('click',e=>{const panel=document.getElementById('album-embed');panel.hidden=!panel.hidden;e.target.textContent=panel.hidden?'OPEN ALBUM PLAYER +':'CLOSE ALBUM PLAYER −';e.target.setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden){audio.pause();const frame=document.createElement('iframe');frame.src='https://open.spotify.com/embed/album/5jylpsenC69YTYfbCO6SOp?theme=0';frame.title='Mindfield Spotify album player';frame.allow='encrypted-media; fullscreen; picture-in-picture';panel.replaceChildren(frame);}else panel.replaceChildren();});
+// Reveal once as each section enters the viewport. Content stays visible without JS.
+if('IntersectionObserver' in window&&!motionPreference.matches){const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);}}),{threshold:.06});document.querySelectorAll('.section-intro,.lead-release,.rounds-layout,.artist-grid,.jukebox,.social-links').forEach(el=>{el.classList.add('reveal');observer.observe(el);});}
+
+// A quiet doorway into the artist’s background, with native modal keyboard handling.
+const backgroundDialog=document.getElementById('background-dialog');
+const backgroundTrigger=document.querySelector('.background-trigger');
+backgroundTrigger.addEventListener('click',()=>{backgroundDialog.showModal();document.body.classList.add('background-open');});
+backgroundDialog.querySelector('.background-close').addEventListener('click',()=>backgroundDialog.close());
+backgroundDialog.addEventListener('click',e=>{if(e.target===backgroundDialog){const r=backgroundDialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)backgroundDialog.close();}});
+backgroundDialog.addEventListener('close',()=>{document.body.classList.remove('background-open');backgroundTrigger.focus();});
+
+// Short signal interruptions, triggered by entry rather than hover alone.
+const signalHeadings=[...document.querySelectorAll('.section-intro h2,.rounds h2,.artist-copy h2,.listen>h2,.social-section h2')];
+function pulseSignal(el){if(motionPreference.matches)return;el.classList.remove('signal-active');requestAnimationFrame(()=>el.classList.add('signal-active'));}
+signalHeadings.forEach(el=>{el.classList.remove('glitch');el.classList.add('signal-glitch');el.dataset.signalText=el.innerText;el.addEventListener('animationend',e=>{if(e.animationName==='signalJolt')el.classList.remove('signal-active');});});
+if('IntersectionObserver' in window){const signalObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)pulseSignal(e.target);}),{threshold:.6});signalHeadings.forEach(el=>signalObserver.observe(el));}
+setInterval(()=>{if(document.hidden||motionPreference.matches)return;const title=document.querySelector('.listen>h2');if(!title)return;const r=title.getBoundingClientRect();if(r.top<innerHeight&&r.bottom>0)pulseSignal(title);},8500);
+
+const heroTitle=document.querySelector('.hero h1');
+function glitchHero(){if(motionPreference.matches)return;heroTitle.classList.remove('hero-signal');requestAnimationFrame(()=>heroTitle.classList.add('hero-signal'));}
+heroTitle.addEventListener('animationend',e=>{if(e.target.classList.contains('hero-word'))heroTitle.classList.remove('hero-signal');});
+if('IntersectionObserver' in window){const heroSignalObserver=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting))glitchHero();},{threshold:.6});heroSignalObserver.observe(heroTitle);}
+setInterval(()=>{if(document.hidden||motionPreference.matches)return;const r=heroTitle.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight)glitchHero();},5000);
