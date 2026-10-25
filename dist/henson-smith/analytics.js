@@ -30,11 +30,11 @@
   const policy=document.createElement('a');policy.href='https://policies.google.com/privacy';policy.target='_blank';policy.rel='noopener';policy.textContent='Google privacy information ↗';
   const actions=document.createElement('div');actions.className='analytics-actions';
   function hidePanel(){panel.hidden=true;}
-  function choose(value){saveChoice(value);if(value==='accepted')startAnalytics();else{window['ga-disable-'+measurementId]=true;if(window.gtag)window.gtag('consent','update',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});removeAnalyticsCookies();}hidePanel();settings?.focus();}
+  function choose(value){saveChoice(value);if(value==='accepted')startAnalytics();else{window['ga-disable-'+measurementId]=true;if(window.gtag)window.gtag('consent','update',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});removeAnalyticsCookies();}hidePanel();settings?.focus({preventScroll:true});}
   if(!isPreview){for(const [label,value] of [['DECLINE','declined'],['ACCEPT ANALYTICS','accepted']]){const button=document.createElement('button');button.textContent=label;button.addEventListener('click',()=>choose(value));actions.append(button);}}
   else{const close=document.createElement('button');close.textContent='CLOSE';close.addEventListener('click',hidePanel);actions.append(close);}
   panel.append(heading,text,policy,actions);document.body.append(panel);
-  settings?.addEventListener('click',()=>{panel.hidden=false;panel.querySelector('button')?.focus();});
+  settings?.addEventListener('click',()=>{panel.hidden=false;panel.querySelector('button')?.focus({preventScroll:true});});
   if(isPreview)return;
   const choice=readChoice();if(choice==='accepted')startAnalytics();else if(choice!=='declined')panel.hidden=false;
 })();
